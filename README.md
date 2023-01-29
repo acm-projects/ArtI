@@ -3,7 +3,7 @@
      style="display: block;
         margin-left: auto;
         margin-right: auto;
-        height: 100px;
+        height: 70px;
         width: auto;" />
 
 AI art has devalued the work of artists in addition to stolen actual artists’ work to create cheap impressions of “art”, but what if AI could help artists? Instead of appropriation, ArtI uses AI for inspiration; using generated images, artists use ArtI to create and save plausible compositions and reference images for their next piece!
@@ -109,7 +109,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 * [How to be successful in ACM Projects](https://docs.google.com/document/d/18Zi3DrKG5e6g5Bojr8iqxIu6VIGl86YBSFlsnJnlM88/edit?usp=sharing)
 * [Git cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * [Git in-depth tutorial](https://youtu.be/RGOj5yH7evk)
-* [Git collaboration tutorial] (https://youtu.be/jhtbhSpV5YA)
+* [Git collaboration tutorial](https://youtu.be/jhtbhSpV5YA)
 * [Postman setup tutorial](https://youtu.be/3eHJkcA8mTs)
 * Share graphics using [Box](https://utdallas.account.box.com/login)
 * Make presentations with either [Pitch](https://pitch.com/) or [Canva](https://www.canva.com/)
