@@ -65,7 +65,8 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 ## Tutorials
 
-* [Routing pt.1](https://youtu.be/aZGzwEjZrXc) and [pt.2](https://youtu.be/EmUa_tcSM-k)
+* [Routing pt.1](https://youtu.be/aZGzwEjZrXc) and [pt.2](https://youtu.be/EmUa_tcSM-k) with a [routing example]()
+* [How to use APIs with React (text)](https://rapidapi.com/blog/how-to-use-an-api-with-react/)
 * [Build an AI [Human] Photo Generator tutorial](https://youtu.be/z5VH_XjDXK8)
 * [Open AI docs](https://beta.openai.com/docs/guides/images)
 * [Build An AI [Text-Based] Image Generator in JS tutorial](https://youtu.be/fU4o_BKaUZE)
