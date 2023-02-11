@@ -38,10 +38,14 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
     * React.JS:
         * [React.JS basics tutorial](https://youtu.be/w7ejDZ8SWv8)
         * [React.JS intermediate tutorial](https://youtu.be/bMknfKXIFA8)
+        * HTML & CSS:
+            * [HTML & CSS cheatsheet](https://ilovecoding.org/blog/htmlcss-cheatsheet)
+            * [Learn HTML & CSS here](https://www.w3schools.com/)
 * Backend: 
     * Node.js:
         * [Express & Node.js basics tutorial](https://youtu.be/G8uL0lFFoN0)
     * MongoDB (database):
+        * [Getting Started with MongoDB](https://youtu.be/bBA9rUdqmgY)
         * [MongoDB basics tutorial](https://youtu.be/9cWm74DteMQ)
 * APIs:
     * [Open AI’s Images API](https://beta.openai.com/docs/guides/images): first 1000 requests are free
