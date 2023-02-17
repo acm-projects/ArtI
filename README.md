@@ -139,11 +139,11 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-## The Team 🫂
-<b><i> Zara Iqbal🎨 </i></b>
-<b><i> Isaac Rommel👾 </i></b>
-<b><i> Shelley Sugiharto🎨 </i></b>
-<b><i> Leon Zhang👾 </i></b>
+## The Team 🌟
+* <b><i> Zara Iqbal🎨 </i></b>
+* <b><i> Isaac Rommel👾 </i></b>
+* <b><i> Shelley Sugiharto🎨 </i></b>
+* <b><i> Leon Zhang👾 </i></b>
 
-<b> Susan Zhang </b> - Project Manager
-<b> Yun Ho Jung </b> - Industry Mentor
+* <b> Susan Zhang </b> - Project Manager
+* <b> Yun Ho Jung </b> - Industry Mentor
