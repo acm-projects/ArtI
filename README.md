@@ -4,6 +4,7 @@
         height: 70px;
         width: auto;" /></p>
 
+anotha change
 AI art has devalued the work of artists in addition to stolen actual artists’ work to create cheap impressions of “art”, but what if AI could help artists? Instead of appropriation, ArtI uses AI for inspiration; using generated images, artists use ArtI to create and save plausible compositions and reference images for their next piece!
 
 ## MVP 🎯
