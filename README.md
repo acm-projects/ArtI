@@ -1,16 +1,12 @@
-<img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
+<p align="center"><img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
      alt="ArtI"
-     style="display: block;
-        margin-left: auto;
-        margin-right: auto;
+     style="
         height: 70px;
-        width: auto;" />
+        width: auto;" /></p>
 
-heyo
 AI art has devalued the work of artists in addition to stolen actual artists’ work to create cheap impressions of “art”, but what if AI could help artists? Instead of appropriation, ArtI uses AI for inspiration; using generated images, artists use ArtI to create and save plausible compositions and reference images for their next piece!
 
-## MVP
-
+## MVP 🎯
 * User account registration and authentication
 * User profile page:
     * Allows users to create and view their saved boards
@@ -21,7 +17,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-## Stretch Goals
+## Stretch Goals 🏁
 
 * Download the generated images and boards onto device
 * Post image(s) into a community space
@@ -31,9 +27,9 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-## Tech Stack
+## Tech Stack 📚
 
-* Frontend:
+* Frontend 🎨:
     * Figma:
         * [Figma basics tutorial](https://youtu.be/II-6dDzc-80)
     * React.JS:
@@ -42,13 +38,13 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
         * HTML & CSS:
             * [HTML & CSS cheatsheet](https://ilovecoding.org/blog/htmlcss-cheatsheet)
             * [Learn HTML & CSS here](https://www.w3schools.com/)
-* Backend: 
-    * Node.js:
-        * [Express & Node.js basics tutorial](https://youtu.be/G8uL0lFFoN0)
+* Backend 👾: 
     * MongoDB (database):
         * [Getting Started with MongoDB](https://youtu.be/bBA9rUdqmgY)
-        * [MongoDB basics tutorial](https://youtu.be/9cWm74DteMQ)
-* APIs:
+        * [MongoDB Crash Course](https://youtu.be/2QQGWYe7IDU)
+    * REST API:
+        * [REST API using NodeJS and MongoDB](https://youtube.com/playlist?list=PLdHg5T0SNpN3EoN3PEyCmPR42Ok_44OFT)
+* APIs ☁️:
     * [Open AI’s Images API](https://beta.openai.com/docs/guides/images): first 1000 requests are free
     * [Face Generator API](https://rapidapi.com/arraybobo/api/facegen): 20 requests/month are free
     * [100K Faces API](https://github.com/ozgrozer/100k-faces)
@@ -56,7 +52,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-## Software to Install
+## Software to Install 🔗
 
 * IDE: [Visual Studio Code](https://code.visualstudio.com/)
 * Version control: [Git](https://git-scm.com/downloads)
@@ -68,27 +64,49 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-## Tutorials
+## Tutorials 🏫
 
-* [Routing pt.1](https://youtu.be/aZGzwEjZrXc) and [pt.2](https://youtu.be/EmUa_tcSM-k) with a [routing example]()
-* [How to use APIs with React (text)](https://rapidapi.com/blog/how-to-use-an-api-with-react/)
-* [Build an AI [Human] Photo Generator tutorial](https://youtu.be/z5VH_XjDXK8)
-* [Open AI docs](https://beta.openai.com/docs/guides/images)
-* [Build An AI [Text-Based] Image Generator in JS tutorial](https://youtu.be/fU4o_BKaUZE)
-* [Generate Images using React and Dall-E API tutorial](https://youtu.be/oacBV4tnuYQ)
-* [Open AI Node.js Library](https://github.com/openai/openai-node)
-* [Uploading imagesto database tutorial pt.1](https://youtu.be/dapS3HkX3Wc) and [pt.2](https://arosh-segar.medium.com/how-to-upload-images-using-multer-in-the-mern-stack-1c6bf691947e)
+* Frontend 🎨:
+    * [Forms in React](https://youtu.be/bMknfKXIFA8?t=28132) (7:48:52 - 8:46:45)
+* Backend 👾:
+    * [MERN User Authentication](https://youtu.be/HGgyd1bYWsE)
+    * [Uploading imagesto database tutorial pt.1](https://youtu.be/dapS3HkX3Wc) and [pt.2](https://arosh-segar.medium.com/how-to-upload-images-using-multer-in-the-mern-stack-1c6bf691947e)
+* API Calls ☁️: 
+    * [Build an AI [Human] Photo Generator tutorial](https://youtu.be/z5VH_XjDXK8)
+    * [Open AI docs](https://beta.openai.com/docs/guides/images)
+    * [Build An AI [Text-Based] Image Generator in JS tutorial](https://youtu.be/fU4o_BKaUZE)
+    * [Generate Images using React and Dall-E API tutorial](https://youtu.be/oacBV4tnuYQ)
+    * [Open AI Node.js Library](https://github.com/openai/openai-node)
 
 
 
-## Timeline
+## GitHub Cheat Sheet 🔄
+ 
+ [Master Github Cheat Sheet](https://www.atlassian.com/dam/jcr:8132028b-024f-4b6b-953e-e68fcce0c5fa/atlassian-git-cheatsheet.pdf)
+ 
+| Command | Description |
+| ------ | ------ |
+| cd "ArtI" | Change directories over to our repository |
+| git status | Outputs status of files |
+| git add . | Finds all changed files |
+| git commit -m "TestyTestTest" | Commit with message |
+| git push origin "branch" | Push to branch |
+| git pull origin "branch" | Pull updates from a specific branch |
+| git branch | Lists branches for you |
+| git branch "branch name" | Makes new branch |
+| git checkout "branch name" | Switch to branch |
+| git checkout -b "branch name" | Same as 2 previous commands together |
 
-* **General:**
+
+
+## Timeline 📆
+
+* **General 🏃:**
     * Agree on member roles and app MVP **(week 1)**
     * Downloading software, setting up environment, and learning Git **(week 1)**
     * Weekly meeting where frontend and backend update each other and integrate code accordingly **(weeks 2-8)**
     Presentation preparation **(weeks 8-10)**
-* **Frontend:**
+* **Frontend 🎨:**
     * Sign up for Figma and learn basics **(week 1)**
     * Make wireframes and revise them if needed **(week 2-3)**
         * Signup, login, user profile w/ saved boards, “AI image generator” page, and “AI-generated portrait” page
@@ -99,7 +117,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
         * “AI image generator” page **(week 6)**
         * User profile w/ saved boards **(weeks 7-8)**
     * Create presentation **(weeks 8-9)**
-* **Backend:**
+* **Backend 👾:**
     * Learn basics for MongoDB **(weeks 1-3)**
         * Learn basics for Express
     * Set up databases based on user profile **(week 3)**
@@ -110,8 +128,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 
 
-
-## Additional Resources
+## Additional Resources ✒️
 * [How to be successful in ACM Projects](https://docs.google.com/document/d/18Zi3DrKG5e6g5Bojr8iqxIu6VIGl86YBSFlsnJnlM88/edit?usp=sharing)
 * [Git cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * [Git in-depth tutorial](https://youtu.be/RGOj5yH7evk)
@@ -119,3 +136,14 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 * [Postman setup tutorial](https://youtu.be/3eHJkcA8mTs)
 * Share graphics using [Box](https://utdallas.account.box.com/login)
 * Make presentations with either [Pitch](https://pitch.com/) or [Canva](https://www.canva.com/)
+
+
+
+## The Team 🫂
+<b><i> Zara Iqbal🎨 </i></b>
+<b><i> Isaac Rommel👾 </i></b>
+<b><i> Shelley Sugiharto🎨 </i></b>
+<b><i> Leon Zhang👾 </i></b>
+
+<b> Susan Zhang </b> - Project Manager
+<b> Yun Ho Jung </b> - Industry Mentor
