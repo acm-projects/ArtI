@@ -130,6 +130,7 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 ## Additional Resources ✒️
 * [How to be successful in ACM Projects](https://docs.google.com/document/d/18Zi3DrKG5e6g5Bojr8iqxIu6VIGl86YBSFlsnJnlM88/edit?usp=sharing)
+* [Web Design Inspiration - Dribble](https://dribbble.com/shots/popular/web-design)
 * [Git cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * [Git in-depth tutorial](https://youtu.be/RGOj5yH7evk)
 * [Git collaboration tutorial](https://youtu.be/jhtbhSpV5YA)
