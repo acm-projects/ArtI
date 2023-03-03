@@ -1,6 +1,7 @@
 const express = require('express');
 const createError = require("http-errors")
 const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 
 const app = express();
 
@@ -13,11 +14,11 @@ mongoose.set('strictQuery', false)
 
 mongoose
   .connect(
-    `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
+    `mongodb+srv://leon:leon@arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
     {
       dbName: 'artiDB',
-      user: 'admin',
-      pass: 'admin'
+      user: process.env.dbUser,
+      pass: process.env.dbPass
     }
   )
   .then(() => {
