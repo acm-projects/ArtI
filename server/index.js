@@ -1,6 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import createHttpError from 'http-errors'
+import dotenv from 'dotenv'
+dotenv.config()
 // Routes
 import { UserRoute } from './Routes/User.route.js'
 
@@ -14,7 +16,12 @@ mongoose.set('strictQuery', false)
 
 mongoose
   .connect(
-    `mongodb+srv://admin:admin@arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
+    {
+      dbName: 'artiDB',
+      user: process.env.dbUser,
+      pass: process.env.dbPass,
+    }
   )
   .then(() => {
     console.log('Database is connected!')
