@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header.js'
+import HeaderTwo from './components/HeaderTwo.js'
+import LoginForm from './components/LoginForm.js'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div className = 'container'>
+        <Header />
+        <HeaderTwo />
+        <LoginForm />
+      </div>
+  )
 }
 
-export default App;
+//either this or the one embedded in form,,waiting for reply
+//will do layout/formatting when CSS week hits (I think)
+
+export default App
