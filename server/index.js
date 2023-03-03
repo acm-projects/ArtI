@@ -5,7 +5,7 @@ import createHttpError from 'http-errors'
 import { UserRoute } from './Routes/User.route.js'
 
 const app = express()
-app.use(express.json())
+app.use(express.json()) // allows express to parse req.body
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = 3000 || process.env.PORT
