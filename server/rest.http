@@ -1,0 +1,31 @@
+###
+GET http://localhost:3000/
+
+### Adding a new user
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "username": "test2",
+  "email":"test2@test.com",
+  "firstName": "sample",
+  "lastName": "sampler",
+  "password": "test"
+}
+
+### Getting all users
+GET http://localhost:3000/user
+
+### Getting a user
+GET http://localhost:3000/user/test
+
+### Deleting a user based on their username
+DELETE http://localhost:3000/user/test2
+
+### Update a user based on their username
+PATCH  http://localhost:3000/user/test
+Content-Type: application/json
+
+{
+  "email": "test.test@test.com"
+}
