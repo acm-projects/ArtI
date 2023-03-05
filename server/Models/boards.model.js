@@ -21,3 +21,6 @@ const boardsSchema = new Schema({
     required: false,
   },
 })
+
+const Board = mongoose.model('boards', boardsSchema)
+export { Board }

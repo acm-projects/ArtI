@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 // Routes
 import { UserRoute } from './Routes/User.route.js'
+import { BoardsRoute } from './Routes/Boards.route.js'
 
 const app = express()
 app.use(express.json()) // allows express to parse req.body
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 
 // USER ROUTES
 app.use('/user', UserRoute)
+app.use('/boards', BoardsRoute)
 
 // 404 handler and pass to error handler
 app.use((req, res, next) => {
