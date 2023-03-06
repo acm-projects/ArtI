@@ -7,13 +7,17 @@ Content-Type: application/json
 
 {
     "username": "test",
-    "boardName": "test",
-    "images": [1,2,3],
-    "thumbnail": "test"
+    "boardName": "test5",
+    "images": ["update1", "update2", "update3"],
+    "thumbnail": "test",
+    "customThumbnail": false
 }
 
 ### Get a specific user's boards
 GET http://localhost:3000/boards/test
+
+### Get a specific board from a user
+GET http://localhost:3000/boards/test/test
 
 ### Delete a specific board from a user
 DELETE http://localhost:3000/boards/test
@@ -24,11 +28,28 @@ Content-Type: application/json
 }
 
 ### Adding an image into a specific board
-PATCH http://localhost:3000/boards/test 
+PATCH http://localhost:3000/boards/test/test
 Content-Type: application/json
 
 {
-    "boardName": "test",
-    "images": [""]
-    ""
+    "images": ["update1", "update2"],
+    "newImageUrl": "update3"
 }
+
+### Deleting a specific image from a board
+PATCH http://localhost:3000/boards/test/test/update3
+Content-Type: application/json
+
+{
+    "images": ["update1", "update2", "update3"],
+    "imageUrl": "update3"
+}
+
+# ### Change a board's thumnail
+# PATCH http://localhost:3000/boards/test/test/test/resource?hasProperty=false
+# Content-Type: application/json
+
+# {
+#     "images": ["update1", "update2", "update3"],
+#     "thumbnail": "test",
+# }

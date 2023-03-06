@@ -20,6 +20,12 @@ const boardsSchema = new Schema({
     type: String,
     required: false,
   },
+
+  customThumbnail: {
+    type: Boolean,
+    required: false,
+  },
+  
 })
 
 const Board = mongoose.model('boards', boardsSchema)
