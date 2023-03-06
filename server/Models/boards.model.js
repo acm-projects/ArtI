@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+import mongoose, { Schema } from 'mongoose'
 
 const boardsSchema = new Schema({
   username: {
@@ -23,5 +22,5 @@ const boardsSchema = new Schema({
   },
 })
 
-const boards = mongoose.model('boards', boardsSchema)
-module.exports = boards;
+const Board = mongoose.model('boards', boardsSchema)
+export { Board }

@@ -12,7 +12,23 @@ Content-Type: application/json
     "thumbnail": "test"
 }
 
-### Get a user's boards
+### Get a specific user's boards
 GET http://localhost:3000/boards/test
 
+### Delete a specific board from a user
+DELETE http://localhost:3000/boards/test
+Content-Type: application/json
 
+{
+    "boardName": "test"
+}
+
+### Adding an image into a specific board
+PATCH http://localhost:3000/boards/test 
+Content-Type: application/json
+
+{
+    "boardName": "test",
+    "images": [""]
+    ""
+}
