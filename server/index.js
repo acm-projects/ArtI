@@ -11,7 +11,7 @@ const app = express()
 app.use(express.json()) // allows express to parse req.body
 app.use(express.urlencoded({ extended: true }))
 
-const PORT = 3000 || process.env.PORT
+const PORT = 8080 || process.env.PORT
 
 mongoose.set('strictQuery', false)
 
@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 })
 
 // USER ROUTES
-app.use('/user', UserRoute)
-app.use('/boards', BoardsRoute)
+app.use('/api/v1/user', UserRoute)
+app.use('/api/v1/boards', BoardsRoute)
 
 // 404 handler and pass to error handler
 app.use((req, res, next) => {
