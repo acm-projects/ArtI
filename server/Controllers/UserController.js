@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors'
-import { User } from '../Models/user.model.js'
+import { User, validate } from '../Models/user.model.js'
+import bcrypt from 'bcrypt'
 
 async function getAllUsers(req, res) {
   try {
@@ -12,8 +13,26 @@ async function getAllUsers(req, res) {
 
 async function createUser(req, res, next) {
   try {
-    const user = new User(req.body) // the req.body is set by front-end after filling out form
-    const result = await user.save()
+    console.log(validate(req.body))
+    const { error } = validate(req.body) // Check if request body is parsed correctly
+    if (error)
+      return res.status(400).send({ message: error.details[0].message })
+
+    // Checks if user already exists
+    const user = await User.findOne({ email: req.body.email })
+    if (user)
+      return res.status(409).send({
+        message: 'There is a user that already exists with the same email!',
+      })
+
+    // Hashing password
+    const salt = await bcrypt.genSalt(Number(10))
+    const hashPassword = await bcrypt.hash(req.body.password, salt)
+    const result = await new User({
+      ...req.body,
+      password: hashPassword,
+    }).save()
+
     res.send(result)
   } catch (error) {
     console.log(error.message)

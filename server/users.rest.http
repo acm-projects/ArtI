@@ -2,7 +2,7 @@
 GET http://localhost:3000/
 
 ### Adding a new user
-POST http://localhost:3000/user
+POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ### Getting all users
-GET http://localhost:3000/user
+GET http://localhost:3000/api/v1/user
 
 ### Getting a user
 GET http://localhost:3000/user/test

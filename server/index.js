@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import createHttpError from 'http-errors'
+import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 // Routes
@@ -8,20 +9,20 @@ import { UserRoute } from './Routes/User.route.js'
 import { BoardsRoute } from './Routes/Boards.route.js'
 
 const app = express()
+app.use(cors())
 app.use(express.json()) // allows express to parse req.body
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8080 || process.env.PORT
 
 mongoose.set('strictQuery', false)
-
 mongoose
   .connect(
     `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
     {
       dbName: 'artiDB',
-      user: process.env.dbUser,
-      pass: process.env.dbPass,
+      user: 'ice',
+      pass: 'ice',
     }
   )
   .then(() => {
