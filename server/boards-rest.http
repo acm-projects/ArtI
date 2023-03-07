@@ -39,11 +39,11 @@ Content-Type: application/json
 }
 
 ### Change a board's thumnail
-PATCH http://localhost:3000/boards/test/boardName
+PATCH http://localhost:3000/boards/test/sample
 Content-Type: application/json
 
  {
     "customThumbnail": false,
     "images": ["1", "2", "3"],
-    "thumbnail": "thumbnailurl",
+    "thumbnailUrl": "thumbnailUrl"
  }

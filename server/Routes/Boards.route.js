@@ -73,7 +73,7 @@ router.delete('/:username', async (req, res, next) => {
     }
 });
 
-//Adding one image to a board
+//Adding and deleting one image to a board
 router.patch('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
@@ -81,7 +81,14 @@ router.patch('/:username', async (req, res, next) => {
         const imageArray = req.body.images
         const imageUrl = req.body.imageUrl
         const shouldDelete = req.body.deleteImage
+        const isCustomThumbnail = req.body.isCustomThumbnail
         const options = { new: true };
+        //Gets the thumbnail from the user's board the Mongoose® way
+        const aggregate = await Board.aggregate([
+            { $match: {username: username, boardName: boardName}},
+            { $project: {thumbnail: 1}}
+        ]);
+        const thumbnail = aggregate[0].thumbnail;
 
         //If we want to delete, do delete function
         function deleteImageFromArray(imageArray, imageUrl) {
@@ -98,18 +105,52 @@ router.patch('/:username', async (req, res, next) => {
             return imageArray
         };
 
-        const result = await Board.findOneAndUpdate(
-        {
-            username: username,
-            boardName: boardName,
-        },
-        {
-            images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl)
-        },
-            options
-        );
+        //If user is deleting the thumbnail from the board, set the thumbnail to the 
+        //last image in the board
+        function isThumbnailDeleted(imageArray){
+            if(imageUrl == thumbnail) {
+                return imageArray[imageArray.length - 1]
+            }
+            else {
+                return imageUrl
+            }
+        };
 
-        res.send(result);
+        //If user has already set a custom thumbnail, adding or deleting will not change the thumbnail
+        if(isCustomThumbnail){
+            const result = await Board.findOneAndUpdate(
+            {
+                username: username,
+                boardName: boardName,
+            },
+            {
+                images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+                thumbnail: shouldDelete ? isThumbnailDeleted(imageArray) : thumbnail
+            },
+                options
+            );
+
+            res.send(result);
+        }
+        //If use has not set custom thumbnail, make the thumbnail the last picture
+        else{
+            const result = await Board.findOneAndUpdate(
+                {
+                    username: username,
+                    boardName: boardName,
+                },
+                {
+                    images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+                    //if user is deleting, sets the thumbnail to the picture before it, else when adding,
+                    //set the thumbnail to the added picture
+                    thumbnail: shouldDelete ? imageArray[imageArray.length - 1] : imageUrl
+                },
+                    options
+                );
+    
+                res.send(result);
+        }
+        
 
     } catch (error) {
         console.log(error.message);
@@ -117,42 +158,32 @@ router.patch('/:username', async (req, res, next) => {
 });
 
 //Change the board thumbnail
-router.patch('/:username', async (req, res, next) => {
+router.patch('/:username/:boardName', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.params.boardName
-        const update = req.body.thumbnail
-        const customThumbnail = req.body.customThumbnail
+        var update = req.body.thumbnailUrl
+        var isCustomThumbnail = req.body.customThumbnail
         const imageArray = req.body.images
         const options = { new: true };
 
         //Make the thumbnail the last added image if user hasn't set
         //a custom thumnail already
-        if (customThumbnail == false) {
-            update = req.body.imageArray[imageArray.length - 1];
+        function makeThumbnailLastImage(){
+            update = imageArray[imageArray.length - 1];
+            return update
+        };
 
-            const result = await Board.findOneAndUpdate({
-                username: username,
-                boardName: boardName,
-            },
-            {
-                thumbnail: update
-            },
-            options)
-        }
-        //Make thumbnail the custom thumbnail
-        else {
-            const result = await Board.findOneAndUpdate({
-                username: username,
-                boardName: boardName
-            },
-            {
-                thumbnail: update,
-                customThumbnail: true
-            },
-            options);
-        }
-
+        const result = await Board.findOneAndUpdate({
+            username: username,
+            boardName: boardName,
+        },
+        {
+            thumbnail: isCustomThumbnail ? update : makeThumbnailLastImage(),
+            customThumbnail: isCustomThumbnail ? true : false
+        },
+        options);
+        
         res.send(result);
 
     } catch (error) {
