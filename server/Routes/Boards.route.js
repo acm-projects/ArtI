@@ -6,14 +6,14 @@ import { Board } from '../Models/boards.model.js'
 
 //Getting all boards in database
 router.get('/', async (req, res, next) => {
-  try {
-    const results = await Board.find({}, {})
+    try {
+        const results = await Board.find({}, {})
 
-    res.send(results);
+        res.send(results);
 
-  } catch (error) {
-    console.log(error.message);
-  }
+    } catch (error) {
+        console.log(error.message);
+    }
 });
 
 //Creating a new board
@@ -33,23 +33,23 @@ router.post('/', async (req, res, next) => {
 router.get('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
-        const board = await Board.find({username: username},{});
+        const board = await Board.find({ username: username }, {});
 
-     res.send(board);
+        res.send(board);
 
-  } catch (error) {
+    } catch (error) {
         console.log(error.message);
-  }
+    }
 });
 
 //Getting a specific board from one user
-router.get('/:username/:boardName', async (req, res, next) =>{
+router.get('/:username/:boardName', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.params.boardName;
 
-        const board = await Board.find({username: username, boardName: boardName}, {});
-    
+        const board = await Board.find({ username: username, boardName: boardName }, {});
+
         res.send(board)
     } catch (error) {
         console.log(error.message);
@@ -67,22 +67,32 @@ router.delete('/:username', async (req, res, next) => {
             boardName: boardName,
         });
         res.send(result);
-    
+
     } catch (error) {
         console.log(error.message);
-  }
+    }
 });
 
 //Adding one image to a board
-router.patch('/:username/:boardName', async (req, res, next) => {
+router.patch('/:username', async (req, res, next) => {
     try {
-        const boardName = req.params.boardName
         const username = req.params.username
-        const updates = req.body.images
-        const newImageUrl = req.body.newImageUrl
-        const options = {new: true};
+        const boardName = req.body.boardName
+        const imageArray = req.body.images
+        const imageUrl = req.body.imageUrl
+        const shouldDelete = req.body.deleteImage
+        const options = { new: true };
 
-        //add new image url to an updated array
+        //If we want to delete, do delete function
+        function deleteImageFromArray(imageArray, imageUrl) {
+            const index = imageArray.indexOf(imageUrl);
+            if (index > -1) {
+                imageArray.splice(index, 1);
+            }
+            return imageArray
+        };
+        
+        //adding new image to array
         function insert(imageArray, imageUrl) {
             imageArray.push(imageUrl)
             return imageArray
@@ -94,42 +104,7 @@ router.patch('/:username/:boardName', async (req, res, next) => {
             boardName: boardName,
         },
         {
-            images: insert(updates, newImageUrl),
-        },
-        options
-        );
-
-        res.send(result);
-
-    } catch (error) {
-        console.log(error.message);
-  }
-});
-
-//Deleting an image from a board
-router.patch('/:username/:boardName/:imageUrl', async (req, res, next) => {
-    try {
-        const username = req.params.username
-        const boardName = req.params.boardName
-        const imageArray = req.body.images
-        const imageUrl = req.params.imageUrl
-        const options = {new: true}
-
-    //delete the given image url from the array
-        function deleteImageFromArray(imageArray, imageUrl) {
-            const index = imageArray.indexOf(imageUrl);
-            if(index > -1){
-                imageArray.splice(index, 1);
-            }
-            return imageArray
-        };
-
-        const result = await Board.findOneAndUpdate({
-            username: username, 
-            boardName: boardName
-        },
-        {
-            images: deleteImageFromArray(imageArray, imageUrl)
+            images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl)
         },
             options
         );
@@ -137,52 +112,87 @@ router.patch('/:username/:boardName/:imageUrl', async (req, res, next) => {
         res.send(result);
 
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+    }
+});
+
+//Change the board thumbnail
+router.patch('/:username', async (req, res, next) => {
+    try {
+        const username = req.params.username
+        const boardName = req.params.boardName
+        const update = req.body.thumbnail
+        const customThumbnail = req.body.customThumbnail
+        const imageArray = req.body.images
+        const options = { new: true };
+
+        //Make the thumbnail the last added image if user hasn't set
+        //a custom thumnail already
+        if (customThumbnail == false) {
+            update = req.body.imageArray[imageArray.length - 1];
+
+            const result = await Board.findOneAndUpdate({
+                username: username,
+                boardName: boardName,
+            },
+            {
+                thumbnail: update
+            },
+            options)
+        }
+        //Make thumbnail the custom thumbnail
+        else {
+            const result = await Board.findOneAndUpdate({
+                username: username,
+                boardName: boardName
+            },
+            {
+                thumbnail: update,
+                customThumbnail: true
+            },
+            options);
+        }
+
+        res.send(result);
+
+    } catch (error) {
+        console.log(error.message);
     }
 
 })
 
-//Change the board thumbnail
-// router.patch('/username/:boardName/:thumbnail/:customThumbnail', async (req, res, next) =>{
+//Deleting an image from a board
+// router.patch('/:username/:boardName/:imageUrl', async (req, res, next) => {
 //     try {
 //         const username = req.params.username
 //         const boardName = req.params.boardName
-//         const update = req.body.thumbnail
-//         const customThumbnail = req.params.customThumbnail
 //         const imageArray = req.body.images
-//         const options = {new: true};
+//         const imageUrl = req.params.imageUrl
+//         const options = { new: true }
 
-//         //Make the thumbnail the last added image if user hasn't set
-//         //a custom thumnail already
-//         if(update == req.params.thumbnail && customThumbnail == false){
-//             update = req.body.imageArray[imageArray.length -1];
+//         //delete the given image url from the array
+//         function deleteImageFromArray(imageArray, imageUrl) {
+//             const index = imageArray.indexOf(imageUrl);
+//             if (index > -1) {
+//                 imageArray.splice(index, 1);
+//             }
+//             return imageArray
+//         };
 
-//             const result = await Board.findOneAndUpdate({
-//                 username: username,
-//                 boardName: boardName,
-//             },
+//         const result = await Board.findOneAndUpdate({
+//             username: username,
+//             boardName: boardName
+//         },
 //             {
-//                 thumbnail: update
+//                 images: deleteImageFromArray(imageArray, imageUrl)
 //             },
-//             options)
-//         }
-//         //Make thumbnail the custom thumbnail
-//         else {
-//             const result = await Board.findOneAndUpdate({
-//                 username: username,
-//                 boardName: boardName
-//             },
-//             {
-//                 thumbnail: update,
-//                 customThumbnail: true
-//             },
-//             options);
-//         }
+//             options
+//         );
 
 //         res.send(result);
-        
+
 //     } catch (error) {
-//         console.log(error.message);
+//         console.log(error.message)
 //     }
 
 // })
