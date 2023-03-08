@@ -1,9 +1,9 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import createHttpError from 'http-errors'
 import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
+import dbInit from './db.init.js'
 // Routes
 import { UserRoute } from './Routes/User.route.js'
 import { BoardsRoute } from './Routes/Boards.route.js'
@@ -16,19 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8080 || process.env.PORT
 
-mongoose.set('strictQuery', false)
-mongoose
-  .connect(
-    `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
-    {
-      dbName: 'artiDB',
-      user: process.env.DB_USERNAME,
-      pass: process.env.DB_PASSWORD,
-    }
-  )
-  .then(() => {
-    console.log('Database is connected!')
-  })
+dbInit()
 
 app.get('/', (req, res) => {
   res.send('Hello World')
