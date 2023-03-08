@@ -1,4 +1,5 @@
 import express from 'express'
+import createHttpError from 'http-errors';
 
 const router = express.Router()
 
@@ -13,15 +14,25 @@ router.get('/', async (req, res, next) => {
 
     } catch (error) {
         console.log(error.message);
+        next(error)
     }
 });
 
-//Creating a new board
+//Creating a new board for a user
 router.post('/', async (req, res, next) => {
     try {
+
+        //checks if user already has a board with the same name
+        const boardNameExist = await Board.findOne({username: req.body.username, boardName: req.body.boardName})
+        if(boardNameExist){
+            return res.status(409).send({
+                message: "A board with this name already exists, please use a different name."
+            })
+        }
+        
+
         const board = new Board(req.body)
         const result = await board.save()
-
         res.send(result);
 
     } catch (error) {
@@ -48,19 +59,38 @@ router.get('/:username/:boardName', async (req, res, next) => {
         const username = req.params.username
         const boardName = req.params.boardName;
 
-        const board = await Board.find({ username: username, boardName: boardName }, {});
+        //if the given user does not exist
+        if(!await Board.find({username: username}))
+            throw createHttpError(404, "User does not exist.")
 
+        //if no board with such name for user exists
+        if(! await Board.find({ username: username, boardName: boardName }, {})){
+            throw createHttpError(404, "No board found.")
+        }
+
+        const board = await Board.find({ username: username, boardName: boardName }, {});
         res.send(board)
     } catch (error) {
+
         console.log(error.message);
+
+        if(error instanceof(mongoose.CastError)){
+            next(createHttpError(400, "Invalid board ID"))
+            return
+        };
+        next(error)
     }
 });
 
-//Delete a board
+//Deleting a whole board
 router.delete('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.body.boardName
+
+        if(! await Board.findOne({username: req.params.username, boardName: req.params.boardName})){
+            throw createHttpError(404, "Board not found.")
+        }
 
         const result = await Board.findOneAndDelete({
             username: username,
@@ -69,19 +99,23 @@ router.delete('/:username', async (req, res, next) => {
         res.send(result);
 
     } catch (error) {
+
         console.log(error.message);
     }
 });
 
-//Adding and deleting one image to a board
+//Adding and deleting one image to a board. Also controlls updates for the thumbnail of the board based on if the 
+//board has a custom thumbnail or not. If no custom thumbnail/if deleting the thumbnail -> most recent added board will
+//become thumbnail, if deleting last image -> new last image becomes board
+//Need to work on - if board only has 1 item, deleting it will set board image to default
 router.patch('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.body.boardName
         const imageArray = req.body.images
         const imageUrl = req.body.imageUrl
-        const shouldDelete = req.body.deleteImage
-        const isCustomThumbnail = req.body.isCustomThumbnail
+        const shouldDelete = req.body.deleteImage // this variable controls whether we are adding or deleting an image from the board
+        const isCustomThumbnail = req.body.isCustomThumbnail 
         const options = { new: true };
         //Gets the thumbnail from the user's board the Mongoose® way
         const aggregate = await Board.aggregate([
@@ -125,6 +159,8 @@ router.patch('/:username', async (req, res, next) => {
             },
             {
                 images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+                
+                //if the thumbnail is the image being deleted, make the thumbnail the last added photo
                 thumbnail: shouldDelete ? isThumbnailDeleted(imageArray) : thumbnail
             },
                 options
@@ -132,7 +168,7 @@ router.patch('/:username', async (req, res, next) => {
 
             res.send(result);
         }
-        //If use has not set custom thumbnail, make the thumbnail the last picture
+        //If user has not set custom thumbnail, make the thumbnail the last picture
         else{
             const result = await Board.findOneAndUpdate(
                 {
@@ -141,6 +177,7 @@ router.patch('/:username', async (req, res, next) => {
                 },
                 {
                     images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+
                     //if user is deleting, sets the thumbnail to the picture before it, else when adding,
                     //set the thumbnail to the added picture
                     thumbnail: shouldDelete ? imageArray[imageArray.length - 1] : imageUrl
@@ -162,25 +199,16 @@ router.patch('/:username/:boardName', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.params.boardName
-        var update = req.body.thumbnailUrl
-        var isCustomThumbnail = req.body.customThumbnail
-        const imageArray = req.body.images
+        var update = req.body.newThumbnailUrll
         const options = { new: true };
-
-        //Make the thumbnail the last added image if user hasn't set
-        //a custom thumnail already
-        function makeThumbnailLastImage(){
-            update = imageArray[imageArray.length - 1];
-            return update
-        };
 
         const result = await Board.findOneAndUpdate({
             username: username,
             boardName: boardName,
         },
         {
-            thumbnail: isCustomThumbnail ? update : makeThumbnailLastImage(),
-            customThumbnail: isCustomThumbnail ? true : false
+            thumbnail: update,
+            customThumbnail: true 
         },
         options);
         
@@ -190,42 +218,13 @@ router.patch('/:username/:boardName', async (req, res, next) => {
         console.log(error.message);
     }
 
-})
+});
 
-//Deleting an image from a board
-// router.patch('/:username/:boardName/:imageUrl', async (req, res, next) => {
-//     try {
-//         const username = req.params.username
-//         const boardName = req.params.boardName
-//         const imageArray = req.body.images
-//         const imageUrl = req.params.imageUrl
-//         const options = { new: true }
+//Change a board's name
+router.patch('/:username/:boardName', async (req, res, next) =>{
 
-//         //delete the given image url from the array
-//         function deleteImageFromArray(imageArray, imageUrl) {
-//             const index = imageArray.indexOf(imageUrl);
-//             if (index > -1) {
-//                 imageArray.splice(index, 1);
-//             }
-//             return imageArray
-//         };
+});
 
-//         const result = await Board.findOneAndUpdate({
-//             username: username,
-//             boardName: boardName
-//         },
-//             {
-//                 images: deleteImageFromArray(imageArray, imageUrl)
-//             },
-//             options
-//         );
 
-//         res.send(result);
-
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-
-// })
 
 export { router as BoardsRoute };
