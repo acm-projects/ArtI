@@ -45,7 +45,7 @@ const PromptBar = () => {
 
       </div>
 
-      <GenerateBtn text = 'Log In.' />
+      <GenerateBtn text = 'Generate' />
     </form>
 
   )
