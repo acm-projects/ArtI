@@ -25,6 +25,7 @@ const LoginForm = () => {
     event.preventDefault()
     console.log(formData)
     console.log("submitted")
+
   }
   return (
     <form 

@@ -1,0 +1,168 @@
+:root{
+  --text-color:#9d9d9d;
+  --body-bg-color: #111;
+  --border-color: #D0C5C5;
+}
+
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  width: 100vw;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Playfair Display', serif;
+}
+
+#root, .container{
+  height: 100%;
+}
+
+.container{
+  display: grid;
+  place-items: center;
+}
+
+.bg-circle{
+  border-radius: 50%;
+  /* Position */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.circle1{
+  width: 450px;
+  height: 450px;
+  background-color: #99441f;
+  z-index: -1;
+}
+
+.circle2{
+  width: 475px;
+  height: 475px;
+  background-color: #733317;
+  z-index: -2;
+}
+
+.circle3{
+  width: 500px;
+  height: 500px;
+  background-color: #562611;
+  z-index: -3;
+}
+
+.circle4{
+  width: 525px;
+  height: 525px;
+  background-color: #31180D;
+  z-index: -4;
+}
+
+
+
+/* PORTRAIT GEN STUFF */
+.portrait-gen-container{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  width: 50%;
+}
+
+.portrait-input-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.generate-bar{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.portrait-input{
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  height: 3.5rem;
+  width: 75%;
+  padding: 1rem;
+  font-size: larger;
+  transition: all 150ms ease-in-out;
+}
+
+.portrait-input:hover{
+  font-size: large;
+}
+
+.generate-btn{
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  height: 3.5rem;
+  width: 25%;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  font-size: larger;
+}
+
+.generate-btn:hover{
+  background-color: #444 ;
+  font-size: large;
+}
+
+.tiny-lines{
+  border-radius: 5px;
+  /* Position */
+  position: absolute;
+  height: 10px;
+}
+
+.line1{
+  background-color: #371E13;
+  width: 55%;
+  top: 25%;
+  left: 0;
+}
+
+.line2{
+  background-color: #562611;
+  width: 40%;
+  top: 40%;
+  left: 0;
+}
+
+.line3{
+  background-color: #562611;
+  width: 40%;
+  bottom: 35%;
+  right: 0;
+}
+
+.line4{
+  background-color: #31180D;
+  width: 50%;
+  bottom: 22.5%;
+  right: 0;
+}

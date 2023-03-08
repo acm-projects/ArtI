@@ -1,0 +1,52 @@
+h3 {
+    color:aquamarine;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.bg-circle{
+    border-radius: 50%;
+    /* Position */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle1{
+    width: 450px;
+    height: 450px;
+    background-color: #99441f;
+    z-index: -1;
+}
+
+.circle2{
+    width: 475px;
+    height: 475px;
+    background-color: #733317;
+    z-index: -2;
+}
+
+.circle3{
+    width: 500px;
+    height: 500px;
+    background-color: #562611;
+    z-index: -3;
+}
+
+.circle4{
+    width: 525px;
+    height: 525px;
+    background-color: #31180D;
+    z-index: -4;
+}
+
