@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import passwordComplexity from 'joi-password-complexity'
 import mongoose, { Schema } from 'mongoose'
+import jwt from 'jsonwebtoken'
 
 const UserSchema = new Schema({
   username: {
@@ -35,7 +36,7 @@ const UserSchema = new Schema({
 
 UserSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWT_PRIVATE_KEY, {
-    expiresin: '7d',
+    expiresIn: '7d',
   })
   return token
 }

@@ -7,6 +7,7 @@ dotenv.config()
 // Routes
 import { UserRoute } from './Routes/User.route.js'
 import { BoardsRoute } from './Routes/Boards.route.js'
+import { AuthRoute } from './Routes/Auth.route.js'
 
 const app = express()
 app.use(cors())
@@ -21,8 +22,8 @@ mongoose
     `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
     {
       dbName: 'artiDB',
-      user: 'ice',
-      pass: 'ice',
+      user: process.env.DB_USERNAME,
+      pass: process.env.DB_PASSWORD,
     }
   )
   .then(() => {
@@ -36,6 +37,9 @@ app.get('/', (req, res) => {
 // USER ROUTES
 app.use('/api/v1/user', UserRoute)
 app.use('/api/v1/boards', BoardsRoute)
+
+// LOGIN AUTHENTICATION
+app.use('/api/v1/auth', AuthRoute)
 
 // 404 handler and pass to error handler
 app.use((req, res, next) => {
