@@ -69,16 +69,10 @@ router.get('/:username/:boardName', async (req, res, next) => {
         }
 
         const board = await Board.find({ username: username, boardName: boardName }, {});
-        res.send(board)
+        res.send(board);
+
     } catch (error) {
-
         console.log(error.message);
-
-        if(error instanceof(mongoose.CastError)){
-            next(createHttpError(400, "Invalid board ID"))
-            return
-        };
-        next(error)
     }
 });
 
@@ -124,7 +118,7 @@ router.patch('/:username', async (req, res, next) => {
         ]);
         const thumbnail = aggregate[0].thumbnail;
 
-        //If we want to delete, do delete function
+        //deletes the selected imageurl from the array
         function deleteImageFromArray(imageArray, imageUrl) {
             const index = imageArray.indexOf(imageUrl);
             if (index > -1) {
@@ -142,6 +136,9 @@ router.patch('/:username', async (req, res, next) => {
         //If user is deleting the thumbnail from the board, set the thumbnail to the 
         //last image in the board
         function isThumbnailDeleted(imageArray){
+            //temp solution
+            if(imageArray.length == 1)
+                return imageArray[0]
             if(imageUrl == thumbnail) {
                 return imageArray[imageArray.length - 1]
             }

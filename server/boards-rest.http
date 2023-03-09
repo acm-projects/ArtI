@@ -6,25 +6,25 @@ POST http://localhost:3000/boards
 Content-Type: application/json
 
 {
-    "username": "test2",
+    "username": "test",
     "boardName": "sample2",
-    "images": ["1", "2", "3"],
+    "images": [],
     "thumbnail": "default",
     "customThumbnail": false
 }
 
 ### Get a specific user's boards
-GET http://localhost:3000/boards/test
+GET http://localhost:3000/boards/ddd
 
 ### Get a specific board from a user
 GET http://localhost:3000/boards/test/test
 
 ### Delete a specific board from a user
-DELETE http://localhost:3000/boards/test
+DELETE http://localhost:3000/boards/test2
 Content-Type: application/json
 
 {
-    "boardName": "test"
+    "boardName": "sample2"
 }
 
 ### Adding and deleting an image into a specific board
@@ -44,7 +44,6 @@ PATCH http://localhost:3000/boards/test2/sample2
 Content-Type: application/json
 
  {
-    "customThumbnail": true,
     "images": ["1", "2", "3"],
-    "thumbnailUrl": "1"
+    "newThumbnailUrl": "1"
  }
