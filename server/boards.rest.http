@@ -1,0 +1,35 @@
+### Get Boards
+GET http://localhost:3000/boards
+
+### Create a new board
+POST http://localhost:3000/boards
+Content-Type: application/json
+
+{
+    "username": "test",
+    "boardName": "test",
+    "images": [1,2,3],
+    "thumbnail": "test"
+}
+
+### Get a specific user's boards
+GET http://localhost:3000/boards/test
+
+### Delete a specific board from a user
+DELETE http://localhost:3000/boards/test
+Content-Type: application/json
+
+{
+    "boardName": "test"
+}
+
+### Adding an image into a specific board
+PATCH http://localhost:3000/boards/test 
+Content-Type: application/json
+
+{
+    "boardName": "test",
+    "images": [""]
+    ""
+}
+

@@ -36,4 +36,8 @@ const boardsSchema = new Schema({
 })
 
 const Board = mongoose.model('boards', boardsSchema)
+<<<<<<< HEAD
 export { Board }
+=======
+export { Board }
+>>>>>>> 22acdf30e028ebbfa89a7996c7133651e04d383c
