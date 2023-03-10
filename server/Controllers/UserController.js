@@ -2,6 +2,7 @@ import createHttpError from 'http-errors'
 import { User, validate } from '../Models/user.model.js'
 import bcrypt from 'bcrypt'
 
+// FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
   try {
     const result = await User.find({}) // no filter means all
@@ -11,6 +12,7 @@ async function getAllUsers(req, res) {
   }
 }
 
+// FOR SIGNUP :: this creates a new user and passes to database
 async function createUser(req, res, next) {
   try {
     console.log(validate(req.body))
@@ -41,6 +43,7 @@ async function createUser(req, res, next) {
   }
 }
 
+// FOR US ONLY :: querying a user with their username
 async function getUser(req, res, next) {
   try {
     const userName = req.params.username
@@ -56,6 +59,7 @@ async function getUser(req, res, next) {
   }
 }
 
+// Any updates to the user
 async function updateUser(req, res, next) {
   try {
     const userName = req.params.username
@@ -76,7 +80,12 @@ async function updateUser(req, res, next) {
   }
 }
 
+// Deletes a user from the database
 async function deleteUser(req, res, next) {
+  const token = req.body.token
+  if (!token) {
+    res.status()
+  }
   try {
     const userName = req.params.username
     const result = await User.findOneAndDelete({ username: userName })
