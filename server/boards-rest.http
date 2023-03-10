@@ -1,26 +1,26 @@
 ### Get Boards
-GET http://localhost:3000/boards
+GET http://localhost:3000/api/v1/boards
 
 ### Create a new board
-POST http://localhost:3000/boards
+POST http://localhost:8080/api/v1/boards
 Content-Type: application/json
 
 {
     "username": "test",
-    "boardName": "sample2",
+    "boardName": "sample4",
     "images": [],
     "thumbnail": "default",
     "customThumbnail": false
 }
 
 ### Get a specific user's boards
-GET http://localhost:3000/boards/ddd
+GET http://localhost:3000/api/v1/boards
 
 ### Get a specific board from a user
-GET http://localhost:3000/boards/test/test
+GET http://localhost:3000/api/v1/boards/test/test
 
 ### Delete a specific board from a user
-DELETE http://localhost:3000/boards/test2
+DELETE http://localhost:3000/api/v1/boards/test2
 Content-Type: application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### Adding and deleting an image into a specific board
-PATCH http://localhost:3000/boards/test2
+PATCH http://localhost:3000/api/v1/boards/test2
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ### Change a board's thumnail
-PATCH http://localhost:3000/boards/test/sample5
+PATCH http://localhost:3000/api/v1/boards/test/sample5
 Content-Type: application/json
 
  {

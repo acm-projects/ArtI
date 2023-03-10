@@ -24,5 +24,3 @@ router.patch('/:username', updateUser)
 router.delete('/:username', deleteUser)
 
 export { router as UserRoute }
-
-export { router as UserRoute }
