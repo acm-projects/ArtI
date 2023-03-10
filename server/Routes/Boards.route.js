@@ -22,6 +22,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try {
 
+        //Error handling
         //checks if user already has a board with the same name
         const boardNameExist = await Board.findOne({username: req.body.username, boardName: req.body.boardName})
         if(boardNameExist){
@@ -30,13 +31,13 @@ router.post('/', async (req, res, next) => {
             })
         }
         
-
         const board = new Board(req.body)
         const result = await board.save()
         res.send(result);
 
     } catch (error) {
         console.log(error.message);
+        next(error);
     }
 });
 
@@ -44,12 +45,17 @@ router.post('/', async (req, res, next) => {
 router.get('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
+
+        if(!await Board.findOne({username: username}))
+            throw createHttpError(404, "User does not exist.")
+
         const board = await Board.find({ username: username }, {});
 
         res.send(board);
 
     } catch (error) {
         console.log(error.message);
+        next(error);
     }
 });
 
@@ -59,12 +65,11 @@ router.get('/:username/:boardName', async (req, res, next) => {
         const username = req.params.username
         const boardName = req.params.boardName;
 
-        //if the given user does not exist
-        if(!await Board.find({username: username}))
+        //Error handling
+        if(!await Board.findOne({username: username}))
             throw createHttpError(404, "User does not exist.")
 
-        //if no board with such name for user exists
-        if(! await Board.find({ username: username, boardName: boardName }, {})){
+        if(! await Board.findOne({ username: username, boardName: boardName }, {})){
             throw createHttpError(404, "No board found.")
         }
 
@@ -73,6 +78,7 @@ router.get('/:username/:boardName', async (req, res, next) => {
 
     } catch (error) {
         console.log(error.message);
+        next(error);
     }
 });
 
@@ -81,6 +87,10 @@ router.delete('/:username', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.body.boardName
+
+        //error handling
+        if(!await Board.findOne({username: username}))
+            throw createHttpError(404, "User does not exist.")
 
         if(! await Board.findOne({username: req.params.username, boardName: req.params.boardName})){
             throw createHttpError(404, "Board not found.")
@@ -93,8 +103,8 @@ router.delete('/:username', async (req, res, next) => {
         res.send(result);
 
     } catch (error) {
-
         console.log(error.message);
+        next(error);
     }
 });
 
@@ -117,6 +127,14 @@ router.patch('/:username', async (req, res, next) => {
             { $project: {thumbnail: 1}}
         ]);
         const thumbnail = aggregate[0].thumbnail;
+
+        //Error handling
+        if(!await Board.findOne({username: username}))
+            throw createHttpError(404, "User does not exist.")
+
+        if(! await Board.findOne({ username: username, boardName: boardName }, {})){
+            throw createHttpError(404, "No board found.")
+        }
 
         //deletes the selected imageurl from the array
         function deleteImageFromArray(imageArray, imageUrl) {
@@ -188,16 +206,34 @@ router.patch('/:username', async (req, res, next) => {
 
     } catch (error) {
         console.log(error.message);
+        next(error);
     }
 });
 
-//Change the board thumbnail
+//Change the board thumbnail or board name
 router.patch('/:username/:boardName', async (req, res, next) => {
     try {
         const username = req.params.username
         const boardName = req.params.boardName
-        var update = req.body.newThumbnailUrll
+        const newBoardName = req.body.newBoardName
+        const update = req.body.newThumbnailUrl
         const options = { new: true };
+
+        //Error handling
+        if(!await Board.findOne({username: username}))
+            throw createHttpError(404, "User does not exist.")
+
+        if(! await Board.findOne({ username: username, boardName: boardName }, {})){
+            throw createHttpError(404, "No board found.")
+        }
+
+        function updateBoardName(){
+            if(boardName == newBoardName){
+                return boardName
+            }
+            return newBoardName
+
+        };
 
         const result = await Board.findOneAndUpdate({
             username: username,
@@ -205,7 +241,8 @@ router.patch('/:username/:boardName', async (req, res, next) => {
         },
         {
             thumbnail: update,
-            customThumbnail: true 
+            customThumbnail: true,
+            boardName: updateBoardName()
         },
         options);
         
@@ -213,12 +250,8 @@ router.patch('/:username/:boardName', async (req, res, next) => {
 
     } catch (error) {
         console.log(error.message);
+        next(error);
     }
-
-});
-
-//Change a board's name
-router.patch('/:username/:boardName', async (req, res, next) =>{
 
 });
 
