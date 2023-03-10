@@ -40,10 +40,10 @@ Content-Type: application/json
 }
 
 ### Change a board's thumnail
-PATCH http://localhost:3000/boards/test2/sample2
+PATCH http://localhost:3000/boards/test/sample5
 Content-Type: application/json
 
  {
     "newThumbnailUrl": "1",
-    "newBoardName": "sample"
+    "newBoardName": "sample3"
  }
