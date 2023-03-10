@@ -117,16 +117,11 @@ router.patch('/:username', async (req, res, next) => {
         const username = req.params.username
         const boardName = req.body.boardName
         const imageArray = req.body.images
-        const imageUrl = req.body.imageUrl
+        //const image = req.body.image
+        const imageUpdates = req.body.imageUpdates
         const shouldDelete = req.body.deleteImage // this variable controls whether we are adding or deleting an image from the board
         const isCustomThumbnail = req.body.isCustomThumbnail 
         const options = { new: true };
-        //Gets the thumbnail from the user's board the Mongoose® way
-        const aggregate = await Board.aggregate([
-            { $match: {username: username, boardName: boardName}},
-            { $project: {thumbnail: 1}}
-        ]);
-        const thumbnail = aggregate[0].thumbnail;
 
         //Error handling
         if(!await Board.findOne({username: username}))
@@ -135,34 +130,51 @@ router.patch('/:username', async (req, res, next) => {
         if(! await Board.findOne({ username: username, boardName: boardName }, {})){
             throw createHttpError(404, "No board found.")
         }
+        //Gets the thumbnail from the user's board the Mongoose® way
+        const aggregate = await Board.aggregate([
+            { $match: {username: username, boardName: boardName}},
+            { $project: {thumbnail: 1}}
+        ]);
+        const thumbnail = aggregate[0].thumbnail;
 
         //deletes the selected imageurl from the array
-        function deleteImageFromArray(imageArray, imageUrl) {
-            const index = imageArray.indexOf(imageUrl);
-            if (index > -1) {
-                imageArray.splice(index, 1);
+        function deleteImageFromArray(imageArray, imageUpdates) {
+
+            for(let i = 0; i < imageArray.length; i++){
+                let index = -1; 
+                for(let j = 0; j < imageUpdates.length; j++){
+                    if(imageArray[i].url == imageUpdates[j].url){
+                        index = i
+                    }
+                    if (index > -1) {
+                        imageArray.splice(i, 1);
+                    }
+                }
+                
             }
             return imageArray
         };
         
         //adding new image to array
-        function insert(imageArray, imageUrl) {
-            imageArray.push(imageUrl)
+        function insert(imageArray, imageUpdates) {
+            for(let i = 0 ; i < imageUpdates.length; i++){
+                imageArray.push(imageUpdates[i])
+            }
             return imageArray
         };
 
         //If user is deleting the thumbnail from the board, set the thumbnail to the 
         //last image in the board
-        function isThumbnailDeleted(imageArray){
-            //temp solution
-            if(imageArray.length == 1)
-                return imageArray[0]
-            if(imageUrl == thumbnail) {
-                return imageArray[imageArray.length - 1]
+        function isThumbnailDeleted(imageArray, imageUpdates){
+            if(imageArray.legnth == 0) return;
+
+            for(let i = 0; i < imageUpdates.length; i++){
+                if(imageUpdates[i].url == thumbnail){
+                    return imageArray[imageArray.length - 1].url;
+                }
             }
-            else {
-                return imageUrl
-            }
+
+            return thumbnail
         };
 
         //If user has already set a custom thumbnail, adding or deleting will not change the thumbnail
@@ -173,10 +185,10 @@ router.patch('/:username', async (req, res, next) => {
                 boardName: boardName,
             },
             {
-                images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+                images: shouldDelete ? deleteImageFromArray(imageArray, imageUpdates) : insert(imageArray, imageUpdates),
                 
                 //if the thumbnail is the image being deleted, make the thumbnail the last added photo
-                thumbnail: shouldDelete ? isThumbnailDeleted(imageArray) : thumbnail
+                thumbnail: shouldDelete ? isThumbnailDeleted(imageArray, imageUpdates) : thumbnail
             },
                 options
             );
@@ -191,11 +203,11 @@ router.patch('/:username', async (req, res, next) => {
                     boardName: boardName,
                 },
                 {
-                    images: shouldDelete ? deleteImageFromArray(imageArray, imageUrl) : insert(imageArray, imageUrl),
+                    images: shouldDelete ? deleteImageFromArray(imageArray, imageUpdates) : insert(imageArray, imageUpdates),
 
                     //if user is deleting, sets the thumbnail to the picture before it, else when adding,
                     //set the thumbnail to the added picture
-                    thumbnail: shouldDelete ? imageArray[imageArray.length - 1] : imageUrl
+                    thumbnail: shouldDelete ? imageArray[imageArray.length - 1].url : imageUpdates[imageUpdates.length -1].url
                 },
                     options
                 );
@@ -254,7 +266,5 @@ router.patch('/:username/:boardName', async (req, res, next) => {
     }
 
 });
-
-
 
 export { router as BoardsRoute };
