@@ -1,5 +1,5 @@
-<img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
-=======
+# <img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
+
 <p align="center"><img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
 >>>>>>> 5f077a054214d0b3702727ace979864ef96895a8
      alt="ArtI"
@@ -139,6 +139,9 @@ AI art has devalued the work of artists in addition to stolen actual artists’ 
 
 - <b> Susan Zhang </b> - Project Manager
 - <b> Yun Ho Jung </b> - Industry Mentor
+
+I did it!
+swfxxefgef
 
 I did it!
 swfxxefgef
