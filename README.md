@@ -1,4 +1,7 @@
+<img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
+=======
 <p align="center"><img src="https://tinypic.host/images/2023/01/24/ArtILogo.png"
+>>>>>>> 5f077a054214d0b3702727ace979864ef96895a8
      alt="ArtI"
      style="
         height: 70px;

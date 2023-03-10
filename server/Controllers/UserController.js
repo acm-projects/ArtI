@@ -91,3 +91,5 @@ async function deleteUser(req, res, next) {
 }
 
 export { getAllUsers, createUser, getUser, updateUser, deleteUser }
+
+export { getAllUsers, createUser, getUser, updateUser, deleteUser }
