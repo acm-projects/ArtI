@@ -22,11 +22,11 @@ h1, h2, h3, h4, h5, h6{
   font-family: 'Playfair Display', serif;
 }
 
-#root, .container{
+#root, .generator-container{
   height: 100%;
 }
 
-.container{
+.generator-container{
   display: grid;
   place-items: center;
 }
@@ -70,21 +70,22 @@ h1, h2, h3, h4, h5, h6{
 
 
 
-/* PORTRAIT GEN STUFF */
-.portrait-gen-container{
+/* IMAGE GEN STUFF */
+.generator-container{
   height: 100%;
   display: grid;
   place-items: center;
-  width: 50%;
+  width: 100%;
 }
 
-.portrait-input-container{
+.image-input-container{
   display: flex;
   flex-direction: column;
   height: 100%;
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-block-start: 17%;
 }
 
 
@@ -92,10 +93,11 @@ h1, h2, h3, h4, h5, h6{
   width: 100%;
   display: flex;
   flex-direction: row;
-  
+  align-items: center;
+  justify-content: center;
 }
 
-.portrait-input{
+.image-input{
   color: var(--text-color);
   background-color: var(--body-bg-color);
   outline: none;
@@ -103,13 +105,13 @@ h1, h2, h3, h4, h5, h6{
   border-bottom-left-radius: 50px;
   border-top-left-radius: 50px;
   height: 3.5rem;
-  width: 75%;
+  width: 60%;
   padding: 1rem;
   font-size: larger;
   transition: all 150ms ease-in-out;
 }
 
-.portrait-input:hover{
+.image-input:hover{
   font-size: large;
 }
 
@@ -121,7 +123,7 @@ h1, h2, h3, h4, h5, h6{
   border-bottom-right-radius: 50px;
   border-top-right-radius: 50px;
   height: 3.5rem;
-  width: 25%;
+  width: 15%;
   cursor: pointer;
   transition: all 150ms ease-in-out;
   font-size: larger;
@@ -131,6 +133,60 @@ h1, h2, h3, h4, h5, h6{
   background-color: #444 ;
   font-size: large;
 }
+
+#root, .portrait-input-container{
+  height: 100%;
+}
+
+.portrait-input-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding-top: 12%;
+}
+
+
+.text-inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.age-input{
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-radius: 50px;
+  width: 15%;
+
+}
+
+.gender-input{
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-radius: 50px;
+  width: 15%;
+}
+
+.portrait-btn{
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  border: #562611 solid 2px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
 
 .tiny-lines{
   border-radius: 5px;
@@ -142,14 +198,14 @@ h1, h2, h3, h4, h5, h6{
 .line1{
   background-color: #371E13;
   width: 55%;
-  top: 25%;
+  top: 20%;
   left: 0;
 }
 
 .line2{
   background-color: #562611;
   width: 40%;
-  top: 40%;
+  top: 35%;
   left: 0;
 }
 

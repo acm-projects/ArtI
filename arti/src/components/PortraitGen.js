@@ -1,5 +1,5 @@
 import '../index.css'
-import GenerateBtn from './GenerateBtn'
+import PortraitGenBtn from './PortraitGenBtn'
 
 const PortraitGen = () => {
   return (
@@ -22,18 +22,25 @@ const PortraitGen = () => {
       </header> */}
 
       <div className='portrait-input-container'>
-        <h3>
-          Enter a detailed description for what you want to create.
-        </h3>
-        
-        <div className='generate-bar'>
-        <input className='portrait-input' 
-        type="text" 
-        placeholder='Enter your prompt...'/>
-        <GenerateBtn text= 'Generate'/>
+        <h2>
+          What will this portrait look like?
+        </h2>
+
+        <div className='text-inputs'>
+          <input className='age-input'
+            type= 'text'
+            placeholder='Age' />
+
+          <input className='gender-input'
+            type= 'text'
+          placeholder='Gender' />
+
         </div>
+
+        <PortraitGenBtn text= 'Generate' />
         
       </div>
+
       
     </div>
 
