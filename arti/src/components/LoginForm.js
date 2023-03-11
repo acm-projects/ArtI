@@ -28,12 +28,29 @@ const LoginForm = () => {
 
   }
   return (
-    <form className = 'login-form' >
+    <form 
+    className = 'login-form' 
+    onSubmit={handleSubmit}
+    >
+
       <div className = 'form-control'>
-        <input type= 'text' placeholder= 'username' />
-      </div>
-      <div className = 'form-control'>
-        <input type= 'text' placeholder= 'password' />
+        <input 
+        type = 'text' 
+        placeholder = 'username'
+        onChange = {handleChange}
+        name = "username"
+        value = {formData.username}
+         />
+
+
+        <input 
+        type = 'text' 
+        placeholder = 'password'
+        onChange = {handleChange}
+        name = "password"
+        value = {formData.password}
+        />
+
       </div>
 
       <Button text = 'Log In.' />
