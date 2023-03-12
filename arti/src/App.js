@@ -1,12 +1,10 @@
-import Header from './components/Header.js'
-import HeaderTwo from './components/HeaderTwo.js'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import LoginForm from './components/LoginForm.js'
-import Footer from './components/Footer.js'
 import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
-import { Route, Routes, useNavigate } from 'react-router-dom'
 import PortraitGen from './components/PortraitGen.js'
 import { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap'
 
 const App = () => {
   const navigate = useNavigate()
@@ -14,7 +12,7 @@ const App = () => {
 
   // Check if the user is logged in by getting their token
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     if (token) setisLoggedIn(true)
 
     if (isLoggedIn) navigate('/imagegen')
@@ -22,24 +20,14 @@ const App = () => {
   }, [navigate, isLoggedIn])
 
   return (
-    <div className='container'>
+    <Container fluid className='main-container'>
       <Routes>
-        <Route
-          path='/'
-          element={
-            <>
-              <Header />
-              <HeaderTwo />
-              <LoginForm />
-              <Footer />
-            </>
-          }
-        />
+        <Route path='/' element={<LoginForm />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/imagegen' element={<ImageGen />} />
         <Route path='/portraitgen' element={<PortraitGen />} />
       </Routes>
-    </div>
+    </Container>
   )
 }
 
