@@ -1,7 +1,6 @@
-// import Button from './Button'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   Col,
   Row,
@@ -11,13 +10,21 @@ import {
   FloatingLabel,
 } from 'react-bootstrap'
 
-const LoginForm = () => {
+const LoginForm = (loggedIn) => {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const [loginStatus, setLoginStatus] = useState('')
 
   const [formData, setFormData] = useState({
     username: '',
     password: '',
+  })
+
+  // TEMPORARY :: go back to imagegen if already logged in -- find a way to return to previous route
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/imagegen')
+    }
   })
 
   // Updates the username and password states
@@ -33,7 +40,9 @@ const LoginForm = () => {
   // Submitting a form will POST username and password to API and API gives a token when logged in
   async function handleSubmit(event) {
     event.preventDefault()
-    console.log(formData)
+
+    // DEBUG ::
+    // console.debug(formData)
 
     try {
       const response = await axios.post('/api/v1/auth', {
@@ -42,10 +51,20 @@ const LoginForm = () => {
       })
       if (response.status === 200) {
         storeToken(response.data.data)
+        setLoginStatus('Logged in successfully!')
         navigate('/imagegen')
       }
     } catch (error) {
-      console.log(error.message)
+      if (error.response.status === 400)
+        // not everything was filled out
+        setLoginStatus('Please fill in the required fields')
+      else if (error.response.status === 401)
+        // Unauthorized
+        setLoginStatus('Invalid Username or Password')
+      else {
+        setLoginStatus('Something went wrong')
+        console.log(error.message)
+      }
     }
 
     console.log('submitted')
@@ -137,7 +156,9 @@ const LoginForm = () => {
               >
                 <i
                   // inside the className is what toggles the icon for the button
-                  className={showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'}
+                  className={
+                    showPassword ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'
+                  }
                 ></i>
               </Button>
             </InputGroup>
@@ -149,7 +170,17 @@ const LoginForm = () => {
             >
               Log In
             </Button>
+
+            {/* Login Status */}
+            <div className='login-status my-2 text-center text-danger'>
+              <p>{loginStatus}</p>
+            </div>
           </Form>
+
+          {/* Footer */}
+          <footer>
+            <Link to='/signup'>New to ArtI? Sign Up.</Link>
+          </footer>
         </div>
       </Col>
     </Row>

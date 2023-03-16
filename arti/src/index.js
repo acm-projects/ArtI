@@ -10,6 +10,7 @@ import { ThemeProvider } from 'react-bootstrap'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
+    {/* useNavigate wasn't working in App.js since it needed to be a child of BrowserRouter */}
     <BrowserRouter>
       <ThemeProvider
         breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}

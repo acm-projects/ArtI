@@ -1,31 +1,34 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Container } from 'react-bootstrap'
 import LoginForm from './components/LoginForm.js'
 import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
 import PortraitGen from './components/PortraitGen.js'
-import { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
+import ProtectedRoutes from './utils/ProtectedRoutes.js'
 
 const App = () => {
-  const navigate = useNavigate()
-  const [isLoggedIn, setisLoggedIn] = useState(false)
+  const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
 
   // Check if the user is logged in by getting their token
   useEffect(() => {
     const token = sessionStorage.getItem('token')
-    if (token) setisLoggedIn(true)
-
-    if (isLoggedIn) navigate('/imagegen')
-    else navigate('/')
-  }, [navigate, isLoggedIn])
+    if (!token) setisLoggedIn(false)
+    else setisLoggedIn(true)
+  }, [isLoggedIn, setisLoggedIn])
 
   return (
     <Container fluid className='main-container'>
       <Routes>
-        <Route path='/' element={<LoginForm />} />
+        {/* Routes that does not require for user to be signed in  */}
+        <Route path='/' element={<LoginForm loggedIn={isLoggedIn} />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/imagegen' element={<ImageGen />} />
-        <Route path='/portraitgen' element={<PortraitGen />} />
+
+        {/* Routes that require for user to be signed in (authenticated) */}
+        <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
+          <Route path='/imagegen' element={<ImageGen />} />
+          <Route path='/portraitgen' element={<PortraitGen />} />
+        </Route>
       </Routes>
     </Container>
   )
