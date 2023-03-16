@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import LoginForm from './components/LoginForm.js'
@@ -19,17 +19,19 @@ const App = () => {
 
   return (
     <Container fluid className='main-container'>
-      <Routes>
-        {/* Routes that does not require for user to be signed in  */}
-        <Route path='/' element={<LoginForm loggedIn={isLoggedIn} />} />
-        <Route path='/signup' element={<SignUp />} />
+      <Router>
+        <Routes>
+          {/* Routes that does not require for user to be signed in  */}
+          <Route path='/' element={<LoginForm loggedIn={isLoggedIn} />} />
+          <Route path='/signup' element={<SignUp />} />
 
-        {/* Routes that require for user to be signed in (authenticated) */}
-        <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-          <Route path='/imagegen' element={<ImageGen />} />
-          <Route path='/portraitgen' element={<PortraitGen />} />
-        </Route>
-      </Routes>
+          {/* Routes that require for user to be signed in (authenticated) */}
+          <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
+            <Route path='/imagegen' element={<ImageGen />} />
+            <Route path='/portraitgen' element={<PortraitGen />} />
+          </Route>
+        </Routes>
+      </Router>
     </Container>
   )
 }
