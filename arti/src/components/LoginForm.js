@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import {
@@ -10,7 +10,7 @@ import {
   FloatingLabel,
 } from 'react-bootstrap'
 
-const LoginForm = (loggedIn) => {
+const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [loginStatus, setLoginStatus] = useState('')
@@ -20,12 +20,12 @@ const LoginForm = (loggedIn) => {
     password: '',
   })
 
-  // TEMPORARY :: go back to imagegen if already logged in -- find a way to return to previous route
   useEffect(() => {
-    if (loggedIn) {
-      navigate('/imagegen')
-    }
+    if (loggedIn) navigate('/imagegen')
   })
+
+  // TODO :: go back to previous route if already logged in to prevent user from logging in again
+  // -- find a way to return to previous route
 
   // Updates the username and password states
   function handleChange(event) {
@@ -37,12 +37,9 @@ const LoginForm = (loggedIn) => {
     })
   }
 
-  // Submitting a form will POST username and password to API and API gives a token when logged in
+  // Submitting a form will POST username and password to API and API gives a token & username when logged in
   async function handleSubmit(event) {
     event.preventDefault()
-
-    // DEBUG ::
-    // console.debug(formData)
 
     try {
       const response = await axios.post('/api/v1/auth', {
@@ -50,8 +47,15 @@ const LoginForm = (loggedIn) => {
         password: formData.password,
       })
       if (response.status === 200) {
-        storeToken(response.data.data)
+        console.log(response.data.data)
+        storeUser(response.data.data)
         setLoginStatus('Logged in successfully!')
+        setLoggedIn(true)
+        setUser(
+          handleUser({ token: response.data.data, username: formData.username })
+        )
+
+        // immediately goes to imagegen after loggin in
         navigate('/imagegen')
       }
     } catch (error) {
@@ -66,13 +70,26 @@ const LoginForm = (loggedIn) => {
         console.log(error.message)
       }
     }
-
-    console.log('submitted')
   }
 
-  function storeToken(token) {
-    if (!token) return
-    sessionStorage.setItem('token', token)
+  // Gets basic user information and passes back to parent component (App.js)
+  async function handleUser(basicUserInfo) {
+    try {
+      const body = {
+        token: basicUserInfo.token,
+        username: basicUserInfo.username,
+      }
+      const response = await axios.post('/api/v1/user/get', body)
+      console.log(response)
+      return response.data
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  function storeUser(userData) {
+    if (!userData.token) return
+    sessionStorage.setItem('arti', JSON.stringify(userData))
   }
 
   // toggles the state of showPassword
@@ -172,7 +189,13 @@ const LoginForm = (loggedIn) => {
             </Button>
 
             {/* Login Status */}
-            <div className='login-status my-2 text-center text-danger'>
+            <div
+              className={`my-2 text-center ${
+                loginStatus === 'Logged in successfully!'
+                  ? 'text-success'
+                  : 'text-danger'
+              }`}
+            >
               <p>{loginStatus}</p>
             </div>
           </Form>

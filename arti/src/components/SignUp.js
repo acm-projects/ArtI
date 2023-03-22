@@ -1,101 +1,97 @@
 import Button from './Button'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
 const SignUp = () => {
-
   const [formData, setFormData] = useState({
-    email: "",
-    firstname: "",
-    lastname: "",
-    username: "", 
-    password: "",
-    cpassword: ""
+    email: '',
+    firstname: '',
+    lastname: '',
+    username: '',
+    password: '',
+    cpassword: '',
   })
 
   console.log(formData)
 
   function handleChange(event) {
-   // const {name, value, type, checked} = event.target
-    setFormData(prevFormData => {
+    // const {name, value, type, checked} = event.target
+    setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [event.target.name]: event.target.value
+        [event.target.name]: event.target.value,
       }
     })
   }
 
   function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     console.log(formData)
 
-    if (formData.password == formData.cpassword) {
-      console.log("Successfully signed up!")
+    if (formData.password === formData.cpassword) {
+      console.log('Successfully signed up!')
     } else {
-      console.log("Passwords do not match.") //if passwords do not match, cannot sign up
+      console.log('Passwords do not match.') //if passwords do not match, cannot sign up
       return
     }
-    console.log("submitted")
+    console.log('submitted')
   }
-  
+
   return (
-    <form className = 'signup-form' onSubmit = {handleSubmit} >
-    <div className = 'form-control'>
-      
-      <input
-      type = 'email'
-      placeholder = 'email address'
-      onChange = {handleChange}
-      name = "email"
-      value = {formData.email}
-      />
-      
-      <input
-      type = 'firstname'
-      placeholder = 'first name'
-      onChange = {handleChange}
-      name = "firstname"
-      value = {formData.firstname}
-      />
-      
-      <input
-      type = 'lastname'
-      placeholder = 'last name'
-      onChange = {handleChange}
-      name = "lastname"
-      value = {formData.lastname}
-      />
+    <form className='signup-form' onSubmit={handleSubmit}>
+      <div className='form-control'>
+        <input
+          type='email'
+          placeholder='email address'
+          onChange={handleChange}
+          name='email'
+          value={formData.email}
+        />
 
-      <input
-      type = 'username'
-      placeHolder = 'username'
-      onChange = {handleChange}
-      name = "username"
-      value = {formData.username}
-      />
+        <input
+          type='firstname'
+          placeholder='first name'
+          onChange={handleChange}
+          name='firstname'
+          value={formData.firstname}
+        />
 
-      <input
-      type = 'password'
-      placeholder = 'password'
-      onChange = {handleChange}
-      name = "password"
-      value = {formData.password}
-      />
-      
-      <input
-      type = 'password'
-      placeholder = 'confirm password'
-      onChange = {handleChange}
-      name = "cpassword"
-      value = {formData.cpassword}
-      />
+        <input
+          type='lastname'
+          placeholder='last name'
+          onChange={handleChange}
+          name='lastname'
+          value={formData.lastname}
+        />
 
+        <input
+          type='username'
+          placeHolder='username'
+          onChange={handleChange}
+          name='username'
+          value={formData.username}
+        />
 
+        <input
+          type='password'
+          placeholder='password'
+          onChange={handleChange}
+          name='password'
+          value={formData.password}
+        />
 
-      <Button text = 'Sign Up.' />
+        <input
+          type='password'
+          placeholder='confirm password'
+          onChange={handleChange}
+          name='cpassword'
+          value={formData.cpassword}
+        />
 
-      <Link to='/'>Go Back</Link>
-    </div>
+        <Button text='Sign Up.' />
+
+        <Link to='/'>Go Back</Link>
+      </div>
     </form>
   )
 }

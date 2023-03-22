@@ -1,6 +1,9 @@
 import createHttpError from 'http-errors'
 import { User, validate } from '../Models/user.model.js'
 import bcrypt from 'bcrypt'
+import mongoose from 'mongoose'
+import fs from 'fs'
+import jwt from 'jsonwebtoken'
 
 // FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
@@ -59,6 +62,35 @@ async function getUser(req, res, next) {
   }
 }
 
+async function getUserAuthorized(req, res, next) {
+  try {
+    const clientToken = req.body.token
+    const username = req.body.username
+
+    // verifying jwt token
+    const cert = fs.readFileSync('./public.pem')
+    jwt.verify(clientToken, cert, async (err, decoded) => {
+      if (err) console.log(err.message)
+      else {
+        // only give back basic user info to client if token is verified
+        const userPrivate = await User.aggregate([
+          { $match: { username: username } },
+          { $project: { password: 0 } },
+        ])
+        console.log(userPrivate)
+        res.status(200).send(userPrivate[0])
+      }
+    })
+  } catch (error) {
+    console.log(error.message)
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid username'))
+      return
+    }
+    next(error)
+  }
+}
+
 // Any updates to the user
 async function updateUser(req, res, next) {
   try {
@@ -99,4 +131,11 @@ async function deleteUser(req, res, next) {
   }
 }
 
-export { getAllUsers, createUser, getUser, updateUser, deleteUser }
+export {
+  getAllUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser,
+  getUserAuthorized,
+}
