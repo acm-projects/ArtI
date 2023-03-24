@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const Button = ({ color, text, onClick, style}) => {
   return (
@@ -10,7 +10,6 @@ const Button = ({ color, text, onClick, style}) => {
     </button>
   )
 }
-
 
 Button.propTypes = {
     text: PropTypes.string,

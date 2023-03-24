@@ -1,5 +1,5 @@
 import Button from './Button'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
 
@@ -9,12 +9,12 @@ const SignUp = () => {
   
 
   const [formData, setFormData] = useState({
-    email: "",
-    firstname: "",
-    lastname: "",
-    username: "", 
-    password: "",
-    cpassword: ""
+    email: '',
+    firstname: '',
+    lastname: '',
+    username: '',
+    password: '',
+    cpassword: '',
   })
 
   
@@ -22,26 +22,26 @@ const SignUp = () => {
   console.log(formData)
 
   function handleChange(event) {
-   // const {name, value, type, checked} = event.target
-    setFormData(prevFormData => {
+    // const {name, value, type, checked} = event.target
+    setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [event.target.name]: event.target.value
+        [event.target.name]: event.target.value,
       }
     })
   }
 
   function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     console.log(formData)
 
     if (formData.password === formData.cpassword) {
       console.log("Successfully signed up!")
     } else {
-      console.log("Passwords do not match.") //if passwords do not match, cannot sign up
+      console.log('Passwords do not match.') //if passwords do not match, cannot sign up
       return
     }
-    console.log("submitted")
+    console.log('submitted')
   }
 
   
@@ -116,8 +116,8 @@ const SignUp = () => {
 
       <Button text='Sign Up.' style={{ backgroundColor: '#9d9d9d', borderRadius: '50px' }} />
 
-      <Link to='/'>Go Back</Link>
-    </div>
+        <Link to='/'>Go Back</Link>
+      </div>
     </form>
   )
 }
