@@ -1,5 +1,6 @@
 import Button from './Button'
 import { useState } from 'react'
+import girl from './assets/girl.png';
 
 const LoginForm = () => {
 
@@ -28,12 +29,12 @@ const LoginForm = () => {
 
   }
   return (
-    <form 
-    className = 'login-form' 
-    onSubmit={handleSubmit}
-    >
+    <div className="login-form-container">
+    <form className = 'login-form' onSubmit={handleSubmit}>
 
       <div className = 'form-control'>
+
+        <div className="input-wrapper">
         <input 
         type = 'text' 
         placeholder = 'username'
@@ -41,8 +42,10 @@ const LoginForm = () => {
         name = "username"
         value = {formData.username}
          />
+         </div>
 
 
+         <div className="input-wrapper">
         <input 
         type = 'text' 
         placeholder = 'password'
@@ -50,11 +53,21 @@ const LoginForm = () => {
         name = "password"
         value = {formData.password}
         />
-
+        </div>
       </div>
 
-      <Button text = 'Log In.' />
+      <Button text='Log In.' style={{ backgroundColor: '#9d9d9d', borderRadius: '50px' }} />
     </form>
+
+    <div className = "image-container">
+      <img src={girl} alt="girl" className="login-image" />
+      </div>
+      
+    </div>
+
+    
+
+
   )
 }
 

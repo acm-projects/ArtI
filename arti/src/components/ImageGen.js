@@ -3,7 +3,6 @@ import GenerateBtn from './GenerateBtn'
 
 const ImageGen = () => {
   return (
-
     <div className='generator-container'>
       <div className='bg-circle circle1'></div>
       <div className='bg-circle circle2'></div>
