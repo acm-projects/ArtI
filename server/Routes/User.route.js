@@ -20,7 +20,7 @@ router.post('/', createUser)
 router.post('/get', getUserAuthorized) // post is required for client to pass token
 
 // Updating a user - any field
-// router.patch('/:username', updateUser)
+router.patch('/:username', updateUser)
 
 // Deleting an existing user
 // router.delete('/:username', deleteUser)

@@ -92,17 +92,32 @@ async function getUserAuthorized(req, res, next) {
 }
 
 // Any updates to the user
+// If editing user in settings page, allow user the ability to edit everything at once
+// then after clicking save or submit, call this endpoint
 async function updateUser(req, res, next) {
   try {
-    const userName = req.params.username
-    const updates = req.body // allows any field to be changed
-    const options = { new: true }
+    const { token, ...rest } = req.body
+    const clientToken = token
+    const cert = fs.readFileSync('./public.pem')
 
-    const result = await User.findOneAndUpdate(
-      { username: userName },
-      updates,
-      options
-    )
+    // verifying token
+    jwt.verify(clientToken, cert, async (err, decoded) => {
+      if (err) throw new Error(err)
+      else {
+        // TODO :: if password is changed, verify password format
+        const userName = req.params.username
+        const updates = rest // allows any field to be changed
+        const options = { new: true }
+
+        const result = await User.findOneAndUpdate(
+          { username: userName },
+          updates,
+          options
+        )
+
+        res.send(result)
+      }
+    })
   } catch (error) {
     console.log(error.message)
     if (error instanceof mongoose.CastError) {

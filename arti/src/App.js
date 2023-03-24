@@ -12,6 +12,7 @@ const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
   const [user, setUser] = useState() // basic user information to be passed down to children as prop
 
+  // TODO :: fix where dont need empty dependency array below
   // Check if the user is logged in by getting their token
   useEffect(() => {
     const userStorage = JSON.parse(sessionStorage.getItem('arti'))
