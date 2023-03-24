@@ -1,4 +1,3 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import axios from 'axios'
@@ -46,6 +45,9 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
+        <div className='wrapper'>
+
+      <NavBar/>
         <Routes>
           {/* Routes that does not require for user to be signed in  */}
           <Route
@@ -66,6 +68,7 @@ const App = () => {
             <Route path='/portraitgen' element={<PortraitGen />} />
           </Route>
         </Routes>
+        </div>
       </Router>
     </Container>
   )
