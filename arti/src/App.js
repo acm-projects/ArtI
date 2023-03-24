@@ -1,4 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Switch,
+} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import axios from 'axios'
@@ -7,6 +13,8 @@ import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
 import PortraitGen from './components/PortraitGen.js'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
+import NavBar from './components/NavBar'
+import MyBoards from './components/MyBoards'
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -43,6 +51,8 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
+        <NavBar />
+
         <Routes>
           {/* Routes that does not require for user to be signed in  */}
           <Route

@@ -9,6 +9,7 @@ import {
   Button,
   FloatingLabel,
 } from 'react-bootstrap'
+import girl from './assets/girl.png'
 
 const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   const navigate = useNavigate()

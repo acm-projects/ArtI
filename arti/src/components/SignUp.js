@@ -40,55 +40,72 @@ const SignUp = () => {
   return (
     <form className='signup-form' onSubmit={handleSubmit}>
       <div className='form-control'>
-        <input
-          type='email'
-          placeholder='email address'
-          onChange={handleChange}
-          name='email'
-          value={formData.email}
-        />
+        <h2>Sign Up.</h2>
 
-        <input
-          type='firstname'
-          placeholder='first name'
-          onChange={handleChange}
-          name='firstname'
-          value={formData.firstname}
-        />
+        <div className='input-wrapper'>
+          <input
+            type='email'
+            placeholder='email address'
+            onChange={handleChange}
+            name='email'
+            value={formData.email}
+          />
+        </div>
 
-        <input
-          type='lastname'
-          placeholder='last name'
-          onChange={handleChange}
-          name='lastname'
-          value={formData.lastname}
-        />
+        <div className='input-wrapper'>
+          <input
+            type='text'
+            placeholder='first name'
+            onChange={handleChange}
+            name='firstname'
+            value={formData.firstname}
+          />
+        </div>
 
-        <input
-          type='username'
-          placeHolder='username'
-          onChange={handleChange}
-          name='username'
-          value={formData.username}
-        />
+        <div className='input-wrapper'>
+          <input
+            type='text'
+            placeholder='last name'
+            onChange={handleChange}
+            name='lastname'
+            value={formData.lastname}
+          />
+        </div>
 
-        <input
-          type='password'
-          placeholder='password'
-          onChange={handleChange}
-          name='password'
-          value={formData.password}
-        />
+        <div className='input-wrapper'>
+          <input
+            type='text'
+            placeHolder='username'
+            onChange={handleChange}
+            name='username'
+            value={formData.username}
+          />
+        </div>
 
-        <input
-          type='password'
-          placeholder='confirm password'
-          onChange={handleChange}
-          name='cpassword'
-          value={formData.cpassword}
-        />
+        <div className='input-wrapper'>
+          <input
+            type='text'
+            placeholder='password'
+            onChange={handleChange}
+            name='password'
+            value={formData.password}
+          />
+        </div>
 
-        <Button text='Sign Up.' />
+        <div className='input-wrapper'>
+          <input
+            type='text'
+            placeholder='confirm password'
+            onChange={handleChange}
+            name='cpassword'
+            value={formData.cpassword}
+          />
+        </div>
+
+        <Button
+          text='Sign Up.'
+          style={{ backgroundColor: '#9d9d9d', borderRadius: '50px' }}
+        />
 
         <Link to='/'>Go Back</Link>
       </div>
