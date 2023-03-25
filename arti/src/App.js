@@ -4,15 +4,16 @@ import axios from 'axios'
 import LoginForm from './components/LoginForm.js'
 import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
-<<<<<<<<< Temporary merge branch 1
-import {BrowserRouter as Router, Route, Routes, Switch} from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Switch,
+} from 'react-router-dom'
 import PortraitGen from './components/PortraitGen.js'
-import NavBar from './components/NavBar';
-import MyBoards from './components/MyBoards';
-=========
-import PortraitGen from './components/PortraitGen.js'
+import NavBar from './components/NavBar'
+import MyBoards from './components/MyBoards'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
->>>>>>>>> Temporary merge branch 2
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -50,30 +51,28 @@ const App = () => {
     <Container fluid className='main-container'>
       <Router>
         <div className='wrapper'>
+          <NavBar />
 
-      <NavBar/>
-        <NavBar />
+          <Routes>
+            {/* Routes that does not require for user to be signed in  */}
+            <Route
+              path='/'
+              element={
+                <LoginForm
+                  loggedIn={isLoggedIn}
+                  setLoggedIn={setisLoggedIn}
+                  setUser={setUser}
+                />
+              }
+            />
+            <Route path='/signup' element={<SignUp />} />
 
-        <Routes>
-          {/* Routes that does not require for user to be signed in  */}
-          <Route
-            path='/'
-            element={
-              <LoginForm
-                loggedIn={isLoggedIn}
-                setLoggedIn={setisLoggedIn}
-                setUser={setUser}
-              />
-            }
-          />
-          <Route path='/signup' element={<SignUp />} />
-
-          {/* Routes that require for user to be signed in (authenticated) */}
-          <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-            <Route path='/imagegen' element={<ImageGen />} />
-            <Route path='/portraitgen' element={<PortraitGen />} />
-          </Route>
-        </Routes>
+            {/* Routes that require for user to be signed in (authenticated) */}
+            <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
+              <Route path='/imagegen' element={<ImageGen />} />
+              <Route path='/portraitgen' element={<PortraitGen />} />
+            </Route>
+          </Routes>
         </div>
       </Router>
     </Container>

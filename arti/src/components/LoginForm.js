@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
+import girl from './assets/girl.png'
+
 import {
   Col,
   Row,
@@ -9,7 +11,6 @@ import {
   Button,
   FloatingLabel,
 } from 'react-bootstrap'
-import girl from './assets/girl.png'
 
 const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   const navigate = useNavigate()
@@ -100,7 +101,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
 
   return (
     <Row className='login-container'>
-      <Col sm='6'>
+      <Col sm='6' className=' side-column'>
         <div className='side-container'>
           <h1>
             <em>Welcome</em>

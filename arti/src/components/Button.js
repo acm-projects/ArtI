@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 
 const Button = ({ color, text, onClick, style }) => {
   return (
@@ -15,14 +14,11 @@ const Button = ({ color, text, onClick, style }) => {
 }
 
 Button.propTypes = {
-<<<<<<<<< Temporary merge branch 1
-    text: PropTypes.string,
-    onClick: PropTypes.func,
-=========
+  text: PropTypes.string,
+  onClick: PropTypes.func,
   text: PropTypes.string,
   color: PropTypes.string,
   onClick: PropTypes.func,
->>>>>>>>> Temporary merge branch 2
 }
 
 export default Button
