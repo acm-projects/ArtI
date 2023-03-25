@@ -1,6 +1,7 @@
 import Button from './Button'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { Row } from 'react-bootstrap'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -38,78 +39,84 @@ const SignUp = () => {
   }
 
   return (
-    <form className='signup-form' onSubmit={handleSubmit}>
-      <div className='form-control'>
-        <h2>Sign Up.</h2>
+    <>
+      <Row>
+        <form className='signup-form' onSubmit={handleSubmit}>
+          <div className='form-ctrl'>
+            <h2>Sign Up.</h2>
+            <div className='form-floating input-wrapper'>
+              <input
+                type='email'
+                className='form-control'
+                placeholder='email address'
+                onChange={handleChange}
+                name='email'
+                id='email'
+                value={formData.email}
+              />
+              <label htmlFor='email'>email address</label>
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='email'
-            placeholder='email address'
-            onChange={handleChange}
-            name='email'
-            value={formData.email}
-          />
-        </div>
+            <div className='input-wrapper'>
+              <input
+                type='text'
+                placeholder='first name'
+                onChange={handleChange}
+                name='firstname'
+                value={formData.firstname}
+              />
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='text'
-            placeholder='first name'
-            onChange={handleChange}
-            name='firstname'
-            value={formData.firstname}
-          />
-        </div>
+            <div className='input-wrapper'>
+              <input
+                type='text'
+                placeholder='last name'
+                onChange={handleChange}
+                name='lastname'
+                value={formData.lastname}
+              />
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='text'
-            placeholder='last name'
-            onChange={handleChange}
-            name='lastname'
-            value={formData.lastname}
-          />
-        </div>
+            <div className='input-wrapper'>
+              <input
+                type='text'
+                placeHolder='username'
+                onChange={handleChange}
+                name='username'
+                value={formData.username}
+              />
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='text'
-            placeHolder='username'
-            onChange={handleChange}
-            name='username'
-            value={formData.username}
-          />
-        </div>
+            <div className='input-wrapper'>
+              <input
+                type='text'
+                placeholder='password'
+                onChange={handleChange}
+                name='password'
+                value={formData.password}
+              />
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='text'
-            placeholder='password'
-            onChange={handleChange}
-            name='password'
-            value={formData.password}
-          />
-        </div>
+            <div className='input-wrapper'>
+              <input
+                type='text'
+                placeholder='confirm password'
+                onChange={handleChange}
+                name='cpassword'
+                value={formData.cpassword}
+              />
+            </div>
 
-        <div className='input-wrapper'>
-          <input
-            type='text'
-            placeholder='confirm password'
-            onChange={handleChange}
-            name='cpassword'
-            value={formData.cpassword}
-          />
-        </div>
+            <Button
+              text='Sign Up.'
+              style={{ backgroundColor: '#9d9d9d', borderRadius: '50px' }}
+            />
 
-        <Button
-          text='Sign Up.'
-          style={{ backgroundColor: '#9d9d9d', borderRadius: '50px' }}
-        />
-
-        <Link to='/'>Go Back</Link>
-      </div>
-    </form>
+            <Link to='/'>Go Back</Link>
+          </div>
+        </form>
+      </Row>
+    </>
   )
 }
 

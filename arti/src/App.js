@@ -1,20 +1,18 @@
-import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Switch,
-} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import axios from 'axios'
 import LoginForm from './components/LoginForm.js'
 import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
+<<<<<<<<< Temporary merge branch 1
+import {BrowserRouter as Router, Route, Routes, Switch} from 'react-router-dom'
+import PortraitGen from './components/PortraitGen.js'
+import NavBar from './components/NavBar';
+import MyBoards from './components/MyBoards';
+=========
 import PortraitGen from './components/PortraitGen.js'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
-import NavBar from './components/NavBar'
-import MyBoards from './components/MyBoards'
+>>>>>>>>> Temporary merge branch 2
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -51,6 +49,9 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
+        <div className='wrapper'>
+
+      <NavBar/>
         <NavBar />
 
         <Routes>
@@ -73,6 +74,7 @@ const App = () => {
             <Route path='/portraitgen' element={<PortraitGen />} />
           </Route>
         </Routes>
+        </div>
       </Router>
     </Container>
   )
