@@ -4,12 +4,7 @@ import axios from 'axios'
 import LoginForm from './components/LoginForm.js'
 import SignUp from './components/SignUp.js'
 import ImageGen from './components/ImageGen.js'
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Switch,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import PortraitGen from './components/PortraitGen.js'
 import NavBar from './components/NavBar'
 import MyBoards from './components/MyBoards'
@@ -65,12 +60,22 @@ const App = () => {
                 />
               }
             />
-            <Route path='/signup' element={<SignUp />} />
+            <Route
+              path='/signup'
+              element={
+                <SignUp
+                  loggedIn={isLoggedIn}
+                  setLoggedIn={setisLoggedIn}
+                  setUser={setUser}
+                />
+              }
+            />
 
             {/* Routes that require for user to be signed in (authenticated) */}
             <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
               <Route path='/imagegen' element={<ImageGen />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
+              <Route path='/myboards' element={<MyBoards />} />
             </Route>
           </Routes>
         </div>

@@ -16,9 +16,7 @@ const Button = ({ color, text, onClick, style }) => {
 Button.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
-  text: PropTypes.string,
   color: PropTypes.string,
-  onClick: PropTypes.func,
 }
 
 export default Button

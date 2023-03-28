@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
-import girl from './assets/girl.png'
+import { storeUser, handleUser } from '../utils/Auth'
 
 import {
   Col,
@@ -50,9 +50,12 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
       })
       if (response.status === 200) {
         console.log(response.data.data)
+        // stores user in sessionStorage for easy access
         storeUser(response.data.data)
+        // Sets the loggedIn prop (a state in App.js) to true
         setLoginStatus('Logged in successfully!')
         setLoggedIn(true)
+        // Allows App.js to have data of user
         setUser(
           handleUser({ token: response.data.data, username: formData.username })
         )
@@ -72,26 +75,6 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
         console.log(error.message)
       }
     }
-  }
-
-  // Gets basic user information and passes back to parent component (App.js)
-  async function handleUser(basicUserInfo) {
-    try {
-      const body = {
-        token: basicUserInfo.token,
-        username: basicUserInfo.username,
-      }
-      const response = await axios.post('/api/v1/user/get', body)
-      console.log(response)
-      return response.data
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  function storeUser(userData) {
-    if (!userData.token) return
-    sessionStorage.setItem('arti', JSON.stringify(userData))
   }
 
   // toggles the state of showPassword
