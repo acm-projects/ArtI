@@ -45,9 +45,9 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
-        <div className='wrapper'>
-          <NavBar />
+        <NavBar />
 
+        <main className='content'>
           <Routes>
             {/* Routes that does not require for user to be signed in  */}
             <Route
@@ -78,7 +78,7 @@ const App = () => {
               <Route path='/myboards' element={<MyBoards />} />
             </Route>
           </Routes>
-        </div>
+        </main>
       </Router>
     </Container>
   )

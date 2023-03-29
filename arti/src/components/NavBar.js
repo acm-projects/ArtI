@@ -6,20 +6,45 @@ const Navbar = () => {
     <nav className='nav-bar'>
       <ul className='nav-links'>
         <li>
-          <Link to='/'>Home</Link>
+          <Link to='/'>
+            <div className='link-icon'>
+              <i className='bi bi-house-fill'></i>
+              <p>Home</p>
+            </div>
+          </Link>
         </li>
         <li>
-          <Link to='/imagegen'>ImageAI</Link>
+          <Link to='/imagegen'>
+            <div className='link-icon'>
+              <i className='bi bi-image-fill'></i>
+              <p>ImageAI</p>
+            </div>
+          </Link>
         </li>
         <li>
-          <Link to='/portraitgen'>PortraitAI</Link>
+          <Link to='/portraitgen'>
+            <div className='link-icon'>
+              <i className='bi bi-person-bounding-box'></i>
+              <p>PortraitAI</p>
+            </div>
+          </Link>
         </li>
         <li>
-          <Link to='/myboards'>My Boards</Link>
+          <Link to='/myboards'>
+            <div className='link-icon'>
+              <i className='bi bi-columns'></i>
+              <p>Boards</p>
+            </div>
+          </Link>
         </li>
         <li>
           <div className='profile-dropdown'>
-            <Link to='/myprofile'>My Profile</Link>
+            <Link to='/myprofile'>
+              <div className='link-icon'>
+                <i className='bi bi-person-lines-fill'></i>
+                <p>Profile</p>
+              </div>
+            </Link>
             <ul className='dropdown-menu'>
               <li>
                 <Link to='/editprofile'>Edit Profile</Link>

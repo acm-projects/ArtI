@@ -1,7 +1,7 @@
 // import Button from './Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Row } from 'react-bootstrap'
+import { Row, Button, Col } from 'react-bootstrap'
 import axios from 'axios'
 import { handleUser, storeUser } from '../utils/Auth'
 
@@ -89,112 +89,118 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
 
   return (
     <>
-      <Row className='signup-container'>
-        <form className='signup-form' onSubmit={handleSubmit}>
-          <div className='form-ctrl'>
-            <h2>Sign Up.</h2>
-            <div className='form-floating input-wrapper'>
-              <input
-                type='email'
-                className='form-control'
-                placeholder='email address'
-                onChange={handleChange}
-                name='email'
-                id='email'
-                value={formData.email}
-                required
-              />
-              <label htmlFor='email'>email address</label>
-            </div>
+      <Row className='signup-container my-auto'>
+        <Col>
+          <form className='signup-form' onSubmit={handleSubmit}>
+            <div className='form-ctrl'>
+              <h2>Sign Up.</h2>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='email'
+                  className='form-control'
+                  placeholder='email address'
+                  onChange={handleChange}
+                  name='email'
+                  id='email'
+                  value={formData.email}
+                  required
+                />
+                <label htmlFor='email'>email address</label>
+              </div>
 
-            <div className='form-floating input-wrapper'>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='first name'
-                onChange={handleChange}
-                name='firstname'
-                id='firstname'
-                value={formData.firstname}
-                required
-              />
-              <label htmlFor='firstname'>first name</label>
-            </div>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='first name'
+                  onChange={handleChange}
+                  name='firstname'
+                  id='firstname'
+                  value={formData.firstname}
+                  required
+                />
+                <label htmlFor='firstname'>first name</label>
+              </div>
 
-            <div className='form-floating input-wrapper'>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='last name'
-                onChange={handleChange}
-                name='lastname'
-                id='lastname'
-                value={formData.lastname}
-                required
-              />
-              <label htmlFor='lastname'>last name</label>
-            </div>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='last name'
+                  onChange={handleChange}
+                  name='lastname'
+                  id='lastname'
+                  value={formData.lastname}
+                  required
+                />
+                <label htmlFor='lastname'>last name</label>
+              </div>
 
-            <div className='form-floating input-wrapper'>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='username'
-                onChange={handleChange}
-                name='username'
-                id='username'
-                value={formData.username}
-                required
-              />
-              <label htmlFor='username'>username</label>
-            </div>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='username'
+                  onChange={handleChange}
+                  name='username'
+                  id='username'
+                  value={formData.username}
+                  required
+                />
+                <label htmlFor='username'>username</label>
+              </div>
 
-            <div className='form-floating input-wrapper'>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='password'
-                onChange={handleChange}
-                name='password'
-                id='password'
-                value={formData.password}
-                required
-              />
-              <label htmlFor='password'>password</label>
-            </div>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='password'
+                  onChange={handleChange}
+                  name='password'
+                  id='password'
+                  value={formData.password}
+                  required
+                />
+                <label htmlFor='password'>password</label>
+              </div>
 
-            <div className='form-floating input-wrapper'>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='confirm password'
-                onChange={handleChange}
-                name='cpassword'
-                id='cpassword'
-                value={formData.cpassword}
-                required
-              />
-              <label htmlFor='cpassword'>confirm password</label>
-            </div>
+              <div className='form-floating input-wrapper'>
+                <input
+                  type='text'
+                  className='form-control'
+                  placeholder='confirm password'
+                  onChange={handleChange}
+                  name='cpassword'
+                  id='cpassword'
+                  value={formData.cpassword}
+                  required
+                />
+                <label htmlFor='cpassword'>confirm password</label>
+              </div>
 
-            {/* <Button
+              {/* <Button
               text="Sign Up."
               style={{ backgroundColor: "#9d9d9d", borderRadius: "50px" }}
             /> */}
-            <p
-              className={`${
-                status.message === 'Looks good!'
-                  ? 'text-success'
-                  : 'text-danger'
-              }`}
-            >
-              {status.message}
-            </p>
-            <button type='submit'>Sign Up</button>
+              <p
+                className={`${
+                  status.message === 'Looks good!'
+                    ? 'text-success'
+                    : 'text-danger'
+                }`}
+              >
+                {status.message}
+              </p>
+              <div className='input-wrapper'>
+                <Button variant='secondary' type='submit' className='login-btn'>
+                  Sign Up
+                </Button>
+              </div>
 
-            <Link to='/'>Go Back</Link>
-          </div>
-        </form>
+              <Link to='/'>Go Back</Link>
+            </div>
+          </form>
+        </Col>
       </Row>
     </>
   )
