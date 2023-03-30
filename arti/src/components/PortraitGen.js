@@ -1,7 +1,12 @@
 import '../index.css'
 import PortraitGenBtn from './PortraitGenBtn'
+import { useState } from 'react';
+import PopUp from './PopUp';
 
 const PortraitGen = () => {
+
+  const [buttonPopup, setButtonPopup]=useState(false);
+
   return (
 
     <div className='portrait-gen-container'>
@@ -31,17 +36,30 @@ const PortraitGen = () => {
             type= 'text'
             placeholder='Age' />
 
-          <input className='gender-input'
-            type= 'text'
-          placeholder='Gender' />
+        <div className='gender-input'>
+
+          <label for='Gender'>Gender</label>
+          <select name='Gender' id='Gender'>
+            <option>Gender</option>
+            <option value='female'>female</option>
+            <option value='male'>male</option>
+          </select>
+
+        </div>
 
         </div>
 
         <PortraitGenBtn text= 'Generate' />
         
       </div>
+      <div className='popup-container'>
+      <button onClick={() => setButtonPopup(true)}>
+        save
+      </button>
+        <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}>
+        </PopUp>
 
-      
+      </div>
     </div>
 
 

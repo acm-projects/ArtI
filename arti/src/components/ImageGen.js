@@ -1,7 +1,11 @@
 import '../index.css'
 import GenerateBtn from './GenerateBtn'
+import PopUp from './PopUp'
+import { useState } from 'react'
 
 const ImageGen = () => {
+
+  const [buttonPopup, setButtonPopup]=useState(false);
   return (
 
     <div className='generator-container'>
@@ -31,11 +35,27 @@ const ImageGen = () => {
         type="text" 
         placeholder='Enter your prompt...'/>
         <GenerateBtn text= 'Generate'/>
-        </div>
-        
+        </div>        
       </div>
-      
+      <div className='popup-container'>
+
+      <button onClick={() => setButtonPopup(true)}>
+        save
+        </button>
+      <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}>
+
+      </PopUp>
+      <div className='generated-img'>
+        <img src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
+          alt='img of travis scott raging' 
+          className='img'
+          
+          />         
+      </div>
+
+      </div>
     </div>
+    
 
 
   )
