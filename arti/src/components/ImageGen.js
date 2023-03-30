@@ -1,5 +1,6 @@
 import '../index.css'
 import GenerateBtn from './GenerateBtn'
+import { Row, Col, Container } from 'react-bootstrap'
 
 const ImageGen = () => {
   return (
@@ -20,25 +21,26 @@ const ImageGen = () => {
       </h1>
       </header> */}
 
-      <div className='image-input-container'>
-        <h3>
-          Enter a detailed description for what you want to create.
-        </h3>
-        
-        <div className='generate-bar'>
-        <input className='image-input' 
-        type="text" 
-        placeholder='Enter your prompt...'/>
-        <GenerateBtn text= 'Generate'/>
+      <Container>
+        <div className='image-input-container'>
+          <Row>
+            <Col>
+              <h3>Enter a detailed description for what you want to create.</h3>
+
+              <div className='generate-bar'>
+                <input
+                  className='image-input'
+                  type='text'
+                  placeholder='Enter your prompt...'
+                />
+                <GenerateBtn text='Generate' />
+              </div>
+            </Col>
+          </Row>
         </div>
-        
-      </div>
-      
+      </Container>
     </div>
-
-
   )
 }
-
 
 export default ImageGen

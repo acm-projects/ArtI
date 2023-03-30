@@ -152,7 +152,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
 
               <div className='form-floating input-wrapper'>
                 <input
-                  type='text'
+                  type='password'
                   className='form-control'
                   placeholder='password'
                   onChange={handleChange}
@@ -166,7 +166,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
 
               <div className='form-floating input-wrapper'>
                 <input
-                  type='text'
+                  type='password'
                   className='form-control'
                   placeholder='confirm password'
                   onChange={handleChange}

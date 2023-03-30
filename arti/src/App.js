@@ -45,7 +45,7 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
-        <NavBar />
+        <NavBar type='desktop-nav' />
 
         <main className='content'>
           <Routes>
@@ -76,9 +76,12 @@ const App = () => {
               <Route path='/imagegen' element={<ImageGen />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
               <Route path='/myboards' element={<MyBoards />} />
+              <Route path='/myprofile' element={<></>}></Route>
             </Route>
           </Routes>
         </main>
+
+        <NavBar type='mobile-nav' />
       </Router>
     </Container>
   )

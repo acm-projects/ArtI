@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({ type }) => {
   return (
-    <nav className='nav-bar'>
+    <nav className={`nav-bar ${type}`}>
       <ul className='nav-links'>
         <li>
           <Link to='/'>
