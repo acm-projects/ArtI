@@ -410,6 +410,16 @@ input:focus {
   z-index: 10;
 }
 
+/* animation for on click generate (not a priority) */
+.image-input-container[slideup='1'] {
+  animation: slideup 1s 1;
+}
+
+/* animation for on click generate (not a priority) */
+.image-input-container[slideup='1'] {
+  animation: slideup 1s 1;
+}
+
 .generate-bar {
   width: 100%;
   display: flex;
@@ -472,6 +482,7 @@ input:focus {
   justify-content: center;
   width: 100%;
   height: 100%;
+  text-align: center;
 }
 
 .age-input {
@@ -481,15 +492,14 @@ input:focus {
   border: var(--border-color) solid 2px;
   border-radius: 50px;
   width: 15%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 .gender-input {
-  color: var(--text-color);
-  background-color: var(--body-bg-color);
-  outline: none;
-  border: var(--border-color) solid 2px;
-  border-radius: 50px;
-  width: 15%;
+  display: flex;
+  flex-direction: column;
 }
 
 .portrait-btn {
@@ -500,4 +510,69 @@ input:focus {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   border-top-left-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.tiny-lines {
+  border-radius: 5px;
+  /* Position */
+  position: absolute;
+  height: 10px;
+}
+
+.line1 {
+  background-color: #371e13;
+  width: 55%;
+  top: 20%;
+  left: 0;
+}
+
+.line2 {
+  background-color: #562611;
+  width: 40%;
+  top: 35%;
+  left: 0;
+}
+
+.line3 {
+  background-color: #562611;
+  width: 40%;
+  bottom: 35%;
+  right: 0;
+}
+
+.line4 {
+  background-color: #31180d;
+  width: 50%;
+  bottom: 22.5%;
+  right: 0;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #444;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-inner {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  background-color: #9d9d9d;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
 }
