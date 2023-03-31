@@ -10,6 +10,8 @@ import ProtectedRoutes from './utils/ProtectedRoutes.js'
 import MyBoards from './components/MyBoards.js';
 import ConditionalNavBar from './components/ConditionalNavBar';
 
+
+
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
   const [user, setUser] = useState() // basic user information to be passed down to children as prop
@@ -62,7 +64,7 @@ const App = () => {
           <Route path='/signup' element={<SignUp />} />
 
           {/* Routes that require for user to be signed in (authenticated) */}
-          <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
+          <Route element={<ProtectedRoutes auth={isLoggedIn}/>}>
             <Route path='/imagegen' element={<ImageGen />} />
             <Route path='/portraitgen' element={<PortraitGen />} />
             <Route path='/MyBoards' element={<MyBoards />} />
