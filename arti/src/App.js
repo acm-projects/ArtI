@@ -10,6 +10,7 @@ import NavBar from './components/NavBar'
 import MyBoards from './components/MyBoards'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
 import Profile from './components/Profile.js'
+import ConditionalNavBar from './components/ConditionalNavBar'
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -46,8 +47,7 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
-        <NavBar type='desktop-nav' />
-
+        <ConditionalNavBar viewportType='desktop-nav' />
         <main className='content'>
           <Routes>
             {/* Routes that does not require for user to be signed in  */}
@@ -82,7 +82,7 @@ const App = () => {
           </Routes>
         </main>
 
-        <NavBar type='mobile-nav' />
+        <ConditionalNavBar viewportType='mobile-nav' />
       </Router>
     </Container>
   )
