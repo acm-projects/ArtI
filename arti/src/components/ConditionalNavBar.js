@@ -9,7 +9,7 @@ const ConditionalNavBar = ({ viewportType }) => {
   // Checks if current path is not signup or login
   const shouldRenderNavbar = !['/signup', '/'].includes(location.pathname)
 
-  return shouldRenderNavbar ? <NavBar className={`${viewportType}`} /> : null
+  return shouldRenderNavbar ? <NavBar viewportType={viewportType} /> : null
 }
 
 export default ConditionalNavBar
