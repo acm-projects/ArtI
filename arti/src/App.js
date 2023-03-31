@@ -9,6 +9,7 @@ import PortraitGen from './components/PortraitGen.js'
 import NavBar from './components/NavBar'
 import MyBoards from './components/MyBoards'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
+import Profile from './components/Profile.js'
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -76,7 +77,7 @@ const App = () => {
               <Route path='/imagegen' element={<ImageGen />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
               <Route path='/myboards' element={<MyBoards />} />
-              <Route path='/myprofile' element={<></>}></Route>
+              <Route path='/myprofile' element={<Profile />}></Route>
             </Route>
           </Routes>
         </main>

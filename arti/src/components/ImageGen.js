@@ -1,11 +1,22 @@
 import '../index.css'
 import GenerateBtn from './GenerateBtn'
 import PopUp from './PopUp'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
+// import axios from 'axios'
 
 const ImageGen = () => {
   const [buttonPopup, setButtonPopup] = useState(false)
+  const [show, setShow] = useState(false)
+  const prompt = useRef(null)
+
+  async function generateImage() {
+    try {
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='generator-container'>
       <div className='bg-circle circle1'></div>
@@ -32,17 +43,18 @@ const ImageGen = () => {
 
               <div className='generate-bar'>
                 <input
+                  ref={prompt}
                   className='image-input'
                   type='text'
                   placeholder='Enter your prompt...'
                 />
-                <GenerateBtn text='Generate' />
+                <GenerateBtn onClick={generateImage} text='Generate' />
               </div>
             </Col>
           </Row>
         </div>
       </Container>
-      <div className='popup-container'>
+      {/* <div className='popup-container'>
         <button onClick={() => setButtonPopup(true)}>save</button>
         <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}></PopUp>
         <div className='generated-img'>
@@ -52,7 +64,7 @@ const ImageGen = () => {
             className='img'
           />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
