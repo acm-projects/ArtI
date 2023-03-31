@@ -7,8 +7,8 @@ import ImageGen from './components/ImageGen.js'
 import {BrowserRouter as Router, Route, Routes, Switch} from 'react-router-dom'
 import PortraitGen from './components/PortraitGen.js'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
-import NavBar from './components/NavBar';
-import MyBoards from './components/MyBoards';
+import MyBoards from './components/MyBoards.js';
+import ConditionalNavBar from './components/ConditionalNavBar';
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
@@ -46,8 +46,7 @@ const App = () => {
     <Container fluid className='main-container'>
       <Router>
         <div className='wrapper'>
-
-      <NavBar/>
+        <ConditionalNavBar />
         <Routes>
           {/* Routes that does not require for user to be signed in  */}
           <Route
@@ -66,6 +65,7 @@ const App = () => {
           <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
             <Route path='/imagegen' element={<ImageGen />} />
             <Route path='/portraitgen' element={<PortraitGen />} />
+            <Route path='/MyBoards' element={<MyBoards />} />
           </Route>
         </Routes>
         </div>

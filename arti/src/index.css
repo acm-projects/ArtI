@@ -334,7 +334,6 @@
   .nav-bar {
     display: flex;
     justify-content: center;
-    background-color: #222;
     padding: 1rem 0;
   }
   
@@ -354,10 +353,29 @@
     color: #9d9d9d;
     font-size: 1.1rem;
     transition: color 0.2s ease-in-out;
+    position: relative;
   }
   
   .nav-links a:hover {
     color: #fff;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background-color: #9d9d9d;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .nav-links a:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
   /*End of Navbar section*/
 
@@ -628,3 +646,7 @@ h1 {
 .row{
   margin: 0 !important;
 }
+
+/*BOARDS PAGE SECTION*/
+
+/*BOARD PAGE SECTION END*/

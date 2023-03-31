@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import girl from "./assets/girl.png";
 
 import {
   Col,
@@ -110,36 +109,13 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
             <em>to</em>
           </h1>
           <h1>
-            ART<em>i</em>
+            ART<em>i.</em>
           </h1>
         </div>
       </Col>
       <Col sm="6">
         <div className="side-container">
-          <h1>Sign In</h1>
-          {/* <form className='login-form' onSubmit={handleSubmit}>
-            <div className='login-form-control'>
-              <input
-                className='login-input'
-                type='text'
-                placeholder='username'
-                onChange={handleChange}
-                name='username'
-                value={formData.username}
-              />
-              <input
-                className='login-input'
-                type='password'
-                placeholder='password'
-                onChange={handleChange}
-                name='password'
-                value={formData.password}
-              />
-            </div>
-
-            <Button text='Log In.' />
-            <button className='login-btn'>Log In</button>
-          </form> */}
+          <h1>Sign In.</h1>
 
           <Form className="my-3 w-75" onSubmit={handleSubmit}>
             {/* USERNAME INPUT */}
