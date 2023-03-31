@@ -1,5 +1,6 @@
 import createHttpError from "http-errors"
 import { Board } from '../Models/boards.model.js'
+import jwt from 'jsonwebtoken'
 
 async function getAllBoards (req, res, next){
     try {
@@ -122,6 +123,17 @@ async function addOrDeleteImage (req, res, next) {
             { $match: {username: username, boardName: boardName}},
             { $project: {thumbnail: 1}}
         ]);
+
+        // const imageAggregate = await Board.aggregate([
+        //     { $match: {username: username, boardName: boardName}},
+        //     { $project: {images: 1}}
+        // ]);
+
+        // const imagesArray = imageAggregate[0].images
+
+        // for(let i = 0; i < imagesArray.length; i++){
+        //     console.log(imagesArray[i]);
+        // }
         const thumbnail = aggregate[0].thumbnail;
 
         //deletes the selected imageurl from the array
@@ -252,5 +264,8 @@ async function changeThumbnailOrBoardName (req, res, next) {
     }
 
 }
+
+
+
 
 export {getAllBoards, createNewBoard, getUsersBoards, getSingleBoard, deleteBoard, addOrDeleteImage, changeThumbnailOrBoardName}

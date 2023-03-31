@@ -6,65 +6,87 @@ POST http://localhost:8080/api/v1/boards
 Content-Type: application/json
 
 {
-    "username": "test",
-    "boardName": "sample4",
-    "images": [],
+    "username": "isaac",
+    "boardName": "cool",
+    "images": [
+        {
+            "url": "image1",
+            "prompt": "1"
+        },
+        {
+            "url": "image2",
+            "prompt": "2"
+        },
+        {
+            "url": "image3",
+            "prompt": "3"
+        }
+    ],
     "thumbnail": "default",
     "customThumbnail": false
 }
 
 ### Get a specific user's boards
-GET http://localhost:8080/api/v1/boards
+GET http://localhost:8080/api/v1/boards/leon
 
 ### Get a specific board from a user
-GET http://localhost:8080/api/v1/boards/test/test
+//TELL FRONTEND SEND URLS WITH SPACES REPLACED WITH DASHES
+GET http://localhost:8080/api/v1/boards/leon/cool images
 
 ### Delete a specific board from a user
-DELETE http://localhost:8080/api/v1/boards/test2
+DELETE http://localhost:8080/api/v1/boards/leon
 Content-Type: application/json
 
 {
-    "boardName": "sample2"
+    "boardName": "dumb images"
 }
 
 ### Adding and deleting an image into a specific board
-PATCH http://localhost:8080/api/v1/boards/test
+PATCH http://localhost:8080/api/v1/boards/leon
 Content-Type: application/json
 
 {
-    "boardName": "sample2",
+    "boardName": "cool images",
     "images": [
         {
-        "url": "3",
-        "prompt": "three"
-        },
-        {
-        "url": "4",
-        "prompt": "four"
-        },
-        {
-        "url": "5",
-        "prompt": "five"
-        }],
+      "url": "image1",
+      "prompt": "1"
+    },
+    {
+      "url": "image2",
+      "prompt": "2"
+    },
+    {
+      "url": "image3",
+      "prompt": "3"
+    },
+    {
+      "url": "image4",
+      "prompt": "4"
+    },
+    {
+      "url": "image5",
+      "prompt": "5"
+    }],
     "imageUpdates": [
         {
-            "url": "4",
+            "url": "image4",
             "prompt": "four"
         },
         {
-            "url": "5",
+            "url": "image5",
             "prompt": "five"
         }
     ],
     "deleteImage": true,
-    "isCustomThumbnail": false
+    "isCustomThumbnail": true
 }
 
 ### Change a board's thumnail and board name
-PATCH http://localhost:8080/api/v1/boards/test/sample5
+PATCH http://localhost:8080/api/v1/boards/leon/cool images
 Content-Type: application/json
 
  {
-    "newThumbnailUrl": "1",
-    "newBoardName": "sample3"
+    "newThumbnailUrl": "image4",
+    "newBoardName": "cool images"
  }
