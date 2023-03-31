@@ -1,7 +1,11 @@
 import createHttpError from 'http-errors'
 import { User, validate } from '../Models/user.model.js'
 import bcrypt from 'bcrypt'
+import mongoose from 'mongoose'
+import fs from 'fs'
+import jwt from 'jsonwebtoken'
 
+// FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
   try {
     const result = await User.find({}) // no filter means all
@@ -11,6 +15,7 @@ async function getAllUsers(req, res) {
   }
 }
 
+// FOR SIGNUP :: this creates a new user and passes to database
 async function createUser(req, res, next) {
   try {
     console.log(validate(req.body))
@@ -41,6 +46,7 @@ async function createUser(req, res, next) {
   }
 }
 
+// FOR US ONLY :: querying a user with their username
 async function getUser(req, res, next) {
   try {
     const userName = req.params.username
@@ -56,17 +62,62 @@ async function getUser(req, res, next) {
   }
 }
 
+async function getUserAuthorized(req, res, next) {
+  try {
+    const clientToken = req.body.token
+    const username = req.body.username
+
+    // verifying jwt token
+    const cert = fs.readFileSync('./public.pem')
+    jwt.verify(clientToken, cert, async (err, decoded) => {
+      if (err) console.log(err.message)
+      else {
+        // only give back basic user info to client if token is verified
+        const userPrivate = await User.aggregate([
+          { $match: { username: username } },
+          { $project: { password: 0 } },
+        ])
+        console.log(userPrivate)
+        res.status(200).send(userPrivate[0])
+      }
+    })
+  } catch (error) {
+    console.log(error.message)
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid username'))
+      return
+    }
+    next(error)
+  }
+}
+
+// Any updates to the user
+// If editing user in settings page, allow user the ability to edit everything at once
+// then after clicking save or submit, call this endpoint
 async function updateUser(req, res, next) {
   try {
-    const userName = req.params.username
-    const updates = req.body // allows any field to be changed
-    const options = { new: true }
+    const { token, ...rest } = req.body
+    const clientToken = token
+    const cert = fs.readFileSync('./public.pem')
 
-    const result = await User.findOneAndUpdate(
-      { username: userName },
-      updates,
-      options
-    )
+    // verifying token
+    jwt.verify(clientToken, cert, async (err, decoded) => {
+      if (err) throw new Error(err)
+      else {
+        // TODO :: if password is changed, verify password format
+        const userName = req.params.username
+        const updates = rest // allows any field to be changed
+        const options = { new: true }
+
+        const result = await User.findOneAndUpdate(
+          { username: userName },
+          updates,
+          options
+        )
+
+        res.send(result)
+      }
+    })
   } catch (error) {
     console.log(error.message)
     if (error instanceof mongoose.CastError) {
@@ -76,7 +127,12 @@ async function updateUser(req, res, next) {
   }
 }
 
+// Deletes a user from the database
 async function deleteUser(req, res, next) {
+  const token = req.body.token
+  if (!token) {
+    res.status()
+  }
   try {
     const userName = req.params.username
     const result = await User.findOneAndDelete({ username: userName })
@@ -90,4 +146,11 @@ async function deleteUser(req, res, next) {
   }
 }
 
-export { getAllUsers, createUser, getUser, updateUser, deleteUser }
+export {
+  getAllUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser,
+  getUserAuthorized,
+}

@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
 const boardsSchema = new Schema({
-  
   //user's username to identify specific boards
   username: {
     type: String,
@@ -32,7 +31,6 @@ const boardsSchema = new Schema({
     type: Boolean,
     required: false,
   },
-  
 })
 
 const Board = mongoose.model('boards', boardsSchema)

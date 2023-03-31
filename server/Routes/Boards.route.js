@@ -25,7 +25,7 @@ router.get('/:username/:boardName', getSingleBoard);
 //Deleting a whole board
 router.delete('/:username', deleteBoard);
 
-//Adding and deleting one image to a board. Also controlls updates for the thumbnail of the board based on if the 
+//Adding and deleting one image to a board. Also controlls updates for the thumbnail of the board based on if the
 //board has a custom thumbnail or not. If no custom thumbnail/if deleting the thumbnail -> most recent added board will
 //become thumbnail, if deleting last image -> new last image becomes board
 //Need to work on - if board only has 1 item, deleting it will set board image to default
