@@ -1,0 +1,8 @@
+###
+POST http://localhost:8080/api/v1/generate
+Content-Type: application/json
+
+{
+    "prompt": "Draw a post-apocalyptic wasteland, with crumbling buildings, scavenging survivors, and a fiery sunset casting an ominous glow over the desolate landscape",
+    "isRandom": true
+}

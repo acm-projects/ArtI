@@ -8,6 +8,7 @@ import dbInit from './db.init.js'
 import { UserRoute } from './Routes/User.route.js'
 import { BoardsRoute } from './Routes/Boards.route.js'
 import { AuthRoute } from './Routes/Auth.route.js'
+import { ApiRouter } from './Routes/Api.route.js'
 
 const app = express()
 app.use(cors())
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 // USER ROUTES
 app.use('/api/v1/user', UserRoute)
 app.use('/api/v1/boards', BoardsRoute)
-
+app.use('/api/v1/generate', ApiRouter)
 // LOGIN AUTHENTICATION
 app.use('/api/v1/auth', AuthRoute)
 
