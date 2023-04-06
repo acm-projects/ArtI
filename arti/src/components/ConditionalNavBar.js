@@ -4,7 +4,7 @@ import NavBar from './NavBar'
 const ConditionalNavBar = ({ viewportType }) => {
   const location = useLocation()
 
-  console.log('Current pathname:', location.pathname) // Log the current pathname
+  // console.log('Current pathname:', location.pathname) // Log the current pathname
 
   // Checks if current path is not signup or login
   const shouldRenderNavbar = !['/signup', '/'].includes(location.pathname)

@@ -38,7 +38,7 @@ const App = () => {
         username: user.username,
       }
       const response = await axios.post(`/api/v1/user/get`, body)
-      setUser(response.data)
+      setUser(await response.data)
     } catch (error) {
       console.log(error)
     }
@@ -77,7 +77,10 @@ const App = () => {
               <Route path='/imagegen' element={<ImageGen />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
               <Route path='/myboards' element={<MyBoards />} />
-              <Route path='/myprofile' element={<Profile />}></Route>
+              <Route
+                path='/myprofile'
+                element={<Profile user={user} />}
+              ></Route>
             </Route>
           </Routes>
         </main>

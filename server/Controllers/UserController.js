@@ -70,14 +70,13 @@ async function getUserAuthorized(req, res, next) {
     // verifying jwt token
     const cert = fs.readFileSync('./public.pem')
     jwt.verify(clientToken, cert, async (err, decoded) => {
-      if (err) console.log(err.message)
+      if (err) console.log('From getUserAuthorized: ', err.message)
       else {
         // only give back basic user info to client if token is verified
         const userPrivate = await User.aggregate([
           { $match: { username: username } },
           { $project: { password: 0 } },
         ])
-        console.log(userPrivate)
         res.status(200).send(userPrivate[0])
       }
     })
