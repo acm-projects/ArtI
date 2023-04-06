@@ -1,11 +1,37 @@
 import '../index.css'
 import GenerateBtn from './GenerateBtn'
 import PopUp from './PopUp'
-import { useState } from 'react'
+import axios from 'axios'
+import { useRef, useState } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 
 const ImageGen = () => {
   const [buttonPopup, setButtonPopup] = useState(false)
+  const promptInput = useRef('')
+  const [imageUrl, setImage] = useState('')
+
+  console.log(`prompt: ${promptInput.current.value}`)
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    const postUrl = 'http://localhost:8080/api/v1/generate'
+    try {
+      if(promptInput.current.value !== ''){
+        const response = await axios.post(postUrl, {prompt: promptInput.current.value, isRandom: false})
+        if(response.status === 200){
+          const url = response.data.response
+          setImage(url)
+          console.log(imageUrl)
+        }
+        console.log(imageUrl)
+      }
+      else throw new Error("No Prompt Entered!")
+    } catch (error) {
+      console.log(error.message)
+    }
+
+  }
+
   return (
     <div className='generator-container'>
       <div className='bg-circle circle1'></div>
@@ -33,10 +59,11 @@ const ImageGen = () => {
               <div className='generate-bar'>
                 <input
                   className='image-input'
+                  ref = {promptInput}
                   type='text'
                   placeholder='Enter your prompt...'
                 />
-                <GenerateBtn text='Generate' />
+                <GenerateBtn onClick = {handleSubmit} text='Generate' />
               </div>
             </Col>
           </Row>
@@ -47,8 +74,8 @@ const ImageGen = () => {
         <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}></PopUp>
         <div className='generated-img'>
           <img
-            src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
-            alt='img of travis scott raging'
+            src = {imageUrl}
+            alt = {promptInput.current.value}
             className='img'
           />
         </div>
