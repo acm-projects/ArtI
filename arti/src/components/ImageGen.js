@@ -2,34 +2,53 @@ import '../index.css'
 import GenerateBtn from './GenerateBtn'
 import PopUp from './PopUp'
 import axios from 'axios'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 
 const ImageGen = () => {
   const [buttonPopup, setButtonPopup] = useState(false)
-  const promptInput = useRef('')
+  const [promptInput, setPrompt] = useState('')
   const [imageUrl, setImage] = useState('')
 
-  console.log(`prompt: ${promptInput.current.value}`)
 
   async function handleSubmit(e){
     e.preventDefault()
-    const postUrl = 'http://localhost:8080/api/v1/generate'
+
+    console.log(`prompt: ${promptInput}`)
+    const postUrl = 'http://localhost:8080/api/v1/imageai'
     try {
-      if(promptInput.current.value !== ''){
-        const response = await axios.post(postUrl, {prompt: promptInput.current.value, isRandom: false})
+      if(promptInput.match('[a-z0-9]')){
+        const response = await axios.post(postUrl, {prompt: promptInput})
         if(response.status === 200){
           const url = response.data.response
           setImage(url)
           console.log(imageUrl)
         }
-        console.log(imageUrl)
       }
       else throw new Error("No Prompt Entered!")
     } catch (error) {
       console.log(error.message)
     }
+  }
 
+  const onChangeHandler = event => {
+    setPrompt(event.target.value);
+ }
+
+  async function randomizePrompt(){
+    console.log('random function called')
+    const postUrl = 'http://localhost:8080/api/v1/text'
+    try {
+      const response  = await axios.post(postUrl)
+      if(response.status === 200){
+        console.log(response.data.message)
+        const randomizePrompt = response.data.prompt
+        setPrompt(randomizePrompt)
+        console.log(promptInput)
+      }
+    } catch (error) {
+      
+    }
   }
 
   return (
@@ -59,11 +78,15 @@ const ImageGen = () => {
               <div className='generate-bar'>
                 <input
                   className='image-input'
-                  ref = {promptInput}
+                  onChange = {onChangeHandler}
                   type='text'
                   placeholder='Enter your prompt...'
+                  value = {promptInput}
                 />
                 <GenerateBtn onClick = {handleSubmit} text='Generate' />
+              </div>
+              <div>
+                <button onClick = {randomizePrompt}> Randomize </button>
               </div>
             </Col>
           </Row>
@@ -75,7 +98,7 @@ const ImageGen = () => {
         <div className='generated-img'>
           <img
             src = {imageUrl}
-            alt = {promptInput.current.value}
+            //alt = {promptInput.current.value}
             className='img'
           />
         </div>
