@@ -1,11 +1,54 @@
 import '../index.css'
 import PortraitGenBtn from './PortraitGenBtn'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import PopUp from './PopUp';
+import axios from 'axios';
 
 const PortraitGen = () => {
+  const ageInput = useRef(null)
+  const genderInput = useRef(null)
 
   const [buttonPopup, setButtonPopup]=useState(false);
+  const [image, setImage] = useState('')
+ 
+  //Function calls the portrait gen api 
+  async function handleChange (){
+    const age = ageInput.current.value
+    const gender = genderInput.current.value
+    let url = ""
+
+    if(age === '' && gender === 'None'){
+      url = 'https://fakeface.rest/face/json'
+    }
+    else if(age === '' && (gender === 'male' || 'female')){
+      url = `https://fakeface.rest/face/json?gender=${gender}`;
+      
+    }
+    else if(age !== '' && gender === 'None'){
+      const max_age = parseInt(age) + 1
+      const min_age = parseInt(age) - 1
+      url = `https://fakeface.rest/face/json?minimum_age=${min_age}&maximum_age=${max_age}`
+    }
+    else{
+      const max_age = parseInt(age) + 1
+      const min_age = parseInt(age) - 1
+      url = `https://fakeface.rest/face/json?minimum_age=${min_age}&maximum_age=${max_age}&gender=${gender}`
+    }
+    console.log(url)
+
+    axios.get(
+      url
+    )
+    .then(res => {
+      const uri = res.data.image_url
+      setImage(uri)
+      console.log(`image: ${image}`)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  }
+
 
   return (
 
@@ -32,15 +75,15 @@ const PortraitGen = () => {
         </h2>
 
         <div className='text-inputs'>
-          <input className='age-input'
+          <input ref={ageInput} className='age-input'
             type= 'text'
             placeholder='Age' />
 
         <div className='gender-input'>
 
           <label for='Gender'>Gender</label>
-          <select name='Gender' id='Gender'>
-            <option>Gender</option>
+          <select ref={genderInput} name='Gender' id='Gender'>
+            <option>None</option>
             <option value='female'>female</option>
             <option value='male'>male</option>
           </select>
@@ -48,10 +91,14 @@ const PortraitGen = () => {
         </div>
 
         </div>
-
-        <PortraitGenBtn text= 'Generate' />
         
-      </div>
+        <PortraitGenBtn onClick={handleChange} text= 'Generate' />
+        {<img src={image} alt = 'AI Face' />}
+        <button type = "button" onClick = {handleChange}>
+          New image
+        </button>
+        </div>
+
       <div className='popup-container'>
       <button onClick={() => setButtonPopup(true)}>
         save
@@ -60,7 +107,9 @@ const PortraitGen = () => {
         </PopUp>
 
       </div>
+      
     </div>
+
 
 
   )

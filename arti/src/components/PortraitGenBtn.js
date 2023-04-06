@@ -4,6 +4,7 @@ import '../index.css'
 const PortraitGenBtn = ({ text, onClick }) => {
   return (
   <button 
+  type='submit'
   onClick={onClick}
   className='portrait-btn'>
     {text}
