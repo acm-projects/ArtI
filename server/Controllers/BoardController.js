@@ -21,9 +21,9 @@ async function createNewBoard (req, res, next) {
         //checks if user already has a board with the same name
         const boardNameExist = await Board.findOne({username: req.body.username, boardName: req.body.boardName})
         if(boardNameExist){
-            return res.status(409).send({
-                message: "A board with this name already exists, please use a different name."
-            })
+            throw new Error(
+                 "A board with this name already exists, please use a different name."
+            )
         }
         
         const board = new Board(req.body)
@@ -33,7 +33,7 @@ async function createNewBoard (req, res, next) {
 
     } catch (error) {
         console.log(error.message);
-        next(error);
+        res.send(error.message)
     }
 }
 
