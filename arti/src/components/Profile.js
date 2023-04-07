@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Button, Form } from 'react-bootstrap'
+import { Container, Row, Col, Button, Form, Dropdown } from 'react-bootstrap'
 import '../styles/Profile.css'
 
 export default function Profile({ user }) {
@@ -85,6 +85,13 @@ export default function Profile({ user }) {
         <Row className='py-4'>
           <Col xs={12}>
             <h2 className='profile-header'>Settings & Privacy</h2>
+          </Col>
+        </Row>
+
+        {/* Help & Support */}
+        <Row className='py-4'>
+          <Col xs={12}>
+            <h2 className='profile-header'>Help & Support</h2>
           </Col>
         </Row>
       </Container>

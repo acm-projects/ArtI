@@ -74,7 +74,6 @@ const ImageGen = () => {
 
               <div className='generate-bar'>
                 <input
-                  ref={prompt}
                   className='image-input'
                   onChange={onChangeHandler}
                   type='text'
@@ -86,24 +85,21 @@ const ImageGen = () => {
               <div>
                 <button onClick={randomizePrompt}> Randomize </button>
               </div>
-              <div>
-                <button onClick={randomizePrompt}> Randomize </button>
-              </div>
             </Col>
           </Row>
         </div>
       </Container>
-      {/* <div className='popup-container'>
+      {<div className='popup-container'>
         <button onClick={() => setButtonPopup(true)}>save</button>
         <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}></PopUp>
         <div className='generated-img'>
           <img
             src = {imageUrl}
-            //alt = {promptInput.current.value}
+            xalt = {promptInput}
             className='img'
           />
         </div>
-      </div> */}
+      </div> }
     </div>
   )
 }
