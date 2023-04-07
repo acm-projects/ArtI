@@ -4,12 +4,13 @@ import { useRef, useState } from 'react'
 import PopUp from './PopUp'
 import axios from 'axios'
 
-const PortraitGen = () => {
+const PortraitGen = ({ user }) => {
   const ageInput = useRef(null)
   const genderInput = useRef(null)
 
   const [buttonPopup, setButtonPopup] = useState(false)
   const [image, setImage] = useState('')
+  const [boardsArray, setBoardsArray] = useState([])
 
   //Function calls the portrait gen api
   async function handleChange() {
@@ -92,7 +93,11 @@ const PortraitGen = () => {
 
       <div className='popup-container'>
         <button onClick={() => setButtonPopup(true)}>save</button>
-        <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}></PopUp>
+        <PopUp
+          trigger={buttonPopup}
+          setTrigger={setButtonPopup}
+          boards={boardsArray}
+        ></PopUp>
       </div>
     </div>
   )

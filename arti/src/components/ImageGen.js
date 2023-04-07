@@ -6,42 +6,37 @@ import PopUp from './PopUp'
 import '../styles/PopUp.css'
 import axios from 'axios'
 
-
-const ImageGen = ({user}) => {
+const ImageGen = ({ user }) => {
   const [boardsArray, setBoardsArray] = useState([])
-
   //button functionality of popup, show/hide popup
   const [show, setShow] = useState(false)
-  const handleShow = async () => {
-    setShow(true)
-    const response=await axios(`/api/v1/boards/${user.username}`)
-    console.log(response)
-    if(response.status === 200)
-    {
-      setBoardsArray(response.data)
-      console.log('calling api',boardsArray) 
-    }
-    }
-  const handleClose = () => setShow(false)
-
-const ImageGen = ({ user }) => {
-  const [buttonPopup, setButtonPopup] = useState(false)
   const [promptInput, setPrompt] = useState('')
   const [imageUrl, setImage] = useState('')
 
+  // Functions for showing/closing modal popup
+  const handleShow = async () => {
+    setShow(true)
+    // gets the boards owned by user
+    const response = await axios(`/api/v1/boards/${user.username}`)
+    if (response.status === 200) {
+      setBoardsArray(response.data)
+      console.log('calling api', boardsArray)
+    }
+  }
+  const handleClose = () => setShow(false)
+
+  // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
     e.preventDefault()
 
-    console.log(`prompt: ${promptInput}`)
-    const postUrl = 'http://localhost:8080/api/v1/imageai'
+    const postUrl = '/api/v1/imageai'
     try {
       if (promptInput.match('[a-z0-9]')) {
+        // makes sure that there is a prompt
         const response = await axios.post(postUrl, { prompt: promptInput })
         if (response.status === 200) {
-          console.log(response.data)
           const url = `data:image/png;base64,${response.data.response.url}`
           setImage(url)
-          console.log(imageUrl)
         }
       } else throw new Error('No Prompt Entered!')
     } catch (error) {
@@ -54,17 +49,16 @@ const ImageGen = ({ user }) => {
   }
 
   async function randomizePrompt() {
-    console.log('random function called')
-    const postUrl = 'http://localhost:8080/api/v1/text'
+    const postUrl = '/api/v1/text'
     try {
       const response = await axios.post(postUrl)
       if (response.status === 200) {
-        console.log(response.data.message)
         const randomizePrompt = response.data.prompt
         setPrompt(randomizePrompt)
-        console.log(promptInput)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   return (
@@ -78,12 +72,6 @@ const ImageGen = ({ user }) => {
       <div className='tiny-lines line2'></div>
       <div className='tiny-lines line3'></div>
       <div className='tiny-lines line4'></div>
-
-      {/* <header>
-      <h1>
-        Portrait Generator
-      </h1>
-      </header> */}
 
       <Container>
         <div className='image-input-container'>
@@ -104,38 +92,37 @@ const ImageGen = ({ user }) => {
               <div>
                 <button onClick={randomizePrompt}> Randomize </button>
               </div>
-              <div>
-                <button onClick={randomizePrompt}> Randomize </button>
-              </div>
             </Col>
           </Row>
-        </div>        
+        </div>
       </Container>
+
       <div className='popup-container'>
         <div className='generated-img'>
-
-          <button className='popup-button' variant="primary" onClick={handleShow}>
-          <i className="bi bi-plus-lg"></i>
+          <button
+            className='popup-button'
+            variant='primary'
+            onClick={handleShow}
+          >
+            <i className='bi bi-plus-lg'></i>
           </button>
 
           <PopUp
-          user={user}
+            user={user}
             show={show}
             handleClose={handleClose}
             boards={boardsArray}
           />
 
-          <img
-            src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
-            alt='img of travis scott raging'
-            className='img'
-          />
-
+          {/* <img
+              src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
+              alt='img of travis scott raging'
+              className='img'
+            /> */}
         </div>
-      </div> */}
+      </div>
       <img src={imageUrl} alt={promptInput} className='img' />
     </div>
   )
 }
-
 export default ImageGen
