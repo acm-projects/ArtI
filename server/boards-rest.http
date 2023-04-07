@@ -9,18 +9,6 @@ Content-Type: application/json
     "username": "isaac",
     "boardName": "awesome",
     "images": [
-        {
-            "url": "image1",
-            "prompt": "1"
-        },
-        {
-            "url": "image2",
-            "prompt": "2"
-        },
-        {
-            "url": "image3",
-            "prompt": "3"
-        }
     ],
     "thumbnail": "default",
     "customThumbnail": false

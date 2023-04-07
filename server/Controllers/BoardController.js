@@ -28,6 +28,7 @@ async function createNewBoard (req, res, next) {
         
         const board = new Board(req.body)
         const result = await board.save()
+        console.log("create new board success")
         res.send(result);
 
     } catch (error) {
@@ -38,12 +39,14 @@ async function createNewBoard (req, res, next) {
 
 async function getUsersBoards (req, res, next) {
     try {
+        console.log()
         const username = req.params.username
 
         if(!await Board.findOne({username: username}))
             throw createHttpError(404, "User does not exist.")
 
         const board = await Board.find({ username: username }, {});
+        console.log('get users board success')
 
         res.send(board);
 
