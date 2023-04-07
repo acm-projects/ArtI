@@ -26,7 +26,7 @@ const App = () => {
       handleUser(userStorage)
       console.log(user)
     }
-  }, []) // DO NOT REMOVE THE ARRAY!, it will run useEffect multiple times
+  }, [isLoggedIn]) // DO NOT REMOVE THE ARRAY!, it will run useEffect multiple times
 
   // Gets basic user information
   async function handleUser(user) {
@@ -73,7 +73,7 @@ const App = () => {
 
             {/* Routes that require for user to be signed in (authenticated) */}
             <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-              <Route path='/imagegen' element={<ImageGen />} />
+              <Route path='/imagegen' element={<ImageGen user={user} isLoggedIn={isLoggedIn}/>} />
               <Route path='/portraitgen' element={<PortraitGen />} />
               <Route path='/myboards' element={<MyBoards />} />
               <Route path='/myprofile' element={<></>}></Route>
