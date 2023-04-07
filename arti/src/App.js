@@ -70,7 +70,7 @@ const App = () => {
 
             {/* Routes that require for user to be signed in (authenticated) */}
             <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-              <Route path='/imagegen' element={<ImageGen user={user} />} />
+              <Route path='/imagegen' element={<ImageGen />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
               <Route path='/myboards' element={<MyBoards />} />
               <Route

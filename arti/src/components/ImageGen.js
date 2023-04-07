@@ -1,10 +1,28 @@
 import '../index.css'
 import GenerateBtn from './GenerateBtn'
-import PopUp from './PopUp'
-import axios from 'axios'
-import { useState } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
-// import axios from 'axios'
+import { useState } from 'react'
+import PopUp from './PopUp'
+import '../styles/PopUp.css'
+import axios from 'axios'
+
+
+const ImageGen = ({user}) => {
+  const [boardsArray, setBoardsArray] = useState([])
+
+  //button functionality of popup, show/hide popup
+  const [show, setShow] = useState(false)
+  const handleShow = async () => {
+    setShow(true)
+    const response=await axios(`/api/v1/boards/${user.username}`)
+    console.log(response)
+    if(response.status === 200)
+    {
+      setBoardsArray(response.data)
+      console.log('calling api',boardsArray) 
+    }
+    }
+  const handleClose = () => setShow(false)
 
 const ImageGen = ({ user }) => {
   const [buttonPopup, setButtonPopup] = useState(false)
@@ -91,12 +109,28 @@ const ImageGen = ({ user }) => {
               </div>
             </Col>
           </Row>
-        </div>
+        </div>        
       </Container>
-      {/* <div className='popup-container'>
-        <button onClick={() => setButtonPopup(true)}>save</button>
-        <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}></PopUp>
+      <div className='popup-container'>
         <div className='generated-img'>
+
+          <button className='popup-button' variant="primary" onClick={handleShow}>
+          <i className="bi bi-plus-lg"></i>
+          </button>
+
+          <PopUp
+          user={user}
+            show={show}
+            handleClose={handleClose}
+            boards={boardsArray}
+          />
+
+          <img
+            src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
+            alt='img of travis scott raging'
+            className='img'
+          />
+
         </div>
       </div> */}
       <img src={imageUrl} alt={promptInput} className='img' />
