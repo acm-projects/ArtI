@@ -7,6 +7,37 @@
     font-size: 16px;
   }
 
-  .add-boards-button {
-    
+  .board-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .board-popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  .board-popup-content {
+    background-color: #303030;
+    padding: 2rem;
+    border-radius: 1rem;
+    z-index: 2;
+  }
+
+  .image-thumbnail {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+    margin-bottom: 1rem;
   }
