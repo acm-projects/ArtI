@@ -98,7 +98,7 @@ const ImageGen = () => {
         <div className='generated-img'>
           <img
             src = {imageUrl}
-            //alt = {promptInput.current.value}
+            alt = {promptInput}
             className='img'
           />
         </div>
