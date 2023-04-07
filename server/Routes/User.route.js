@@ -7,6 +7,7 @@ import {
   getUser,
   getUserAuthorized,
   updateUser,
+  uploadProfilePic,
 } from '../Controllers/UserController.js'
 
 // Gets all the users
@@ -24,5 +25,8 @@ router.patch('/:username', updateUser)
 
 // Deleting an existing user
 // router.delete('/:username', deleteUser)
+
+// Upload a profile picture
+router.post('/:username/profile-pic', uploadProfilePic)
 
 export { router as UserRoute }

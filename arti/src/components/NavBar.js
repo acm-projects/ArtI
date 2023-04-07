@@ -45,7 +45,7 @@ const Navbar = ({ viewportType }) => {
                 <p>Profile</p>
               </div>
             </Link>
-            <ul className='dropdown-menu'>
+            {/* <ul className='dropdown-menu'>
               <li>
                 <Link to='/editprofile'>Edit Profile</Link>
               </li>
@@ -61,7 +61,7 @@ const Navbar = ({ viewportType }) => {
               <li>
                 <Link to='/'>Logout</Link>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </li>
       </ul>

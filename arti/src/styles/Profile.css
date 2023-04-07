@@ -5,6 +5,12 @@
   }
 }
 
+.intro-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .profile-intro,
 .logout-wrapper {
   display: flex;
@@ -23,4 +29,17 @@
 
 .info-row {
   margin: 1rem 0;
+}
+
+.profile-pic-btn {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  color: white;
+  transition: transform 500ms;
+}
+
+.profile-pic-btn:hover {
+  transform: scale(1.075);
+  transition: transform 200ms;
 }

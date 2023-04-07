@@ -16,7 +16,7 @@ const boardsSchema = new Schema({
   //An array that holds all the image urls of photos in a board
   images: {
     type: [],
-    requierd: true,
+    required: true,
   },
 
   //the thumbnail of the board, users can customly set it as any image that is inside the board

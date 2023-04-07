@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 // import axios from 'axios'
 
-const ImageGen = () => {
+const ImageGen = ({ user }) => {
   const [buttonPopup, setButtonPopup] = useState(false)
   const [promptInput, setPrompt] = useState('')
   const [imageUrl, setImage] = useState('')
@@ -20,7 +20,8 @@ const ImageGen = () => {
       if (promptInput.match('[a-z0-9]')) {
         const response = await axios.post(postUrl, { prompt: promptInput })
         if (response.status === 200) {
-          const url = response.data.response
+          console.log(response.data)
+          const url = `data:image/png;base64,${response.data.response.url}`
           setImage(url)
           console.log(imageUrl)
         }
