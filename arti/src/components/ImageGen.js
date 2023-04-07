@@ -22,7 +22,7 @@ const ImageGen = () => {
         if (response.status === 200) {
           const url = response.data.response
           setImage(url)
-          console.log(imageUrl)
+          console.log(await imageUrl)
         }
       } else throw new Error('No Prompt Entered!')
     } catch (error) {
