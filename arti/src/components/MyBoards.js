@@ -12,7 +12,6 @@ import React, { useState } from "react";
 import axios from 'axios'
 
 const MyBoards = ({user}) => {
-  console.log(user)
   const [searchTerm, setSearchTerm] = useState("");
   const [modalSearchTerm, setModalSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -122,7 +121,7 @@ const MyBoards = ({user}) => {
             <Button variant="secondary" onClick={handleCloseModal}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={() => createNewBoard(user, modalSearchTerm)}>
+            <Button variant="primary" onClick={() => createNewBoard(user, modalSearchTerm, handleAddBoard)} >
               Add Board
             </Button>
           </Modal.Footer>
@@ -167,7 +166,7 @@ const MyBoards = ({user}) => {
               <Button variant="primary" onClick={handleShowAddImageModal}>
                 Add Image
               </Button>
-              <Button variant="secondary" onClick={closeBoard}>
+              <Button variant="secondary" onClick={() => deleteBoard(user, boards[selectedBoard].name)}>
                 Delete Board
               </Button>
               <Button variant="secondary" onClick={closeBoard}>
@@ -216,7 +215,7 @@ const MyBoards = ({user}) => {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => setShowImageModal(false)}
+              onClick={() => deleteImage(user, boards[selectedBoard].name, boards[selectedBoard].images)}
             >
               Delete Image
             </Button>
@@ -267,13 +266,15 @@ async function saveToBoards(user){
   }
 }
 
-async function createNewBoard(user, newBoardName){
+async function createNewBoard(user, newBoardName, handleAddBoard){
+
+  handleAddBoard()
+
   const username = user.username
   const boardName = newBoardName
   const images = []
   const thumbnail = ''
   const customThumbnail = false
-  console.log(username)
 
   try {
     const postUrl = 'http://localhost:8080/api/v1/boards'
@@ -285,7 +286,7 @@ async function createNewBoard(user, newBoardName){
       customThumbnail: customThumbnail
     })
   
-    console.log(response)
+    console.log('this is from creating new board' + response) 
   } catch (error) {
     console.log(error.message)
   }
@@ -306,13 +307,15 @@ async function getSingleBoard(user){
   }
 }
 
-async function deleteBoard(user){
+async function deleteBoard(user, deleteThisBoard){
   try {
     const username = user.username
-    const boardName = user.boardName
-    const deleteUrl = `http://localhost:8080/api/v1/boards/${username}`
+    console.log(username)
+    const boardName = deleteThisBoard
+    console.log(`trying to delete this board ${boardName}`)
+    const postUrl = `http://localhost:8080/api/v1/boards/${username}`
     
-    const response = await axios.delete(deleteUrl, {boardName: boardName})
+    const response = await axios.post(postUrl, {boardName: boardName})
     console.log(response)
 
   } catch (error) {
@@ -320,12 +323,12 @@ async function deleteBoard(user){
   }
 }
 
-async function deleteImage(user){
+async function deleteImage(user, userBoard, boardImages){
   try{
     const username = user.username
-    const boardName = user.boardName
-    const images = user.images
-    const imagesToDelete = []
+    const boardName = userBoard
+    const images = boardImages
+    const imagesToDelete = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg"
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 

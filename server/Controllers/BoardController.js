@@ -95,6 +95,7 @@ async function deleteBoard (req, res, next) {
             username: username,
             boardName: boardName,
         });
+        console.log('delete board success')
         res.send(result);
 
     } catch (error) {
