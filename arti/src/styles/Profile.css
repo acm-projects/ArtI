@@ -1,0 +1,26 @@
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .logout-wrapper p {
+    display: none;
+  }
+}
+
+.profile-intro,
+.logout-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.profile-intro > *,
+.logout-wrapper > * {
+  margin: 0 0.5rem;
+}
+
+.profile-header {
+  text-decoration: underline;
+}
+
+.info-row {
+  margin: 1rem 0;
+}

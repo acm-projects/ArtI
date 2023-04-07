@@ -1,0 +1,92 @@
+### Get Boards
+GET http://localhost:8080/api/v1/boards
+
+### Create a new board
+POST http://localhost:8080/api/v1/boards
+Content-Type: application/json
+
+{
+    "username": "isaac",
+    "boardName": "awesome",
+    "images": [
+        {
+            "url": "image1",
+            "prompt": "1"
+        },
+        {
+            "url": "image2",
+            "prompt": "2"
+        },
+        {
+            "url": "image3",
+            "prompt": "3"
+        }
+    ],
+    "thumbnail": "default",
+    "customThumbnail": false
+}
+
+### Get a specific user's boards
+GET http://localhost:8080/api/v1/boards/leon
+
+### Get a specific board from a user
+//TELL FRONTEND SEND URLS WITH SPACES REPLACED WITH DASHES
+GET http://localhost:8080/api/v1/boards/leon/cool images
+
+### Delete a specific board from a user
+DELETE http://localhost:8080/api/v1/boards/leon
+Content-Type: application/json
+
+{
+    "boardName": "dumb images"
+}
+
+### Adding and deleting an image into a specific board
+PATCH http://localhost:8080/api/v1/boards/leon
+Content-Type: application/json
+
+{
+    "boardName": "cool images",
+    "images": [
+        {
+      "url": "image1",
+      "prompt": "1"
+    },
+    {
+      "url": "image2",
+      "prompt": "2"
+    },
+    {
+      "url": "image3",
+      "prompt": "3"
+    },
+    {
+      "url": "image4",
+      "prompt": "4"
+    },
+    {
+      "url": "image5",
+      "prompt": "5"
+    }],
+    "imageUpdates": [
+        {
+            "url": "image4",
+            "prompt": "four"
+        },
+        {
+            "url": "image5",
+            "prompt": "five"
+        }
+    ],
+    "deleteImage": true,
+    "isCustomThumbnail": true
+}
+
+### Change a board's thumnail and board name
+PATCH http://localhost:8080/api/v1/boards/leon/cool images
+Content-Type: application/json
+
+ {
+    "newThumbnailUrl": "image4",
+    "newBoardName": "cool images"
+ }
