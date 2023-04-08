@@ -1,6 +1,7 @@
 import '../index.css'
+import styles from '../styles/image-gen.module.css'
 import GenerateBtn from '../components/GenerateBtn'
-import { Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import PopUp from '../components/PopUp'
 import '../styles/PopUp.css'
@@ -37,6 +38,7 @@ const ImageGen = ({ user }) => {
         if (response.status === 200) {
           const url = `data:image/png;base64,${response.data.response.url}`
           setImage(url)
+          handleShow()
         }
       } else throw new Error('No Prompt Entered!')
     } catch (error) {
@@ -79,7 +81,7 @@ const ImageGen = ({ user }) => {
             <Col>
               <h3>Enter a detailed description for what you want to create.</h3>
 
-              <div className='generate-bar'>
+              <div className='generate-bar mb-3'>
                 <input
                   className='image-input'
                   onChange={onChangeHandler}
@@ -89,39 +91,42 @@ const ImageGen = ({ user }) => {
                 />
                 <GenerateBtn onClick={handleSubmit} text='Generate' />
               </div>
-              <div>
-                <button onClick={randomizePrompt}> Randomize </button>
+              <div className={`${styles['btn-wrapper']}`}>
+                <Button variant='secondary' onClick={randomizePrompt}>
+                  Randomize Prompt
+                </Button>
+              </div>
+              <div className='popup-container'>
+                <div className='generated-img'>
+                  {/* <button
+            className='popup-button'
+            variant='primary'
+            onClick={handleShow}
+          >
+            <i className='bi bi-plus-lg'></i>
+          </button> */}
+
+                  <PopUp
+                    user={user}
+                    show={show}
+                    handleClose={handleClose}
+                    boards={boardsArray}
+                    imageUrl={imageUrl}
+                  />
+
+                  {/* <img
+              src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
+              alt='img of travis scott raging'
+              className='img'
+            /> */}
+                </div>
               </div>
             </Col>
           </Row>
         </div>
       </Container>
 
-      <div className='popup-container'>
-        <div className='generated-img'>
-          <button
-            className='popup-button'
-            variant='primary'
-            onClick={handleShow}
-          >
-            <i className='bi bi-plus-lg'></i>
-          </button>
-
-          <PopUp
-            user={user}
-            show={show}
-            handleClose={handleClose}
-            boards={boardsArray}
-          />
-
-          {/* <img
-              src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
-              alt='img of travis scott raging'
-              className='img'
-            /> */}
-        </div>
-      </div>
-      <img src={imageUrl} alt={promptInput} className='img' />
+      {/* <img src={imageUrl} alt={promptInput} className='img' /> */}
     </div>
   )
 }

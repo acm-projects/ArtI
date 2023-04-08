@@ -250,7 +250,7 @@ img {
 
 /*image properties for login*/
 .side-column {
-  background-image: url('components/assets/girl.png');
+  background-image: url('assets/girl.png');
   background-color: #111;
 
   flex: 1;

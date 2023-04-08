@@ -6,7 +6,6 @@ import {
   Button,
   Card,
   Image,
-  Dropdown,
 } from 'react-bootstrap'
 import React, { useState } from 'react'
 import axios from 'axios'
