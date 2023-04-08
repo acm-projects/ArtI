@@ -162,6 +162,7 @@ export default function Profile({ user, setIsLoggedIn }) {
           </Col>
         </Row>
 
+        {/* Help & Support */}
         <Row className='py-4'>
           <Col xs={12}>
             <h2 className='profile-header'>Help & Support</h2>

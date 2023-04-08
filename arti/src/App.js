@@ -72,7 +72,7 @@ const App = () => {
             <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
               <Route path='/imagegen' element={<ImageGen user={user} />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
-              <Route path='/myboards' element={<MyBoards />} />
+              <Route path='/myboards' element={<MyBoards user={user} />} />
               <Route
                 path='/myprofile'
                 element={<Profile user={user} setIsLoggedIn={setisLoggedIn} />}

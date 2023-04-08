@@ -6,23 +6,11 @@ POST http://localhost:8080/api/v1/boards
 Content-Type: application/json
 
 {
-    "username": "isaac",
-    "boardName": "awesome",
+    "username": "shells",
+    "boardName": "test_board",
     "images": [
-        {
-            "url": "image1",
-            "prompt": "1"
-        },
-        {
-            "url": "image2",
-            "prompt": "2"
-        },
-        {
-            "url": "image3",
-            "prompt": "3"
-        }
     ],
-    "thumbnail": "default",
+    "thumbnail": "",
     "customThumbnail": false
 }
 
@@ -38,7 +26,7 @@ DELETE http://localhost:8080/api/v1/boards/leon
 Content-Type: application/json
 
 {
-    "boardName": "dumb images"
+    "boardName": "dog12"
 }
 
 ### Adding and deleting an image into a specific board
@@ -47,36 +35,12 @@ Content-Type: application/json
 
 {
     "boardName": "cool images",
-    "images": [
-        {
-      "url": "image1",
-      "prompt": "1"
-    },
-    {
-      "url": "image2",
-      "prompt": "2"
-    },
-    {
-      "url": "image3",
-      "prompt": "3"
-    },
-    {
-      "url": "image4",
-      "prompt": "4"
-    },
-    {
-      "url": "image5",
-      "prompt": "5"
-    }],
+    "images": [],
     "imageUpdates": [
-        {
-            "url": "image4",
-            "prompt": "four"
-        },
-        {
-            "url": "image5",
-            "prompt": "five"
-        }
+      {
+      "url": "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg",
+      "prompt": "1"
+      }
     ],
     "deleteImage": true,
     "isCustomThumbnail": true

@@ -23,7 +23,7 @@ router.get('/:username', getUsersBoards);
 router.get('/:username/:boardName', getSingleBoard);
 
 //Deleting a whole board
-router.delete('/:username', deleteBoard);
+router.post('/:username', deleteBoard);
 
 //Adding and deleting one image to a board. Also controlls updates for the thumbnail of the board based on if the
 //board has a custom thumbnail or not. If no custom thumbnail/if deleting the thumbnail -> most recent added board will

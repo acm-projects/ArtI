@@ -21,29 +21,32 @@ async function createNewBoard (req, res, next) {
         //checks if user already has a board with the same name
         const boardNameExist = await Board.findOne({username: req.body.username, boardName: req.body.boardName})
         if(boardNameExist){
-            return res.status(409).send({
-                message: "A board with this name already exists, please use a different name."
-            })
+            throw new Error(
+                 "A board with this name already exists, please use a different name."
+            )
         }
         
         const board = new Board(req.body)
         const result = await board.save()
+        console.log("create new board success")
         res.send(result);
 
     } catch (error) {
         console.log(error.message);
-        next(error);
+        res.send(error.message)
     }
 }
 
 async function getUsersBoards (req, res, next) {
     try {
+        console.log()
         const username = req.params.username
 
         if(!await Board.findOne({username: username}))
             throw createHttpError(404, "User does not exist.")
 
         const board = await Board.find({ username: username }, {});
+        console.log('get users board success')
 
         res.send(board);
 
@@ -92,6 +95,7 @@ async function deleteBoard (req, res, next) {
             username: username,
             boardName: boardName,
         });
+        console.log('delete board success')
         res.send(result);
 
     } catch (error) {
