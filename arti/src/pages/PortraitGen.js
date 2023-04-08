@@ -1,7 +1,7 @@
 import '../index.css'
-import PortraitGenBtn from './PortraitGenBtn'
+import PortraitGenBtn from '../components/PortraitGenBtn'
 import { useRef, useState } from 'react'
-import PopUp from './PopUp'
+import PopUp from '../components/PopUp'
 import axios from 'axios'
 
 const PortraitGen = ({ user }) => {

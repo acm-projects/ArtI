@@ -1,8 +1,8 @@
 import '../index.css'
-import GenerateBtn from './GenerateBtn'
+import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container } from 'react-bootstrap'
 import { useState } from 'react'
-import PopUp from './PopUp'
+import PopUp from '../components/PopUp'
 import '../styles/PopUp.css'
 import axios from 'axios'
 
