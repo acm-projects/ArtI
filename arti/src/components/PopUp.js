@@ -36,7 +36,7 @@ export const Form = () => {
 //save the image to the selected board(unsure if this a backened thing, so just logging that it happened)
 export const pullBoard = () => {
   return(
-    console.log(`image saved to ${board.boardName} board`)
+    console.log('image saved to selected board')
   )
 }
 
@@ -65,6 +65,7 @@ export default function PopUp({show, handleClose, boards}) {
             boards.map((board,i) => {
               return <Dropdown.Item key={i} onClick={pullBoard(true)}> { board.boardName} </Dropdown.Item>
             })
+
           }
         </DropdownButton>
       </Modal.Body>
