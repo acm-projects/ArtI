@@ -11,7 +11,7 @@ const saveImage = () => {
     //log for on click
     console.log('Image Saved!')
 
-    //log image link for API (todo)
+    //log image link for API 
     console.log('https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg')
 }
 
@@ -33,14 +33,16 @@ export const Form = () => {
   )
 }
 
-//boards to save to function - need to figure out a way to pull data from boards to figure amt of 
-export const saveBoard = () => {
-  
+//save the image to the selected board(unsure if this a backened thing, so just logging that it happened)
+export const pullBoard = () => {
+  return(
+    console.log(`image saved to ${board.boardName} board`)
+  )
 }
 
 //contents of popup
 export default function PopUp({show, handleClose, boards}) {
-// console.log('getting prop from mom',boards)
+
   return (
     <Modal
       show = {show} onHide={handleClose}
@@ -57,11 +59,11 @@ export default function PopUp({show, handleClose, boards}) {
         <h4>
           Choose a board...
         </h4>
-        //do dropdown from bootstrap using code from discord chat
+        //dropdown pulling boards from api
         <DropdownButton id='board-select' title='Choose Board'>
           {
             boards.map((board,i) => {
-              return <Dropdown.Item key={i} onClick={'pullBoard'}> { board.boardName} </Dropdown.Item>
+              return <Dropdown.Item key={i} onClick={pullBoard(true)}> { board.boardName} </Dropdown.Item>
             })
           }
         </DropdownButton>
@@ -74,18 +76,3 @@ export default function PopUp({show, handleClose, boards}) {
     
   )
 }
-
-
-
-/* return (props.trigger) ? (
-  <div className='popups'>
-      <div className='popup-inner'>
-          <button className='close-btn' onClick={() => props.setTrigger(false)}>
-              close
-          </button>
-          {props.children}
-
-      </div>
-    
-  </div>
-) : ""; */
