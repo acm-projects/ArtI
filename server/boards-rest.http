@@ -19,7 +19,8 @@ GET http://localhost:8080/api/v1/boards/leon
 
 ### Get a specific board from a user
 //TELL FRONTEND SEND URLS WITH SPACES REPLACED WITH DASHES
-GET http://localhost:8080/api/v1/boards/leon/cool images
+GET http://localhost:8080/api/v1/boards/leon/dog3
+
 
 ### Delete a specific board from a user
 DELETE http://localhost:8080/api/v1/boards/leon
@@ -34,16 +35,15 @@ PATCH http://localhost:8080/api/v1/boards/leon
 Content-Type: application/json
 
 {
-    "boardName": "cool images",
-    "images": [],
+    "boardName": "dog3",
+    "images": ["https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2021/03/dog-group.jpg"],
     "imageUpdates": [
       {
-      "url": "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg",
-      "prompt": "1"
+      "url": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2021/03/dog-group.jpg",
       }
     ],
     "deleteImage": true,
-    "isCustomThumbnail": true
+    "isCustomThumbnail": false
 }
 
 ### Change a board's thumnail and board name

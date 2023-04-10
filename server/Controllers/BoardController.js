@@ -106,6 +106,7 @@ async function deleteBoard (req, res, next) {
 
 async function addOrDeleteImage (req, res, next) {
     try {
+        console.log("starting function...")
         const username = req.params.username
         const boardName = req.body.boardName
         const imageArray = req.body.images
@@ -114,7 +115,6 @@ async function addOrDeleteImage (req, res, next) {
         const shouldDelete = req.body.deleteImage // this variable controls whether we are adding or deleting an image from the board
         const isCustomThumbnail = req.body.isCustomThumbnail 
         const options = { new: true };
-
         //Error handling
         if(!await Board.findOne({username: username}))
             throw createHttpError(404, "User does not exist.")
@@ -128,38 +128,43 @@ async function addOrDeleteImage (req, res, next) {
             { $project: {thumbnail: 1}}
         ]);
 
-        // const imageAggregate = await Board.aggregate([
-        //     { $match: {username: username, boardName: boardName}},
-        //     { $project: {images: 1}}
-        // ]);
-
-        // const imagesArray = imageAggregate[0].images
-
-        // for(let i = 0; i < imagesArray.length; i++){
-        //     console.log(imagesArray[i]);
-        // }
         const thumbnail = aggregate[0].thumbnail;
 
         //deletes the selected imageurl from the array
         function deleteImageFromArray(imageArray, imageUpdates) {
-
+            console.log('this is image updates: ' + imageUpdates)
+            console.log('this is the og array: ' + imageArray)
             for(let i = 0; i < imageArray.length; i++){
+                console.log('size of imageArray: ' + imageArray.length)
+                console.log('value of i :' + i)
                 let index = -1; 
                 for(let j = 0; j < imageUpdates.length; j++){
-                    if(imageArray[i].url == imageUpdates[j].url){
+                console.log('length of deleting array: '+imageUpdates.length)
+                    console.log('value of i :' + i)
+                    console.log('vaule of j: ' + j)
+                    console.log(imageArray[i])
+                    console.log(imageUpdates[j])
+                    if(imageArray[i] == imageUpdates[j]){
                         index = i
                     }
+                    console.log('this is index: '+ index)
                     if (index > -1) {
                         imageArray.splice(i, 1);
+                        console.log("this is the new array: " + imageArray)
                     }
                 }
-                
+            }
+            console.log(imageArray.length)
+            if(imageArray.length === 0){
+                console.log('returning blank array')
+                return []
             }
             return imageArray
         };
         
         //adding new image to array
         function insert(imageArray, imageUpdates) {
+            console.log('adding to array')
             for(let i = 0 ; i < imageUpdates.length; i++){
                 imageArray.push(imageUpdates[i])
             }
@@ -169,16 +174,25 @@ async function addOrDeleteImage (req, res, next) {
         //If user is deleting the thumbnail from the board, set the thumbnail to the 
         //last image in the board
         function isThumbnailDeleted(imageArray, imageUpdates){
-            if(imageArray.legnth == 0) return;
+            console.log('thumbnail is being deleted')
+            if(imageArray.legnth == 0) return [];
 
             for(let i = 0; i < imageUpdates.length; i++){
                 if(imageUpdates[i].url == thumbnail){
                     return imageArray[imageArray.length - 1].url;
                 }
             }
-
             return thumbnail
         };
+
+        function isEmptyArray(imageArray){
+            if(imageArray.length === 0 ){
+                return "default"
+            }
+            else{
+                return imageArray[imageArray.length - 1].url
+            }
+        }
 
         //If user has already set a custom thumbnail, adding or deleting will not change the thumbnail
         if(isCustomThumbnail){
@@ -200,6 +214,7 @@ async function addOrDeleteImage (req, res, next) {
         }
         //If user has not set custom thumbnail, make the thumbnail the last picture
         else{
+            console.log('delete alg without custom thumbnail...')
             const result = await Board.findOneAndUpdate(
                 {
                     username: username,
@@ -207,14 +222,14 @@ async function addOrDeleteImage (req, res, next) {
                 },
                 {
                     images: shouldDelete ? deleteImageFromArray(imageArray, imageUpdates) : insert(imageArray, imageUpdates),
-
                     //if user is deleting, sets the thumbnail to the picture before it, else when adding,
                     //set the thumbnail to the added picture
-                    thumbnail: shouldDelete ? imageArray[imageArray.length - 1].url : imageUpdates[imageUpdates.length -1].url
+
+                    thumbnail: shouldDelete ? isEmptyArray(imageArray) : isEmptyArray(imageArray)
                 },
                     options
                 );
-    
+                console.log('result: ' + result)
                 res.send(result);
         }
         
