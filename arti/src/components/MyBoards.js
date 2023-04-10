@@ -20,6 +20,7 @@ const MyBoards = ({user}) => {
   const [newImageURL, setNewImageURL] = useState("");
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const handleAddBoard = () => {
     if (boards.some((board) => board.name === modalSearchTerm)) {
@@ -152,6 +153,7 @@ const MyBoards = ({user}) => {
                   onClick={() => {
                     setNewImageURL(imageURL);
                     setShowImageModal(true);
+                    setSelectedImages(imageURL)
                   }}
                 >
                   <Image
@@ -215,7 +217,7 @@ const MyBoards = ({user}) => {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => deleteImage(user, boards[selectedBoard].name, boards[selectedBoard].images)}
+              onClick={() => deleteImage(user, boards[selectedBoard].name, boards[selectedBoard].images, selectedImages)}
             >
               Delete Image
             </Button>
@@ -242,29 +244,29 @@ async function getBoards(user){
 // do stuff with it 
 }
 
-async function saveToBoards(user){
-  try{
-    const username = user.username
-    const boardName = user.boardName
-    const images = user.images
-    const imageToAdd = ''
-    const isCustomThumbnail = user.customThumbnail
-    const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
+// async function saveToBoards(user){
+//   try{
+//     const username = user.username
+//     const boardName = user.boardName
+//     const images = user.images
+//     const imageToAdd = ''
+//     const isCustomThumbnail = user.customThumbnail
+//     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
-    const response = await axios.patch(patchUrl, {
-      boardName: boardName,
-      images: images,
-      imageUpdates: imageToAdd,
-      deleteBoard: false,
-      isCustomThumbnail: isCustomThumbnail
-    })
+//     const response = await axios.patch(patchUrl, {
+//       boardName: boardName,
+//       images: images,
+//       imageUpdates: imageToAdd,
+//       deleteBoard: false,
+//       isCustomThumbnail: isCustomThumbnail
+//     })
 
-    console.log(response)
+//     console.log(response)
 
-  }catch(error){
-    console.log(error.message)
-  }
-}
+//   }catch(error){
+//     console.log(error.message)
+//   }
+// }
 
 async function createNewBoard(user, newBoardName, handleAddBoard){
 
@@ -323,12 +325,14 @@ async function deleteBoard(user, deleteThisBoard){
   }
 }
 
-async function deleteImage(user, userBoard, boardImages){
+async function deleteImage(user, userBoard, boardImages, imageToDelete){
   try{
     const username = user.username
     const boardName = userBoard
     const images = boardImages
-    const imagesToDelete = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg"
+    console.log(images)
+    const imagesToDelete = [imageToDelete]
+    console.log('images to delete: ' + imageToDelete)
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
@@ -336,7 +340,7 @@ async function deleteImage(user, userBoard, boardImages){
       boardName: boardName,
       images: images,
       imageUpdates: imagesToDelete,
-      deleteBoard: true,
+      deleteImage: true,
       isCustomThumbnail: isCustomThumbnail
     })
 
