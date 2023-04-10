@@ -97,6 +97,16 @@ const MyBoards = ({user}) => {
           Create Board
         </Button>
 
+        <Button
+          variant = "primary"
+          onClick = {async () => 
+          getBoards(user)
+          }
+          className = "display-all-boards-button"
+        >
+          Display all boards
+        </Button>
+
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create New Board</Modal.Title>
@@ -228,20 +238,18 @@ const MyBoards = ({user}) => {
   );
 };
 
+
 async function getBoards(user){
-// use the axios package by importing at the top
-// set it to a variable so u can access the stuff sent by backend
+  console.log('this is the user: ')
+  console.log(user)
   const username = user.username
-  console.log(username)
   const getUrl = `http://localhost:8080/api/v1/boards/${username}`
   try {
-    const response = await axios(getUrl)
-    
+    const response = await axios(getUrl)   
     console.log(response)
   } catch (error) {
     console.log(error.message)
   }
-// do stuff with it 
 }
 
 // async function saveToBoards(user){
@@ -330,9 +338,7 @@ async function deleteImage(user, userBoard, boardImages, imageToDelete){
     const username = user.username
     const boardName = userBoard
     const images = boardImages
-    console.log(images)
     const imagesToDelete = [imageToDelete]
-    console.log('images to delete: ' + imageToDelete)
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
