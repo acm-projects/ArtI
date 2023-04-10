@@ -12,19 +12,27 @@ const ImageGen = ({ user }) => {
   //button functionality of popup, show/hide popup
   const [show, setShow] = useState(false)
   const [promptInput, setPrompt] = useState('')
-  const [imageUrl, setImage] = useState('')
+  const [image, setImage] = useState({})
+  const [showSaving, setShowSaving] = useState(false)
 
   // Functions for showing/closing modal popup
   const handleShow = async () => {
-    setShow(true)
-    // gets the boards owned by user
-    const response = await axios(`/api/v1/boards/${user.username}`)
-    if (response.status === 200) {
-      setBoardsArray(response.data)
-      console.log('calling api', boardsArray)
+    try {
+      setShow(true)
+      // gets the boards owned by user
+      const response = await axios(`/api/v1/boards/${user.username}`)
+      if (response.status === 200) {
+        setBoardsArray(response.data)
+        console.log('calling api', boardsArray)
+      }
+    } catch (error) {
+      console.error(error.message)
     }
   }
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    setShowSaving(false)
+  }
 
   // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
@@ -36,8 +44,9 @@ const ImageGen = ({ user }) => {
         // makes sure that there is a prompt
         const response = await axios.post(postUrl, { prompt: promptInput })
         if (response.status === 200) {
-          const url = `data:image/png;base64,${response.data.response.url}`
-          setImage(url)
+          const id = response.data.response.id
+          // const url = `data:image/png;base64,${response.data.response.url}`
+          setImage({ id: id, data: response.data.response.url })
           handleShow()
         }
       } else throw new Error('No Prompt Entered!')
@@ -111,7 +120,9 @@ const ImageGen = ({ user }) => {
                     show={show}
                     handleClose={handleClose}
                     boards={boardsArray}
-                    imageUrl={imageUrl}
+                    image={image}
+                    showSaving={showSaving}
+                    setShowSaving={setShowSaving}
                   />
 
                   {/* <img

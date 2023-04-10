@@ -1,4 +1,10 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema, mongo } from 'mongoose'
+
+const imageSchema = new Schema({
+  id: String,
+  data: Buffer,
+  contentType: String,
+})
 
 const boardsSchema = new Schema({
   //user's username to identify specific boards
@@ -15,14 +21,14 @@ const boardsSchema = new Schema({
 
   //An array that holds all the image urls of photos in a board
   images: {
-    type: [],
+    type: [imageSchema],
     required: true,
   },
 
   //the thumbnail of the board, users can customly set it as any image that is inside the board
   //if have time, let user make the thumbnail any photo (even from file system)
   thumbnail: {
-    type: String,
+    type: imageSchema,
     required: false,
   },
 
@@ -34,4 +40,5 @@ const boardsSchema = new Schema({
 })
 
 const Board = mongoose.model('boards', boardsSchema)
-export { Board }
+const Image = mongoose.model('image', imageSchema)
+export { Board, Image }

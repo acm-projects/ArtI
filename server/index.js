@@ -13,7 +13,7 @@ import { TextCompleteRouter } from './Routes/TextComplete.route.js'
 
 const app = express()
 app.use(cors())
-app.use(express.json()) // allows express to parse req.body
+app.use(express.json({ limit: '5mb' })) // allows express to parse req.body
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8080 || process.env.PORT
@@ -51,4 +51,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
 })
-

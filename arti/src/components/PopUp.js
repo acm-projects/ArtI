@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { DropdownButton, Dropdown, Row, Col, Container } from 'react-bootstrap'
+import axios from 'axios'
+import { useState } from 'react'
 
 const saveImage = () => {
   //log for on click
@@ -26,9 +28,43 @@ export const Form = () => {
 }
 
 //contents of popup
-export default function PopUp({ show, handleClose, boards, imageUrl }) {
+export default function PopUp({
+  user,
+  show,
+  handleClose,
+  boards,
+  image,
+  showSaving,
+  setShowSaving,
+}) {
+  const [saveStatus, setSaveStatus] = useState('Saving...')
   //boards to save to function - need to figure out a way to pull data from boards to figure amt of
-  const saveBoard = async () => {}
+  const saveBoard = async (e) => {
+    try {
+      const imageUpdates = [JSON.stringify(image)]
+      const boardName = e.target.name
+      const body = {
+        boardName: boardName,
+        imageUpdates: imageUpdates,
+        shouldDelete: false,
+        isCustomThumbnail: false,
+      }
+
+      console.log(body)
+
+      setShowSaving(true)
+      const save = await axios.post(
+        `/api/v1/boards/${user.username}/add-delete`,
+        body
+      )
+      if (save.status === 200) {
+        console.log(save.data)
+        setSaveStatus(`Saved to "${boardName}"`)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <Modal
@@ -47,21 +83,29 @@ export default function PopUp({ show, handleClose, boards, imageUrl }) {
         {/* <h4>Choose a board...</h4> */}
         <Row className='mb-4'>
           <Col>
-            <Container>{<img src={imageUrl} alt='Prompt' />}</Container>
+            <Container>
+              {<img src={`data:image/png;base64,${image.data}`} alt='Prompt' />}
+            </Container>
           </Col>
         </Row>
 
         <Row className='mt-4'>
           <Col>
             <div className={styles['save-btn-wrapper']}>
-              <Button variant='secondary' disabled>
-                Save Image
-              </Button>
+              <p
+                className={`${showSaving ? 'd-inline text-success' : 'd-none'}`}
+              >
+                {saveStatus}
+              </p>
               {/* //do dropdown from bootstrap using code from discord chat */}
               <DropdownButton id='board-select' title='Choose Board'>
                 {boards.map((board, i) => {
                   return (
-                    <Dropdown.Item key={i} onClick={'pullBoard'}>
+                    <Dropdown.Item
+                      key={i}
+                      name={board.boardName}
+                      onClick={saveBoard}
+                    >
                       {' '}
                       {board.boardName}{' '}
                     </Dropdown.Item>
