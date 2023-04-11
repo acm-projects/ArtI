@@ -145,6 +145,28 @@ async function deleteUser(req, res, next) {
   }
 }
 
+async function uploadProfilePic(req, res, next) {
+  const token = req.body.token
+  if (!token) res.status(401).send('User is unauthorized')
+
+  try {
+    const userName = req.params.username
+    const file = req.body.file
+    const result = await User.findOneAndUpdate(
+      { username: userName },
+      {
+        profilePicture: '',
+      }
+    )
+    res.status(200).send(result)
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, 'Invalid username'))
+      return
+    }
+  }
+}
+
 export {
   getAllUsers,
   createUser,
@@ -152,4 +174,5 @@ export {
   updateUser,
   deleteUser,
   getUserAuthorized,
+  uploadProfilePic,
 }

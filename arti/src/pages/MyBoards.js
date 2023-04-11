@@ -1,4 +1,4 @@
-import "../utils/MyBoardsIndex.css";
+import '../styles/MyBoardsIndex.css'
 import {
   Container,
   FormControl,
@@ -6,105 +6,93 @@ import {
   Button,
   Card,
   Image,
-  Dropdown,
-} from "react-bootstrap";
-import React, { useState } from "react";
+} from 'react-bootstrap'
+import React, { useState } from 'react'
 import axios from 'axios'
 
-const MyBoards = ({user}) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [modalSearchTerm, setModalSearchTerm] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [showAddImageModal, setShowAddImageModal] = useState(false);
-  const [boards, setBoards] = useState([]);
-  const [newImageURL, setNewImageURL] = useState("");
-  const [selectedBoard, setSelectedBoard] = useState(null);
-  const [showImageModal, setShowImageModal] = useState(false);
-  const [selectedImages, setSelectedImages] = useState([]);
+const MyBoards = ({ user }) => {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [modalSearchTerm, setModalSearchTerm] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [showAddImageModal, setShowAddImageModal] = useState(false)
+  const [boards, setBoards] = useState([])
+  const [newImageURL, setNewImageURL] = useState('')
+  const [selectedBoard, setSelectedBoard] = useState(null)
+  const [showImageModal, setShowImageModal] = useState(false)
 
   const handleAddBoard = () => {
     if (boards.some((board) => board.name === modalSearchTerm)) {
-      alert("A board with this name already exists.");
-      return;
+      alert('A board with this name already exists.')
+      return
     }
 
     const newBoard = {
       name: modalSearchTerm,
       images: newImageURL ? [newImageURL] : [],
-    };
-    setBoards([...boards, newBoard]);
-    setModalSearchTerm("");
-    setNewImageURL("");
-  };
+    }
+    setBoards([...boards, newBoard])
+    setModalSearchTerm('')
+    setNewImageURL('')
+  }
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
+    setSearchTerm(event.target.value)
+  }
 
   const handleShowModal = () => {
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   const handleCloseModal = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   const handleModalSearch = (event) => {
-    setModalSearchTerm(event.target.value);
-  };
+    setModalSearchTerm(event.target.value)
+  }
 
   const handleBoardClick = (boardIndex) => {
-    setSelectedBoard(boardIndex);
-  };
+    setSelectedBoard(boardIndex)
+  }
 
   const closeBoard = () => {
-    setSelectedBoard(null);
-  };
+    setSelectedBoard(null)
+  }
 
   const handleShowAddImageModal = () => {
-    setShowAddImageModal(true);
-  };
+    setShowAddImageModal(true)
+  }
 
   const handleCloseAddImageModal = () => {
-    setShowAddImageModal(false);
-  };
+    setShowAddImageModal(false)
+  }
 
   const handleAddImageToBoard = () => {
-    const newBoards = [...boards];
-    newBoards[selectedBoard].images.push(newImageURL);
-    setBoards(newBoards);
-    setNewImageURL("");
-    handleCloseAddImageModal();
-  };
+    const newBoards = [...boards]
+    newBoards[selectedBoard].images.push(newImageURL)
+    setBoards(newBoards)
+    setNewImageURL('')
+    handleCloseAddImageModal()
+  }
 
   return (
     <div>
       <h1>Welcome, USER </h1>
 
-      <Container className="search-bar">
+      <Container className='search-bar'>
         <FormControl
-          type="text"
-          placeholder="Search for Board..."
+          type='text'
+          placeholder='Search for Board...'
           value={searchTerm}
           onChange={handleSearch}
         />
 
         <Button
-          variant="primary"
+          variant='primary'
           onClick={handleShowModal}
-          className="add-boards-button"
+          className='add-boards-button'
         >
           Create Board
-        </Button>
-
-        <Button
-          variant = "primary"
-          onClick = {async () => 
-          getBoards(user)
-          }
-          className = "display-all-boards-button"
-        >
-          Display all boards
         </Button>
 
         <Modal show={showModal} onHide={handleCloseModal}>
@@ -114,35 +102,40 @@ const MyBoards = ({user}) => {
           <Modal.Body>
             <p>Name Board</p>
             <FormControl
-              type="text"
-              placeholder="e.g. background inspo"
+              type='text'
+              placeholder='e.g. background inspo'
               value={modalSearchTerm}
               onChange={handleModalSearch}
             />
 
             <p>Image URL</p>
             <FormControl
-              type="text"
-              placeholder="https://example.com/image.jpg"
+              type='text'
+              placeholder='https://example.com/image.jpg'
               value={newImageURL}
               onChange={(e) => setNewImageURL(e.target.value)}
             />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
+            <Button variant='secondary' onClick={handleCloseModal}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={() => createNewBoard(user, modalSearchTerm, handleAddBoard)} >
+            <Button
+              variant='primary'
+              onClick={() =>
+                createNewBoard(user, modalSearchTerm, handleAddBoard)
+              }
+            >
               Add Board
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <div className="boards-container">
+        <div className='boards-container'>
           {boards.map((board, boardIndex) => (
             <Card
               key={boardIndex}
-              style={{ width: "18rem", margin: "1rem" }}
+              style={{ width: '18rem', margin: '1rem' }}
               onClick={() => handleBoardClick(boardIndex)}
             >
               <Card.Body>
@@ -153,35 +146,37 @@ const MyBoards = ({user}) => {
         </div>
 
         {selectedBoard !== null && (
-          <div className="board-popup">
-            <div className="board-popup-background" onClick={closeBoard} />
-            <div className="board-popup-content">
+          <div className='board-popup'>
+            <div className='board-popup-background' onClick={closeBoard} />
+            <div className='board-popup-content'>
               <h2>{boards[selectedBoard].name} </h2>
               {boards[selectedBoard].images.map((imageURL, imageIndex) => (
                 <div
                   key={imageIndex}
                   onClick={() => {
-                    setNewImageURL(imageURL);
-                    setShowImageModal(true);
-                    setSelectedImages(imageURL)
+                    setNewImageURL(imageURL)
+                    setShowImageModal(true)
                   }}
                 >
                   <Image
                     src={imageURL}
-                    alt="Image"
-                    className="image-thumbnail"
+                    alt='Image'
+                    className='image-thumbnail'
                     thumbnail
                   />
                 </div>
               ))}
 
-              <Button variant="primary" onClick={handleShowAddImageModal}>
+              <Button variant='primary' onClick={handleShowAddImageModal}>
                 Add Image
               </Button>
-              <Button variant="secondary" onClick={() => deleteBoard(user, boards[selectedBoard].name)}>
+              <Button
+                variant='secondary'
+                onClick={() => deleteBoard(user, boards[selectedBoard].name)}
+              >
                 Delete Board
               </Button>
-              <Button variant="secondary" onClick={closeBoard}>
+              <Button variant='secondary' onClick={closeBoard}>
                 Close
               </Button>
             </div>
@@ -194,17 +189,17 @@ const MyBoards = ({user}) => {
               <Modal.Body>
                 <p>Image URL</p>
                 <FormControl
-                  type="text"
-                  placeholder="https://example.com/image.jpg"
+                  type='text'
+                  placeholder='https://example.com/image.jpg'
                   value={newImageURL}
                   onChange={(e) => setNewImageURL(e.target.value)}
                 />
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseAddImageModal}>
+                <Button variant='secondary' onClick={handleCloseAddImageModal}>
                   Cancel
                 </Button>
-                <Button variant="primary" onClick={handleAddImageToBoard}>
+                <Button variant='primary' onClick={handleAddImageToBoard}>
                   Add Image
                 </Button>
               </Modal.Footer>
@@ -216,18 +211,24 @@ const MyBoards = ({user}) => {
             <Modal.Title>Image</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Image src={newImageURL} alt="Image" fluid />
+            <Image src={newImageURL} alt='Image' fluid />
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="secondary"
+              variant='secondary'
               onClick={() => setShowImageModal(false)}
             >
               Close
             </Button>
             <Button
-              variant="secondary"
-              onClick={() => deleteImage(user, boards[selectedBoard].name, boards[selectedBoard].images, selectedImages)}
+              variant='secondary'
+              onClick={() =>
+                deleteImage(
+                  user,
+                  boards[selectedBoard].name,
+                  boards[selectedBoard].images
+                )
+              }
             >
               Delete Image
             </Button>
@@ -235,49 +236,49 @@ const MyBoards = ({user}) => {
         </Modal>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-
-async function getBoards(user){
-  console.log('this is the user: ')
-  console.log(user)
+async function getBoards(user) {
+  // use the axios package by importing at the top
+  // set it to a variable so u can access the stuff sent by backend
   const username = user.username
+  console.log(username)
   const getUrl = `http://localhost:8080/api/v1/boards/${username}`
   try {
-    const response = await axios(getUrl)   
+    const response = await axios(getUrl)
+
+    console.log(response)
+  } catch (error) {
+    console.log(error.message)
+  }
+  // do stuff with it
+}
+
+async function saveToBoards(user) {
+  try {
+    const username = user.username
+    const boardName = user.boardName
+    const images = user.images
+    const imageToAdd = ''
+    const isCustomThumbnail = user.customThumbnail
+    const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
+
+    const response = await axios.patch(patchUrl, {
+      boardName: boardName,
+      images: images,
+      imageUpdates: imageToAdd,
+      deleteBoard: false,
+      isCustomThumbnail: isCustomThumbnail,
+    })
+
     console.log(response)
   } catch (error) {
     console.log(error.message)
   }
 }
 
-// async function saveToBoards(user){
-//   try{
-//     const username = user.username
-//     const boardName = user.boardName
-//     const images = user.images
-//     const imageToAdd = ''
-//     const isCustomThumbnail = user.customThumbnail
-//     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
-
-//     const response = await axios.patch(patchUrl, {
-//       boardName: boardName,
-//       images: images,
-//       imageUpdates: imageToAdd,
-//       deleteBoard: false,
-//       isCustomThumbnail: isCustomThumbnail
-//     })
-
-//     console.log(response)
-
-//   }catch(error){
-//     console.log(error.message)
-//   }
-// }
-
-async function createNewBoard(user, newBoardName, handleAddBoard){
-
+async function createNewBoard(user, newBoardName, handleAddBoard) {
   handleAddBoard()
 
   const username = user.username
@@ -293,16 +294,16 @@ async function createNewBoard(user, newBoardName, handleAddBoard){
       boardName: boardName,
       images: images,
       thumbnail: thumbnail,
-      customThumbnail: customThumbnail
+      customThumbnail: customThumbnail,
     })
-  
-    console.log('this is from creating new board' + response) 
+
+    console.log('this is from creating new board' + response)
   } catch (error) {
     console.log(error.message)
   }
 }
 
-async function getSingleBoard(user){
+async function getSingleBoard(user) {
   const username = user.username
   const boardName = user.boardName
 
@@ -311,34 +312,33 @@ async function getSingleBoard(user){
 
     const response = await axios.post(getUrl)
     console.log(response)
-
   } catch (error) {
     console.log(error.message)
   }
 }
 
-async function deleteBoard(user, deleteThisBoard){
+async function deleteBoard(user, deleteThisBoard) {
   try {
     const username = user.username
     console.log(username)
     const boardName = deleteThisBoard
     console.log(`trying to delete this board ${boardName}`)
     const postUrl = `http://localhost:8080/api/v1/boards/${username}`
-    
-    const response = await axios.post(postUrl, {boardName: boardName})
-    console.log(response)
 
+    const response = await axios.post(postUrl, { boardName: boardName })
+    console.log(response)
   } catch (error) {
     console.log(error.message)
   }
 }
 
-async function deleteImage(user, userBoard, boardImages, imageToDelete){
-  try{
+async function deleteImage(user, userBoard, boardImages) {
+  try {
     const username = user.username
     const boardName = userBoard
     const images = boardImages
-    const imagesToDelete = [imageToDelete]
+    const imagesToDelete =
+      'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg'
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
@@ -346,19 +346,18 @@ async function deleteImage(user, userBoard, boardImages, imageToDelete){
       boardName: boardName,
       images: images,
       imageUpdates: imagesToDelete,
-      deleteImage: true,
-      isCustomThumbnail: isCustomThumbnail
+      deleteBoard: true,
+      isCustomThumbnail: isCustomThumbnail,
     })
 
     console.log(response)
-
-  }catch(error){
+  } catch (error) {
     console.log(error.message)
   }
 }
 
-async function changeThumbnailOrBoardName(user){
-  try{
+async function changeThumbnailOrBoardName(user) {
+  try {
     const username = user.username
     const boardName = user.boardName
     const thumbnailImage = ''
@@ -367,14 +366,12 @@ async function changeThumbnailOrBoardName(user){
 
     const response = await axios.patch(patchUrl, {
       newThumbnailUrl: thumbnailImage,
-      newBoardName: newBoardName
+      newBoardName: newBoardName,
     })
     console.log(response)
-
-  } catch(error){
+  } catch (error) {
     console.log(error.message)
   }
 }
 
-
-export default MyBoards;
+export default MyBoards

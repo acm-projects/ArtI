@@ -38,12 +38,17 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
     event.preventDefault()
     console.log(formData)
 
+    const defaultBoard = 'Saved Images'
+
     const body = {
       username: formData.username,
       email: formData.email,
       password: formData.cpassword,
       firstName: formData.firstname,
       lastName: formData.lastname,
+      settings: {
+        defaultBoard: defaultBoard,
+      },
     }
 
     try {
@@ -67,14 +72,20 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
               username: formData.username,
             })
           )
-          // immediately goes to imagegen after loggin in
+
+          // Creates the default board for new user
+          await axios.post('/api/v1/boards/', {
+            username: body.username,
+            boardName: defaultBoard,
+          })
+
+          // immediately goes to imagegen after logging in
           navigate('/imagegen')
         }
       }
     } catch (error) {
       if (error.response) {
         setStatus({ message: error.response.data.message })
-        // console.error(error.response.data.message)
       } else console.log(error.message)
     }
 
