@@ -7,7 +7,7 @@ import {
   Card,
   Image,
 } from 'react-bootstrap'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const MyBoards = ({ user }) => {
@@ -19,6 +19,13 @@ const MyBoards = ({ user }) => {
   const [newImageURL, setNewImageURL] = useState('')
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
+  const [selectedImage, setSelectedImage] = useState('')
+  // ISAAC STUFF
+  const [boardsArr, setBoardsArr] = useState([])
+
+  useEffect(()=> {
+    setBoardsArr(getBoards(user))
+  }, [])
 
   const handleAddBoard = () => {
     if (boards.some((board) => board.name === modalSearchTerm)) {
@@ -77,7 +84,7 @@ const MyBoards = ({ user }) => {
 
   return (
     <div>
-      <h1>Welcome, USER </h1>
+      <h1>{user.username}'s Boards </h1>
 
       <Container className='search-bar'>
         <FormControl
@@ -94,6 +101,20 @@ const MyBoards = ({ user }) => {
         >
           Create Board
         </Button>
+
+        {/* ISAAC STUFF */}
+        {
+          /*
+          boardsArr.map((board, i) => {
+            return (<>
+            <Card>
+              <Card.Body>
+                {board.boardName}
+              </Card.Body>
+            </Card>
+            </>)
+          })*/
+        }
 
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
@@ -156,6 +177,7 @@ const MyBoards = ({ user }) => {
                   onClick={() => {
                     setNewImageURL(imageURL)
                     setShowImageModal(true)
+                    setSelectedImage(imageURL)
                   }}
                 >
                   <Image
@@ -226,7 +248,8 @@ const MyBoards = ({ user }) => {
                 deleteImage(
                   user,
                   boards[selectedBoard].name,
-                  boards[selectedBoard].images
+                  boards[selectedBoard].images,
+                  selectedImage
                 )
               }
             >
@@ -248,34 +271,13 @@ async function getBoards(user) {
   try {
     const response = await axios(getUrl)
 
-    console.log(response)
+    console.log(response.data)
+    return response.data
+
   } catch (error) {
     console.log(error.message)
   }
   // do stuff with it
-}
-
-async function saveToBoards(user) {
-  try {
-    const username = user.username
-    const boardName = user.boardName
-    const images = user.images
-    const imageToAdd = ''
-    const isCustomThumbnail = user.customThumbnail
-    const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
-
-    const response = await axios.patch(patchUrl, {
-      boardName: boardName,
-      images: images,
-      imageUpdates: imageToAdd,
-      deleteBoard: false,
-      isCustomThumbnail: isCustomThumbnail,
-    })
-
-    console.log(response)
-  } catch (error) {
-    console.log(error.message)
-  }
 }
 
 async function createNewBoard(user, newBoardName, handleAddBoard) {
@@ -338,6 +340,7 @@ async function deleteImage(user, userBoard, boardImages, imageToDelete){
     const boardName = userBoard
     const images = boardImages
     const imagesToDelete = [imageToDelete]
+    console.log(imagesToDelete)
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
