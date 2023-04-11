@@ -332,13 +332,12 @@ async function deleteBoard(user, deleteThisBoard) {
   }
 }
 
-async function deleteImage(user, userBoard, boardImages) {
-  try {
+async function deleteImage(user, userBoard, boardImages, imageToDelete){
+  try{
     const username = user.username
     const boardName = userBoard
     const images = boardImages
-    const imagesToDelete =
-      'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-08/220805-border-collie-play-mn-1100-82d2f1.jpg'
+    const imagesToDelete = [imageToDelete]
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
 
@@ -346,12 +345,13 @@ async function deleteImage(user, userBoard, boardImages) {
       boardName: boardName,
       images: images,
       imageUpdates: imagesToDelete,
-      deleteBoard: true,
-      isCustomThumbnail: isCustomThumbnail,
+      deleteImage: true,
+      isCustomThumbnail: isCustomThumbnail
     })
 
     console.log(response)
-  } catch (error) {
+
+  }catch(error){
     console.log(error.message)
   }
 }
