@@ -143,8 +143,9 @@ async function addOrDeleteImage(req, res, next) {
     imageUpdates = imageUpdates.map((image) => {
       let theImage = JSON.parse(image)
       console.log('From Board Controler: image -- ', theImage)
+      console.log()
       return new Image({
-        id: image.id,
+        id: theImage.id,
         data: Buffer.from(theImage.data, 'base64'),
         contentType: 'image/png',
       })
