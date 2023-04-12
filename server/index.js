@@ -8,10 +8,12 @@ import dbInit from './db.init.js'
 import { UserRoute } from './Routes/User.route.js'
 import { BoardsRoute } from './Routes/Boards.route.js'
 import { AuthRoute } from './Routes/Auth.route.js'
+import { ApiRouter } from './Routes/Api.route.js'
+import { TextCompleteRouter } from './Routes/TextComplete.route.js'
 
 const app = express()
 app.use(cors())
-app.use(express.json()) // allows express to parse req.body
+app.use(express.json({ limit: '5mb' })) // allows express to parse req.body
 app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8080 || process.env.PORT
@@ -25,9 +27,10 @@ app.get('/', (req, res) => {
 // USER ROUTES
 app.use('/api/v1/user', UserRoute)
 app.use('/api/v1/boards', BoardsRoute)
-
+app.use('/api/v1/imageai', ApiRouter)
 // LOGIN AUTHENTICATION
 app.use('/api/v1/auth', AuthRoute)
+app.use('/api/v1/text', TextCompleteRouter)
 
 // 404 handler and pass to error handler
 app.use((req, res, next) => {
@@ -48,4 +51,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
 })
-

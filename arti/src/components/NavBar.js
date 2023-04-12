@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Navbar = ({ type }) => {
+const Navbar = ({ viewportType }) => {
   return (
-    <nav className={`nav-bar ${type}`}>
+    <nav className={`nav-bar ${viewportType}`}>
       <ul className='nav-links'>
         <li>
           <Link to='/'>
@@ -45,7 +45,7 @@ const Navbar = ({ type }) => {
                 <p>Profile</p>
               </div>
             </Link>
-            <ul className='dropdown-menu'>
+            {/* <ul className='dropdown-menu'>
               <li>
                 <Link to='/editprofile'>Edit Profile</Link>
               </li>
@@ -61,7 +61,7 @@ const Navbar = ({ type }) => {
               <li>
                 <Link to='/'>Logout</Link>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </li>
       </ul>

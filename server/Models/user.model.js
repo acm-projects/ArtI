@@ -51,6 +51,7 @@ function validate(data) {
     password: passwordComplexity().required().label('Password'),
     firstName: Joi.string().required().label('First Name'),
     lastName: Joi.string().required().label('Last Name'),
+    settings: Joi.object().label('Settings'),
   })
   return schema.validate(data)
 }

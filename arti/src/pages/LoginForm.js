@@ -93,7 +93,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
             <em>to</em>
           </h1>
           <h1>
-            ART<em>i</em>
+            ART<em>i.</em>
           </h1>
         </div>
       </Col>

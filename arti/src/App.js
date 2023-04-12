@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import axios from 'axios'
-import LoginForm from './components/LoginForm.js'
-import SignUp from './components/SignUp.js'
-import ImageGen from './components/ImageGen.js'
+import LoginForm from './pages/LoginForm.js'
+import SignUp from './pages/SignUp.js'
+import ImageGen from './pages/ImageGen.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import PortraitGen from './components/PortraitGen.js'
-import NavBar from './components/NavBar'
-import MyBoards from './components/MyBoards'
+import PortraitGen from './pages/PortraitGen.js'
+import MyBoards from './pages/MyBoards.js'
 import ProtectedRoutes from './utils/ProtectedRoutes.js'
+import Profile from './pages/Profile.js'
+import ConditionalNavBar from './components/ConditionalNavBar'
 
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
   const [user, setUser] = useState() // basic user information to be passed down to children as prop
 
-  // TODO :: fix where dont need empty dependency array below
   // Check if the user is logged in by getting their token
   useEffect(() => {
     const userStorage = JSON.parse(sessionStorage.getItem('arti'))
@@ -22,9 +22,7 @@ const App = () => {
       setisLoggedIn(false)
     } else {
       setisLoggedIn(true)
-      // TODO :: get user info by requesting from API
       handleUser(userStorage)
-      console.log(user)
     }
   }, [isLoggedIn]) // DO NOT REMOVE THE ARRAY!, it will run useEffect multiple times
 
@@ -36,7 +34,7 @@ const App = () => {
         username: user.username,
       }
       const response = await axios.post(`/api/v1/user/get`, body)
-      setUser(response.data)
+      setUser(await response.data)
     } catch (error) {
       console.log(error)
     }
@@ -45,8 +43,7 @@ const App = () => {
   return (
     <Container fluid className='main-container'>
       <Router>
-        <NavBar type='desktop-nav' />
-
+        <ConditionalNavBar viewportType='desktop-nav' />
         <main className='content'>
           <Routes>
             {/* Routes that does not require for user to be signed in  */}
@@ -73,15 +70,18 @@ const App = () => {
 
             {/* Routes that require for user to be signed in (authenticated) */}
             <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-              <Route path='/imagegen' element={<ImageGen user={user} isLoggedIn={isLoggedIn}/>} />
+              <Route path='/imagegen' element={<ImageGen user={user} />} />
               <Route path='/portraitgen' element={<PortraitGen />} />
-              <Route path='/myboards' element={<MyBoards />} />
-              <Route path='/myprofile' element={<></>}></Route>
+              <Route path='/myboards' element={<MyBoards user={user} />} />
+              <Route
+                path='/myprofile'
+                element={<Profile user={user} setIsLoggedIn={setisLoggedIn} />}
+              ></Route>
             </Route>
           </Routes>
         </main>
 
-        <NavBar type='mobile-nav' />
+        <ConditionalNavBar viewportType='mobile-nav' />
       </Router>
     </Container>
   )
