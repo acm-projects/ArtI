@@ -1,0 +1,105 @@
+:root{
+  /* i think u define variables */
+  --line-width: 20%;
+}
+
+/* TODO :: make circles and lines responsive */
+.bg-circle {
+  border-radius: 50%;
+  /* Position */
+  position: absolute;
+  top: calc(50% + 50px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* animation: infinite circleAnimation 5s; */
+}
+
+/* @keyframes circleAnimation{
+  from{
+    transform: scale(1) translate(-50%, -50%);
+  }
+  to{
+    transform: scale(0.5) translate(-50%, -50%);
+  }
+} */
+
+.circle1 {
+  width: calc(var(--circle-base-size) + 0px);
+  height: calc(var(--circle-base-size) + 0px);
+  background-color: #99441f;
+  z-index: -1;
+}
+
+.circle2 {
+  width: calc(var(--circle-base-size) + 25px);
+  height: calc(var(--circle-base-size) + 25px);
+  background-color: #733317;
+  z-index: -2;
+}
+
+.circle3 {
+  width: calc(var(--circle-base-size) + 50px);
+  height: calc(var(--circle-base-size) + 50px);
+  background-color: #562611;
+  z-index: -3;
+}
+
+.circle4 {
+  width: calc(var(--circle-base-size) + 75px);
+  height: calc(var(--circle-base-size) + 75px);
+  background-color: #31180d;
+  z-index: -4;
+}
+
+.tiny-lines {
+  border-radius: 5px;
+  /* Position */
+  position: absolute;
+  height: 10px;
+  z-index: -1;
+  transition: all 5s;
+  /* name duration method */
+  animation: lineAnimation 5s normal;
+}
+
+@keyframes lineAnimation {
+  from{
+    width: 0;
+  }
+  to{
+    width: var(--line-width)
+  }
+}
+
+.line1 {
+  background-color: #371e13;
+  /* width: calc(var(--line-width) + 35%); */
+  --line-width: 55%;
+  top: 20%;
+  left: 0;
+}
+
+.line2 {
+  background-color: #562611;
+  /* width: calc(var(--line-width) + 20%); */
+  --line-width: 40%;
+  top: 35%;
+  left: 0;
+}
+
+.line3 {
+  background-color: #562611;
+  /* width: calc(var(--line-width) + 20%); */
+  --line-width: 40%;
+
+  bottom: 35%;
+  right: 0;
+}
+
+.line4 {
+  background-color: #31180d;
+  /* width: calc(var(--line-width) + 30%); */
+  --line-width: 50%;
+  bottom: 22.5%;
+  right: 0;
+}

@@ -4,7 +4,7 @@ import '../index.css'
 const GenerateBtn = ({ color, text, onClick }) => {
   return (
   <button 
-  onClick={onClick}
+  onClick={(onClick)}
   className='generate-btn'>
     {text}
     </button>
