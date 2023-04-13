@@ -8,12 +8,13 @@ import { ThemeProvider } from 'react-bootstrap'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
-    <ThemeProvider
-      breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-      minBreakpoint='xxs'
-    >
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>
+  // Turning off StrictMode because it keeps callin useEffect() twice leading to duplicating API calls
+  // <React.StrictMode>
+  <ThemeProvider
+    breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+    minBreakpoint='xxs'
+  >
+    <App />
+  </ThemeProvider>
+  // </React.StrictMode>
 )

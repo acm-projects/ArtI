@@ -93,11 +93,11 @@ const PortraitGen = ({ user }) => {
 
       <div className='popup-container'>
         <button onClick={() => setButtonPopup(true)}>save</button>
-        <PopUp
+        {/* <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
           boards={boardsArray}
-        ></PopUp>
+        ></PopUp> */}
       </div>
     </div>
   )
