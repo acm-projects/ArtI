@@ -1,14 +1,19 @@
 import '../styles/MyBoardsIndex.css'
+import styles from '../styles/board.module.css'
 import {
   Container,
+  Row,
+  Col,
   FormControl,
   Modal,
   Button,
   Card,
   Image,
+  Spinner,
 } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Board from '../components/Board'
 
 const MyBoards = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -26,6 +31,17 @@ const MyBoards = ({ user }) => {
   useEffect(()=> {
     setBoardsArr(getBoards(user))
   }, [])
+
+  // When component mounts, get the boards from the API --> will fix and be moved to App.js and saved to sessionStorage
+  useEffect(() => {
+    handleGettingBoards()
+  }, [])
+
+  //
+  async function handleGettingBoards() {
+    const bArr = await getBoards(user)
+    setBoards(bArr)
+  }
 
   const handleAddBoard = () => {
     if (boards.some((board) => board.name === modalSearchTerm)) {
@@ -83,39 +99,38 @@ const MyBoards = ({ user }) => {
   }
 
   return (
-    <div>
-      <h1>{user.username}'s Boards </h1>
+    <>
+      <Container>
+        <Row className='py-4'>
+          <Col xs={12}>
+            <h1>{user.username}'s Boards </h1>
+          </Col>
+        </Row>
 
-      <Container className='search-bar'>
-        <FormControl
-          type='text'
-          placeholder='Search for Board...'
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <Row className='py-4'>
+          <Col xs={12}>
+            <FormControl
+              type='text'
+              placeholder='Search for Board...'
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </Col>
+        </Row>
 
-        <Button
-          variant='primary'
-          onClick={handleShowModal}
-          className='add-boards-button'
-        >
-          Create Board
-        </Button>
+        <Row>
+          <div className={styles['create-wrapper']}>
+            <Button
+              variant='primary'
+              onClick={handleShowModal}
+              className='add-boards-button'
+            >
+              Create Board
+            </Button>
+          </div>
+        </Row>
 
-        {/* ISAAC STUFF */}
-        {
-          /*
-          boardsArr.map((board, i) => {
-            return (<>
-            <Card>
-              <Card.Body>
-                {board.boardName}
-              </Card.Body>
-            </Card>
-            </>)
-          })*/
-        }
-
+        {/* Modal for creating new boards */}
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>Create New Board</Modal.Title>
@@ -129,13 +144,13 @@ const MyBoards = ({ user }) => {
               onChange={handleModalSearch}
             />
 
-            <p>Image URL</p>
-            <FormControl
-              type='text'
-              placeholder='https://example.com/image.jpg'
-              value={newImageURL}
-              onChange={(e) => setNewImageURL(e.target.value)}
-            />
+            {/* <p>Image URL</p>
+              <FormControl
+                type='text'
+                placeholder='https://example.com/image.jpg'
+                value={newImageURL}
+                onChange={(e) => setNewImageURL(e.target.value)}
+              /> */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary' onClick={handleCloseModal}>
@@ -152,36 +167,49 @@ const MyBoards = ({ user }) => {
           </Modal.Footer>
         </Modal>
 
-        <div className='boards-container'>
-          {boards.map((board, boardIndex) => (
-            <Card
-              key={boardIndex}
-              style={{ width: '18rem', margin: '1rem' }}
-              onClick={() => handleBoardClick(boardIndex)}
-            >
-              <Card.Body>
-                <Card.Title>{board.name}</Card.Title>
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
+        <Row className='boards-container py-4'>
+          {/* Renders a spinner to show loading if boards is empty */}
+          {boards.length === 0 ? (
+            <Spinner animation='border' />
+          ) : (
+            boards.map((board, boardIndex) => {
+              console.log(board)
+              return (
+                // <Board boardDetails={board} key={boardIndex}></Board>
+                <Col xs={6} md={6} key={boardIndex}>
+                  <button className={styles['board-btn']}>
+                    <Card onClick={() => handleBoardClick(boardIndex)}>
+                      <Card.Body>
+                        <Card.Title>{board.boardName}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </button>
+                </Col>
+              )
+            })
+          )}
+        </Row>
 
         {selectedBoard !== null && (
           <div className='board-popup'>
             <div className='board-popup-background' onClick={closeBoard} />
             <div className='board-popup-content'>
-              <h2>{boards[selectedBoard].name} </h2>
-              {boards[selectedBoard].images.map((imageURL, imageIndex) => (
+              <h2>{boards[selectedBoard].boardName} </h2>
+              {boards[selectedBoard].images.map((image, imageIndex) => (
                 <div
                   key={imageIndex}
                   onClick={() => {
-                    setNewImageURL(imageURL)
+                    setNewImageURL(
+                      `data:image/png;base64,${bufferToBase64(image.data.data)}`
+                    )
                     setShowImageModal(true)
                     setSelectedImage(imageURL)
                   }}
                 >
                   <Image
-                    src={imageURL}
+                    src={`data:image/png;base64,${bufferToBase64(
+                      image.data.data
+                    )}`}
                     alt='Image'
                     className='image-thumbnail'
                     thumbnail
@@ -258,22 +286,27 @@ const MyBoards = ({ user }) => {
           </Modal.Footer>
         </Modal>
       </Container>
-    </div>
+    </>
   )
+}
+
+function bufferToBase64(buffer) {
+  let binary = ''
+  let bytes = new Uint8Array(buffer) // Uint8Array is an array of 8 integers (cuz a byte is 4 binary digits)
+  const len = bytes.byteLength // the length in bytes of the array
+  for (let i = 0; i < len; i++) binary += String.fromCharCode(bytes[i]) // concatenate every byte into a string
+  return window.btoa(binary)
 }
 
 async function getBoards(user) {
   // use the axios package by importing at the top
   // set it to a variable so u can access the stuff sent by backend
   const username = user.username
-  console.log(username)
   const getUrl = `http://localhost:8080/api/v1/boards/${username}`
   try {
     const response = await axios(getUrl)
 
-    console.log(response.data)
     return response.data
-
   } catch (error) {
     console.log(error.message)
   }
@@ -290,7 +323,7 @@ async function createNewBoard(user, newBoardName, handleAddBoard) {
   const customThumbnail = false
 
   try {
-    const postUrl = 'http://localhost:8080/api/v1/boards'
+    const postUrl = '/api/v1/boards'
     const response = await axios.post(postUrl, {
       username: username,
       boardName: boardName,
@@ -299,7 +332,7 @@ async function createNewBoard(user, newBoardName, handleAddBoard) {
       customThumbnail: customThumbnail,
     })
 
-    console.log('this is from creating new board' + response)
+    console.log('this is from creating new board', response)
   } catch (error) {
     console.log(error.message)
   }
@@ -334,8 +367,8 @@ async function deleteBoard(user, deleteThisBoard) {
   }
 }
 
-async function deleteImage(user, userBoard, boardImages, imageToDelete){
-  try{
+async function deleteImage(user, userBoard, boardImages, imageToDelete) {
+  try {
     const username = user.username
     const boardName = userBoard
     const images = boardImages
@@ -349,12 +382,11 @@ async function deleteImage(user, userBoard, boardImages, imageToDelete){
       images: images,
       imageUpdates: imagesToDelete,
       deleteImage: true,
-      isCustomThumbnail: isCustomThumbnail
+      isCustomThumbnail: isCustomThumbnail,
     })
 
     console.log(response)
-
-  }catch(error){
+  } catch (error) {
     console.log(error.message)
   }
 }

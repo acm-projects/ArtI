@@ -1,0 +1,9 @@
+.board-btn {
+  all: unset;
+  width: 100%;
+}
+
+.create-wrapper {
+  display: flex;
+  justify-content: center;
+}

@@ -123,16 +123,3 @@ export default function PopUp({
     </Modal>
   )
 }
-
-/* return (props.trigger) ? (
-  <div className='popups'>
-      <div className='popup-inner'>
-          <button className='close-btn' onClick={() => props.setTrigger(false)}>
-              close
-          </button>
-          {props.children}
-
-      </div>
-    
-  </div>
-) : ""; */
