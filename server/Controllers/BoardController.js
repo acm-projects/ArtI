@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors'
 import { Board, Image } from '../Models/boards.model.js'
 import jwt from 'jsonwebtoken'
+import { CreateImageRequestResponseFormatEnum } from 'openai'
 
 async function getAllBoards(req, res, next) {
   try {
@@ -140,23 +141,31 @@ async function addOrDeleteImage(req, res, next) {
     ])
     const imageArray = findImages[0].images
 
-    imageUpdates = imageUpdates.map((image) => {
-      let theImage = JSON.parse(image)
-      console.log('From Board Controler: image -- ', theImage)
-      console.log()
-      return new Image({
-        id: theImage.id,
-        data: Buffer.from(theImage.data, 'base64'),
-        contentType: 'image/png',
+
+    for(let i = 0; i < imageArray.length; i++){
+      console.log(`image id at ${i}: ${imageArray[i].id}`)
+    }
+
+    if(!shouldDelete){
+      imageUpdates = imageUpdates.map((image) => {
+        let theImage = JSON.parse(image)
+        console.log('From Board Controler: image -- ', theImage)
+        console.log()
+        return new Image({
+          id: theImage.id,
+          data: Buffer.from(theImage.data, 'base64'),
+          contentType: 'image/png',
+          prompt: theImage.prompt
+        })
       })
-    })
+    }
 
     //deletes the selected imageurl from the array
     function deleteImageFromArray(imageArray, imageUpdates) {
       for (let i = 0; i < imageArray.length; i++) {
         let index = -1
         for (let j = 0; j < imageUpdates.length; j++) {
-          if (imageArray[i].id == imageUpdates[j].id) {
+          if (imageArray[i].id === imageUpdates[j]) {
             index = i
           }
           if (index > -1) {
@@ -181,8 +190,8 @@ async function addOrDeleteImage(req, res, next) {
       if (imageArray.length == 0) return
 
       for (let i = 0; i < imageUpdates.length; i++) {
-        if (imageUpdates[i].id == thumbnail.id) {
-          return imageArray[imageArray.length - 1].data
+        if (imageUpdates[i] === thumbnail.id) {
+          return imageArray[imageArray.length - 1]
         }
       }
 

@@ -205,7 +205,7 @@ const MyBoards = ({ user }) => {
                       `data:image/png;base64,${bufferToBase64(image.data.data)}`
                     )
                     setShowImageModal(true)
-                    setSelectedImage(image.data.data)
+                    setSelectedImage(image.id)
                   }}
                 >
                   <Image
@@ -283,7 +283,7 @@ const MyBoards = ({ user }) => {
                   user,
                   boards[selectedBoard].boardName,
                   boards[selectedBoard].images,
-                  selectedImage.id
+                  selectedImage
                 )
               }
             >
@@ -375,19 +375,23 @@ async function deleteImage(user, userBoard, boardImages, imageToDelete) {
     console.log('hello')
     const username = user.username
     const boardName = userBoard
-    const images = boardImages
-    console.log('boardname: ' + boardName)
-    console.log('images in the board: ' + images)
+    let images = boardImages
+    console.log('boardname: ' , boardName)
+    console.log('images in the board: ' , images)
     const imagesToDelete = imageToDelete
-    console.log('selected image: ' + imagesToDelete)
-    console.log(imagesToDelete)
+    console.log('selected image: ' , imagesToDelete)
     const isCustomThumbnail = user.customThumbnail
-    const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
+    const postUrl = `http://localhost:8080/api/v1/boards/${username}/add-delete`
 
-    const response = await axios.patch(patchUrl, {
+    for(let i = 0; i < images.length; i++){
+      images[i] = images[i].id
+      console.log(`this is the image id at ${i}: ${images[i]} `)
+    }
+
+    const response = await axios.post(postUrl, {
       boardName: boardName,
       images: images,
-      imageUpdates: imagesToDelete,
+      imageUpdates: [imagesToDelete],
       deleteImage: true,
       isCustomThumbnail: isCustomThumbnail,
     })

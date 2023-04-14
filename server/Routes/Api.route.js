@@ -25,6 +25,7 @@ router.post('/', async (req, res, next) => {
       response: {
         id: created,
         url: data[0]['b64_json'],
+        prompt: prompt
       },
     })
   } catch (error) {

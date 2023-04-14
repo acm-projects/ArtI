@@ -4,6 +4,7 @@ const imageSchema = new Schema({
   id: String,
   data: Buffer,
   contentType: String,
+  prompt: String
 })
 
 const boardsSchema = new Schema({
