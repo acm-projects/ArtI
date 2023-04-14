@@ -44,7 +44,7 @@ const MyBoards = ({ user }) => {
   }
 
   const handleAddBoard = () => {
-    if (boards.some((board) => board.name === modalSearchTerm)) {
+    if (boards.some((board) => board.boardName === modalSearchTerm)) {
       alert('A board with this name already exists.')
       return
     }
@@ -158,8 +158,10 @@ const MyBoards = ({ user }) => {
             </Button>
             <Button
               variant='primary'
-              onClick={() =>
-                createNewBoard(user, modalSearchTerm, handleAddBoard)
+              onClick={() =>{
+                createNewBoard(user, modalSearchTerm, handleGettingBoards)
+                handleCloseModal()
+              }
               }
             >
               Add Board
@@ -203,7 +205,7 @@ const MyBoards = ({ user }) => {
                       `data:image/png;base64,${bufferToBase64(image.data.data)}`
                     )
                     setShowImageModal(true)
-                    setSelectedImage(imageURL)
+                    setSelectedImage(image.data.data)
                   }}
                 >
                   <Image
@@ -222,7 +224,11 @@ const MyBoards = ({ user }) => {
               </Button>
               <Button
                 variant='secondary'
-                onClick={() => deleteBoard(user, boards[selectedBoard].name)}
+                onClick={() => {
+                  deleteBoard(user, boards[selectedBoard].boardName, handleGettingBoards,)
+                  handleCloseModal()
+                }
+                }
               >
                 Delete Board
               </Button>
@@ -275,9 +281,9 @@ const MyBoards = ({ user }) => {
               onClick={() =>
                 deleteImage(
                   user,
-                  boards[selectedBoard].name,
+                  boards[selectedBoard].boardName,
                   boards[selectedBoard].images,
-                  selectedImage
+                  selectedImage.id
                 )
               }
             >
@@ -305,7 +311,6 @@ async function getBoards(user) {
   const getUrl = `http://localhost:8080/api/v1/boards/${username}`
   try {
     const response = await axios(getUrl)
-
     return response.data
   } catch (error) {
     console.log(error.message)
@@ -313,13 +318,13 @@ async function getBoards(user) {
   // do stuff with it
 }
 
-async function createNewBoard(user, newBoardName, handleAddBoard) {
-  handleAddBoard()
-
+async function createNewBoard(user, newBoardName, handleGettingBoards) {
+  handleGettingBoards()
   const username = user.username
   const boardName = newBoardName
+  console.log(boardName)
   const images = []
-  const thumbnail = ''
+  const thumbnail = null
   const customThumbnail = false
 
   try {
@@ -355,12 +360,10 @@ async function getSingleBoard(user) {
 async function deleteBoard(user, deleteThisBoard) {
   try {
     const username = user.username
-    console.log(username)
     const boardName = deleteThisBoard
     console.log(`trying to delete this board ${boardName}`)
     const postUrl = `http://localhost:8080/api/v1/boards/${username}`
-
-    const response = await axios.post(postUrl, { boardName: boardName })
+    const response = await axios.post(postUrl, { boardName: boardName })    
     console.log(response)
   } catch (error) {
     console.log(error.message)
@@ -369,10 +372,14 @@ async function deleteBoard(user, deleteThisBoard) {
 
 async function deleteImage(user, userBoard, boardImages, imageToDelete) {
   try {
+    console.log('hello')
     const username = user.username
     const boardName = userBoard
     const images = boardImages
-    const imagesToDelete = [imageToDelete]
+    console.log('boardname: ' + boardName)
+    console.log('images in the board: ' + images)
+    const imagesToDelete = imageToDelete
+    console.log('selected image: ' + imagesToDelete)
     console.log(imagesToDelete)
     const isCustomThumbnail = user.customThumbnail
     const patchUrl = `http://localhost:8080/api/v1/boards/${username}`
