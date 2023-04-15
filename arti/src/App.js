@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import axios from 'axios'
 import LoginForm from './pages/LoginForm.js'
@@ -11,9 +11,19 @@ import ProtectedRoutes from './utils/ProtectedRoutes.js'
 import Profile from './pages/Profile.js'
 import ConditionalNavBar from './components/ConditionalNavBar'
 
+export const UserAndBoardContext = createContext()
+
 const App = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false) // to check if user is logged in
   const [user, setUser] = useState() // basic user information to be passed down to children as prop
+  const [boards, setBoards] = useState([])
+
+  const valuesToPass = {
+    user,
+    setUser,
+    boards,
+    setBoards,
+  }
 
   // Check if the user is logged in by getting their token
   useEffect(() => {
@@ -34,7 +44,17 @@ const App = () => {
         username: user.username,
       }
       const response = await axios.post(`/api/v1/user/get`, body)
-      setUser(await response.data)
+      await setUser(await response.data)
+      setBoards(await handleBoards(user))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function handleBoards(user) {
+    try {
+      const response = await axios.get(`/api/v1/boards/${user.username}`)
+      return response.data
     } catch (error) {
       console.log(error)
     }
@@ -42,47 +62,51 @@ const App = () => {
 
   return (
     <Container fluid className='main-container'>
-      <Router>
-        <ConditionalNavBar viewportType='desktop-nav' />
-        <main className='content'>
-          <Routes>
-            {/* Routes that does not require for user to be signed in  */}
-            <Route
-              path='/'
-              element={
-                <LoginForm
-                  loggedIn={isLoggedIn}
-                  setLoggedIn={setisLoggedIn}
-                  setUser={setUser}
-                />
-              }
-            />
-            <Route
-              path='/signup'
-              element={
-                <SignUp
-                  loggedIn={isLoggedIn}
-                  setLoggedIn={setisLoggedIn}
-                  setUser={setUser}
-                />
-              }
-            />
-
-            {/* Routes that require for user to be signed in (authenticated) */}
-            <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
-              <Route path='/imagegen' element={<ImageGen user={user} />} />
-              <Route path='/portraitgen' element={<PortraitGen />} />
-              <Route path='/myboards' element={<MyBoards user={user} />} />
+      <UserAndBoardContext.Provider value={valuesToPass}>
+        <Router>
+          <ConditionalNavBar viewportType='desktop-nav' />
+          <main className='content'>
+            <Routes>
+              {/* Routes that does not require for user to be signed in  */}
               <Route
-                path='/myprofile'
-                element={<Profile user={user} setIsLoggedIn={setisLoggedIn} />}
-              ></Route>
-            </Route>
-          </Routes>
-        </main>
+                path='/'
+                element={
+                  <LoginForm
+                    loggedIn={isLoggedIn}
+                    setLoggedIn={setisLoggedIn}
+                    setUser={setUser}
+                  />
+                }
+              />
+              <Route
+                path='/signup'
+                element={
+                  <SignUp
+                    loggedIn={isLoggedIn}
+                    setLoggedIn={setisLoggedIn}
+                    setUser={setUser}
+                  />
+                }
+              />
 
-        <ConditionalNavBar viewportType='mobile-nav' />
-      </Router>
+              {/* Routes that require for user to be signed in (authenticated) */}
+              <Route element={<ProtectedRoutes auth={isLoggedIn} />}>
+                <Route path='/imagegen' element={<ImageGen />} />
+                <Route path='/portraitgen' element={<PortraitGen />} />
+                <Route path='/myboards' element={<MyBoards />} />
+                <Route
+                  path='/myprofile'
+                  element={
+                    <Profile user={user} setIsLoggedIn={setisLoggedIn} />
+                  }
+                ></Route>
+              </Route>
+            </Routes>
+          </main>
+
+          <ConditionalNavBar viewportType='mobile-nav' />
+        </Router>
+      </UserAndBoardContext.Provider>
     </Container>
   )
 }

@@ -5,7 +5,8 @@ import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { DropdownButton, Dropdown, Row, Col, Container } from 'react-bootstrap'
 import axios from 'axios'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { UserAndBoardContext } from '../App'
 
 const saveImage = () => {
   //log for on click
@@ -32,11 +33,11 @@ export default function PopUp({
   user,
   show,
   handleClose,
-  boards,
   image,
   showSaving,
   setShowSaving,
 }) {
+  const { boards, setBoards } = useContext(UserAndBoardContext)
   const [saveStatus, setSaveStatus] = useState('Saving...')
   //boards to save to function - need to figure out a way to pull data from boards to figure amt of
   const saveBoard = async (e) => {
@@ -60,6 +61,12 @@ export default function PopUp({
       if (save.status === 200) {
         console.log(save.data)
         setSaveStatus(`Saved to "${boardName}"`)
+        // Updates the new image into the boards array
+        const newBoards = boards.map((board) => {
+          if (board.boardName === save.data.boardName) return save.data
+          else return board
+        })
+        setBoards(newBoards)
       }
     } catch (error) {
       console.log(error.message)
@@ -99,18 +106,22 @@ export default function PopUp({
               </p>
               {/* //do dropdown from bootstrap using code from discord chat */}
               <DropdownButton id='board-select' title='Choose Board'>
-                {boards.map((board, i) => {
-                  return (
-                    <Dropdown.Item
-                      key={i}
-                      name={board.boardName}
-                      onClick={saveBoard}
-                    >
-                      {' '}
-                      {board.boardName}{' '}
-                    </Dropdown.Item>
-                  )
-                })}
+                {boards !== undefined ? (
+                  boards.map((board, i) => {
+                    return (
+                      <Dropdown.Item
+                        key={i}
+                        name={board.boardName}
+                        onClick={saveBoard}
+                      >
+                        {' '}
+                        {board.boardName}{' '}
+                      </Dropdown.Item>
+                    )
+                  })
+                ) : (
+                  <Dropdown.Item>There are no available boards</Dropdown.Item>
+                )}
               </DropdownButton>
             </div>
           </Col>

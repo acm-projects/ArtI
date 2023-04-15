@@ -2,14 +2,15 @@ import '../index.css'
 import styles from '../styles/image-gen.module.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import PopUp from '../components/PopUp'
 import '../styles/PopUp.css'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
+import { UserAndBoardContext } from '../App'
 
-const ImageGen = ({ user }) => {
-  const [boardsArray, setBoardsArray] = useState([])
+const ImageGen = () => {
+  const { user, boards, setBoards } = useContext(UserAndBoardContext)
   //button functionality of popup, show/hide popup
   const [show, setShow] = useState(false)
   const [promptInput, setPrompt] = useState('')
@@ -21,11 +22,11 @@ const ImageGen = ({ user }) => {
     try {
       setShow(true)
       // gets the boards owned by user
-      const response = await axios(`/api/v1/boards/${user.username}`)
-      if (response.status === 200) {
-        setBoardsArray(response.data)
-        console.log('calling api', boardsArray)
-      }
+      // const response = await axios(`/api/v1/boards/${user.username}`)
+      // if (response.status === 200) {
+      //   setBoards(response.data)
+      //   console.log('calling api', boards)
+      // }
     } catch (error) {
       console.error(error.message)
     }
@@ -47,7 +48,11 @@ const ImageGen = ({ user }) => {
         if (response.status === 200) {
           const id = response.data.response.id
           // const url = `data:image/png;base64,${response.data.response.url}`
-          setImage({ id: id, data: response.data.response.url, prompt: response.data.response.prompt })
+          setImage({
+            id: id,
+            data: response.data.response.url,
+            prompt: response.data.response.prompt,
+          })
           await console.log('this is from image gen ', image)
           handleShow()
         }
@@ -112,7 +117,6 @@ const ImageGen = ({ user }) => {
                     user={user}
                     show={show}
                     handleClose={handleClose}
-                    boards={boardsArray}
                     image={image}
                     showSaving={showSaving}
                     setShowSaving={setShowSaving}

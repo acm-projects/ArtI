@@ -47,10 +47,10 @@ async function getUsersBoards(req, res, next) {
     const username = req.params.username
 
     const user = await Board.findOne({ username: username })
-    if (!user) throw createHttpError(404, 'User does not exist.')
+    if (!user) throw createHttpError(404, 'User does not exist to get boards')
 
     const board = await Board.find({ username: username }, {})
-    console.log(`Getting boards for ${username} was successful`)
+    console.log(`Getting boards for '${username}' was successful`)
 
     res.status(200).send(board)
   } catch (error) {
@@ -66,7 +66,7 @@ async function getSingleBoard(req, res, next) {
 
     //Error handling
     if (!(await Board.findOne({ username: username })))
-      throw createHttpError(404, 'User does not exist.')
+      throw createHttpError(404, 'User does not exist to get a single board')
 
     if (
       !(await Board.findOne({ username: username, boardName: boardName }, {}))
@@ -92,7 +92,7 @@ async function deleteBoard(req, res, next) {
 
     //error handling
     if (!(await Board.findOne({ username: username })))
-      throw createHttpError(404, 'User does not exist.')
+      throw createHttpError(404, 'User does not exist to delete a board')
 
     if (!(await Board.findOne({ username: username, boardName: boardName }))) {
       throw createHttpError(404, 'Board not found.')
@@ -102,7 +102,7 @@ async function deleteBoard(req, res, next) {
       username: username,
       boardName: boardName,
     })
-    console.log('delete board success')
+    console.log(`Deleting board for '${username}' was successful`)
     res.send(result)
   } catch (error) {
     console.log(error.message)
@@ -141,21 +141,18 @@ async function addOrDeleteImage(req, res, next) {
     ])
     const imageArray = findImages[0].images
 
-
-    for(let i = 0; i < imageArray.length; i++){
+    for (let i = 0; i < imageArray.length; i++) {
       console.log(`image id at ${i}: ${imageArray[i].id}`)
     }
 
-    if(!shouldDelete){
+    if (!shouldDelete) {
       imageUpdates = imageUpdates.map((image) => {
         let theImage = JSON.parse(image)
-        console.log('From Board Controler: image -- ', theImage)
-        console.log()
         return new Image({
           id: theImage.id,
           data: Buffer.from(theImage.data, 'base64'),
           contentType: 'image/png',
-          prompt: theImage.prompt
+          prompt: theImage.prompt,
         })
       })
     }
