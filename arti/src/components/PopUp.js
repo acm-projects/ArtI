@@ -30,16 +30,23 @@ export const Form = () => {
 
 //contents of popup
 export default function PopUp({
-  user,
   show,
   handleClose,
   image,
   showSaving,
   setShowSaving,
 }) {
-  const { boards, setBoards } = useContext(UserAndBoardContext)
+  const { user, boards, setBoards } = useContext(UserAndBoardContext)
   const [saveStatus, setSaveStatus] = useState('Saving...')
-  //boards to save to function - need to figure out a way to pull data from boards to figure amt of
+  const [disabledItems, setDisabledItems] = useState([])
+
+  const handleItemClick = (index) => {
+    const newDisabledItems = [...disabledItems]
+    newDisabledItems[index] = true
+    setDisabledItems(newDisabledItems)
+  }
+
+  // boards to save to function
   const saveBoard = async (e) => {
     try {
       const imageUpdates = [JSON.stringify(image)]
@@ -112,10 +119,27 @@ export default function PopUp({
                       <Dropdown.Item
                         key={i}
                         name={board.boardName}
-                        onClick={saveBoard}
+                        onClick={(e) => {
+                          saveBoard(e)
+                          handleItemClick(i)
+                        }}
+                        disabled={disabledItems[i]}
                       >
-                        {' '}
-                        {board.boardName}{' '}
+                        {/* Adds dynamic styling where there's a checkmark if option has been clicked */}
+                        <div className='d-flex justify-content-between'>
+                          <p
+                            className={`my-0 ${
+                              disabledItems[i] ? 'text-secondary' : ''
+                            }`}
+                          >
+                            {board.boardName}
+                          </p>
+                          {disabledItems[i] ? (
+                            <i className='bi bi-check2'></i>
+                          ) : (
+                            <></>
+                          )}
+                        </div>
                       </Dropdown.Item>
                     )
                   })

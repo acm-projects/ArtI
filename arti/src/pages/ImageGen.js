@@ -2,15 +2,13 @@ import '../index.css'
 import styles from '../styles/image-gen.module.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import PopUp from '../components/PopUp'
 import '../styles/PopUp.css'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
-import { UserAndBoardContext } from '../App'
 
 const ImageGen = () => {
-  const { user, boards, setBoards } = useContext(UserAndBoardContext)
   //button functionality of popup, show/hide popup
   const [show, setShow] = useState(false)
   const [promptInput, setPrompt] = useState('')
@@ -114,7 +112,6 @@ const ImageGen = () => {
           </button> */}
 
                   <PopUp
-                    user={user}
                     show={show}
                     handleClose={handleClose}
                     image={image}
