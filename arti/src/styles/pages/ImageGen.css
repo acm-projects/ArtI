@@ -1,0 +1,105 @@
+.btn-wrapper {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+/* IMAGE GEN STUFF */
+.generator-container {
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.image-input-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* margin-block-start: 17%; */
+  z-index: 10;
+}
+
+/* animation for on click generate (not a priority) */
+.image-input-container[slideup='1'] {
+  animation: slideup 1s 1;
+}
+
+/* animation for on click generate (not a priority) */
+.image-input-container[slideup='1'] {
+  animation: slideup 1s 1;
+}
+
+.generate-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-input {
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  height: 3.5rem;
+  width: 75%;
+  padding: 1rem;
+  font-size: larger;
+  transition: all 150ms ease-in-out;
+}
+
+.image-input:hover {
+  font-size: large;
+}
+
+.generate-btn {
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+  outline: none;
+  border: var(--border-color) solid 2px;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  height: 3.5rem;
+  width: 15%;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  font-size: larger;
+}
+
+.generate-btn:hover {
+  background-color: #444;
+  font-size: large;
+}
+
+/* RESPONSIVE STUFF */
+@media (max-width: 767.98px) {
+  /* ImageGen Stuff */
+  .image-input-container h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .generate-bar {
+    flex-direction: column !important;
+  }
+
+  .generate-bar .image-input {
+    border-radius: 50px;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .generate-bar .generate-btn {
+    border-radius: 50px;
+    width: 50%;
+    font-size: 1rem;
+  }
+}

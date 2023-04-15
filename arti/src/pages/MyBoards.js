@@ -1,5 +1,5 @@
-import '../styles/MyBoardsIndex.css'
-import styles from '../styles/board.module.css'
+import '../styles/pages/MyBoards.css'
+import styles from '../styles/components/board.module.css'
 import {
   Container,
   Row,

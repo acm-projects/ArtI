@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
-import '../styles/Profile.css'
+import '../styles/pages/Profile.css'
 
 export default function Profile({ user, setIsLoggedIn }) {
   const { username, email, firstName, lastName } = user

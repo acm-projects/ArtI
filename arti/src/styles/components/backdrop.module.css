@@ -1,27 +1,16 @@
-:root{
+:root {
   /* i think u define variables */
   --line-width: 20%;
 }
 
-/* TODO :: make circles and lines responsive */
 .bg-circle {
   border-radius: 50%;
   /* Position */
   position: absolute;
-  top: calc(50% + 50px);
+  top: calc(50%);
   left: 50%;
   transform: translate(-50%, -50%);
-  /* animation: infinite circleAnimation 5s; */
 }
-
-/* @keyframes circleAnimation{
-  from{
-    transform: scale(1) translate(-50%, -50%);
-  }
-  to{
-    transform: scale(0.5) translate(-50%, -50%);
-  }
-} */
 
 .circle1 {
   width: calc(var(--circle-base-size) + 0px);
@@ -63,17 +52,16 @@
 }
 
 @keyframes lineAnimation {
-  from{
-    width: 0;
+  from {
+    width: 1%;
   }
-  to{
-    width: var(--line-width)
+  to {
+    width: var(--line-width);
   }
 }
 
 .line1 {
   background-color: #371e13;
-  /* width: calc(var(--line-width) + 35%); */
   --line-width: 55%;
   top: 20%;
   left: 0;
@@ -81,7 +69,6 @@
 
 .line2 {
   background-color: #562611;
-  /* width: calc(var(--line-width) + 20%); */
   --line-width: 40%;
   top: 35%;
   left: 0;
@@ -89,7 +76,6 @@
 
 .line3 {
   background-color: #562611;
-  /* width: calc(var(--line-width) + 20%); */
   --line-width: 40%;
 
   bottom: 35%;
@@ -98,8 +84,24 @@
 
 .line4 {
   background-color: #31180d;
-  /* width: calc(var(--line-width) + 30%); */
   --line-width: 50%;
   bottom: 22.5%;
   right: 0;
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    /* Makes all the circles smaller */
+    --circle-base-size: 200px;
+  }
+  /* TODO :: Make this more efficient using variables */
+  .bg-circle {
+    top: 50% !important;
+  }
+  .line1 {
+    top: 10% !important;
+  }
+  .line2 {
+    top: 20% !important;
+  }
 }

@@ -1,0 +1,71 @@
+/*image properties for login*/
+.side-column {
+  background-image: url('../../assets/girl.png');
+  background-color: #111;
+
+  flex: 1;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: auto;
+
+  font-size: 3rem;
+
+  /*blur image*/
+  filter: blur(0.5px);
+  opacity: 0.8;
+
+  /* duration, how many times it will run, direction of animation, name of animation */
+  animation: 3s 1 normal coverFade;
+}
+
+@keyframes coverFade {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+.side-column > h1 {
+  font-size: max(3rem, 5rem) !important;
+}
+
+.login-container {
+  height: 100vh;
+  height: 100svh;
+}
+
+.side-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+/*end image properties*/
+
+/*login part*/
+.login-input {
+  background-color: var(--body-bg-color) !important;
+  border: 2px solid var(--border-color) !important;
+  border-radius: 25px !important;
+}
+
+.login-input[name='password'] {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.toggle-password-btn {
+  border: 2px solid var(--border-color) !important;
+  background-color: var(--body-bg-color) !important;
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
+
+.login-btn {
+  background-color: var(--text-color) !important;
+  border-radius: 25px !important;
+}
+/*end login part*/

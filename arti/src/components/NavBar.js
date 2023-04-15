@@ -1,67 +1,79 @@
+import styles from '../styles/components/navbar.module.css'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = ({ viewportType }) => {
   return (
-    <nav className={`nav-bar ${viewportType}`}>
-      <ul className='nav-links'>
-        <li>
-          <Link to='/'>
-            <div className='link-icon'>
+    <nav
+      className={`${styles['nav-bar']} navbar-static-top ${styles[viewportType]}`}
+    >
+      <ul className={`${styles['nav-links']}`}>
+        {/* not needed??? */}
+        {/* <li>
+          <NavLink
+            to='/'
+            className={({ isActive, isPending }) =>
+              isPending ? styles.pending : isActive ? styles.active : ''
+            }
+          >
+            <div className={`${styles['link-icon']}`}>
               <i className='bi bi-house-fill'></i>
               <p>Home</p>
             </div>
-          </Link>
-        </li>
+          </NavLink>
+        </li> */}
         <li>
-          <Link to='/imagegen'>
-            <div className='link-icon'>
+          <NavLink
+            to='/imagegen'
+            className={({ isActive, isPending }) =>
+              isPending ? styles.pending : isActive ? styles.active : ''
+            }
+          >
+            <div className={`${styles['link-icon']}`}>
               <i className='bi bi-image-fill'></i>
               <p>ImageAI</p>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/portraitgen'>
-            <div className='link-icon'>
+          <NavLink
+            to='/portraitgen'
+            className={({ isActive, isPending }) =>
+              isPending ? styles.pending : isActive ? styles.active : ''
+            }
+          >
+            <div className={`${styles['link-icon']}`}>
               <i className='bi bi-person-bounding-box'></i>
               <p>PortraitAI</p>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/myboards'>
-            <div className='link-icon'>
+          <NavLink
+            to='/myboards'
+            className={({ isActive, isPending }) =>
+              isPending ? styles.pending : isActive ? styles.active : ''
+            }
+          >
+            <div className={`${styles['link-icon']}`}>
               <i className='bi bi-columns'></i>
               <p>Boards</p>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li>
           <div className='profile-dropdown'>
-            <Link to='/myprofile'>
-              <div className='link-icon'>
+            <NavLink
+              to='/myprofile'
+              className={({ isActive, isPending }) =>
+                isPending ? styles.pending : isActive ? styles.active : ''
+              }
+            >
+              <div className={`${styles['link-icon']}`}>
                 <i className='bi bi-person-lines-fill'></i>
                 <p>Profile</p>
               </div>
-            </Link>
-            {/* <ul className='dropdown-menu'>
-              <li>
-                <Link to='/editprofile'>Edit Profile</Link>
-              </li>
-              <li>
-                <Link to='/settings'>Settings & Privacy</Link>
-              </li>
-              <li>
-                <Link to='/help'>Help and Support</Link>
-              </li>
-              <li>
-                <Link to='/display'>Display</Link>
-              </li>
-              <li>
-                <Link to='/'>Logout</Link>
-              </li>
-            </ul> */}
+            </NavLink>
           </div>
         </li>
       </ul>

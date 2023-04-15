@@ -1,4 +1,4 @@
-// import Button from './Button'
+import '../styles/pages/Signup.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Row, Button, Col } from 'react-bootstrap'
@@ -99,8 +99,8 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
   }
 
   return (
-    <>
-      <Row className='signup-container my-auto'>
+    <div className='signup-container'>
+      <Row className='my-auto'>
         <Col>
           <form className='signup-form' onSubmit={handleSubmit}>
             <div className='form-ctrl'>
@@ -213,7 +213,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
           </form>
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import styles from '../styles/board.module.css'
+import styles from '../styles/components/board.module.css'
 
 export default function Board(boardDetails) {
   const { boardName, images } = boardDetails

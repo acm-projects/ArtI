@@ -1,16 +1,21 @@
-import '../index.css'
+import '../styles/pages/PortraitGen.css'
 import PortraitGenBtn from '../components/PortraitGenBtn'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
+import Backdrop from '../components/Backdrop'
+import { UserAndBoardContext } from '../App'
+import { Container } from 'react-bootstrap'
 
-const PortraitGen = ({ user }) => {
+const PortraitGen = () => {
+  const { user } = useContext(UserAndBoardContext)
+
   const ageInput = useRef(null)
   const genderInput = useRef(null)
 
   const [buttonPopup, setButtonPopup] = useState(false)
   const [image, setImage] = useState('')
-  const [boardsArray, setBoardsArray] = useState([])
+  // const [boardsArray, setBoardsArray] = useState([])
 
   //Function calls the portrait gen api
   async function handleChange() {
@@ -47,15 +52,7 @@ const PortraitGen = ({ user }) => {
 
   return (
     <div className='portrait-gen-container'>
-      <div className='bg-circle circle1'></div>
-      <div className='bg-circle circle2'></div>
-      <div className='bg-circle circle3'></div>
-      <div className='bg-circle circle4'></div>
-
-      <div className='tiny-lines line1'></div>
-      <div className='tiny-lines line2'></div>
-      <div className='tiny-lines line3'></div>
-      <div className='tiny-lines line4'></div>
+      <Backdrop />
 
       {/* <header>
       <h1>
@@ -63,42 +60,44 @@ const PortraitGen = ({ user }) => {
       </h1>
       </header> */}
 
-      <div className='portrait-input-container'>
-        <h2>What will this portrait look like?</h2>
+      <Container>
+        <div className='portrait-input-container'>
+          <h2>What will this portrait look like?</h2>
 
-        <div className='text-inputs'>
-          <input
-            ref={ageInput}
-            className='age-input'
-            type='text'
-            placeholder='Age'
-          />
+          <div className='text-inputs'>
+            <input
+              ref={ageInput}
+              className='age-input'
+              type='text'
+              placeholder='Age'
+            />
 
-          <div className='gender-input'>
-            <label htmlFor='Gender'>Gender</label>
-            <select ref={genderInput} name='Gender' id='Gender'>
-              <option>None</option>
-              <option value='female'>female</option>
-              <option value='male'>male</option>
-            </select>
+            <div className='gender-input'>
+              <label htmlFor='Gender'>Gender</label>
+              <select ref={genderInput} name='Gender' id='Gender'>
+                <option>None</option>
+                <option value='female'>female</option>
+                <option value='male'>male</option>
+              </select>
+            </div>
           </div>
+
+          <PortraitGenBtn onClick={handleChange} text='Generate' />
+          {<img src={image} alt='AI Face' />}
+          <button type='button' onClick={handleChange}>
+            New image
+          </button>
         </div>
 
-        <PortraitGenBtn onClick={handleChange} text='Generate' />
-        {<img src={image} alt='AI Face' />}
-        <button type='button' onClick={handleChange}>
-          New image
-        </button>
-      </div>
-
-      <div className='popup-container'>
-        <button onClick={() => setButtonPopup(true)}>save</button>
-        {/* <PopUp
+        <div className='popup-container'>
+          <button onClick={() => setButtonPopup(true)}>save</button>
+          {/* <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
           boards={boardsArray}
         ></PopUp> */}
-      </div>
+        </div>
+      </Container>
     </div>
   )
 }
