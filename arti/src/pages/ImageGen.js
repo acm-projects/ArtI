@@ -45,12 +45,12 @@ const ImageGen = () => {
         if (response.status === 200) {
           const id = response.data.response.id
           // const url = `data:image/png;base64,${response.data.response.url}`
-          setImage({
+          await setImage({
             id: id,
             data: response.data.response.url,
             prompt: response.data.response.prompt,
           })
-          await console.log('this is from image gen ', image)
+          console.log('this is from image gen ', image)
           handleShow()
         }
       } else throw new Error('No Prompt Entered!')

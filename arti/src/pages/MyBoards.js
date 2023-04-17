@@ -1,5 +1,4 @@
 import '../styles/pages/MyBoards.css'
-import styles from '../styles/components/board.module.css'
 import {
   Container,
   Row,
@@ -11,12 +10,22 @@ import {
   Image,
   Spinner,
 } from 'react-bootstrap'
-import React, { useState, useContext } from 'react'
+import React, {
+  useState,
+  useContext,
+  createContext,
+  useRef,
+  useEffect,
+} from 'react'
 import axios from 'axios'
 import Board from '../components/Board'
 import { UserAndBoardContext } from '../App'
+import { bufferToBase64 } from '../utils/BufferToBase64.js'
+
+export const BoardsStateContext = createContext()
 
 const MyBoards = () => {
+  const thisRef = useRef(null)
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
   const [searchTerm, setSearchTerm] = useState('')
   const [newBoardName, setNewBoardName] = useState('')
@@ -26,6 +35,20 @@ const MyBoards = () => {
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const [parentWidth, setParentWidth] = useState(0)
+
+  const boardStateValues = {
+    selectedBoard,
+    setSelectedBoard,
+    showImageModal,
+    setShowImageModal,
+    selectedImage,
+    setSelectedImage,
+  }
+
+  useEffect(() => {
+    console.log('width', thisRef.current ? thisRef.current.offsetWidth : 0)
+  }, [thisRef.current])
 
   // Manually calling the the API to get all the boards of the user
   async function getBoards(user) {
@@ -185,9 +208,10 @@ const MyBoards = () => {
   //   setNewBoardName(event.target.value)
   // }
 
-  const handleBoardClick = (boardIndex) => {
-    setSelectedBoard(boardIndex)
-  }
+  // made this inline
+  // const handleBoardClick = (boardIndex) => {
+  //   setSelectedBoard(boardIndex)
+  // }
 
   // made this inline
   // const closeBoard = () => {
@@ -210,7 +234,7 @@ const MyBoards = () => {
   // }
 
   return (
-    <>
+    <BoardsStateContext.Provider value={boardStateValues}>
       <Container>
         <Row className='py-4'>
           <Col xs={12}>
@@ -230,7 +254,7 @@ const MyBoards = () => {
         </Row>
 
         <Row>
-          <div className={styles['create-wrapper']}>
+          <div className='create-wrapper'>
             <Button
               variant='primary'
               onClick={handleShowModal}
@@ -271,7 +295,8 @@ const MyBoards = () => {
           </Modal.Footer>
         </Modal>
 
-        <Row className='boards-container py-4'>
+        {/* Row of boards */}
+        <Row className='boards-container py-4' ref={thisRef}>
           {/* Renders a spinner to show loading if boards is empty */}
           {boards !== undefined ? (
             boards.length === 0 ? (
@@ -279,16 +304,14 @@ const MyBoards = () => {
             ) : (
               boards.map((board, boardIndex) => {
                 return (
-                  // <Board boardDetails={board} key={boardIndex}></Board>
-                  <Col xs={6} md={6} key={boardIndex} className='my-2'>
-                    <button className={styles['board-btn']}>
-                      <Card onClick={() => handleBoardClick(boardIndex)}>
-                        <Card.Body>
-                          <Card.Title>{board.boardName}</Card.Title>
-                        </Card.Body>
-                      </Card>
-                    </button>
-                  </Col>
+                  <Board
+                    key={boardIndex}
+                    board={board}
+                    boardIndex={boardIndex}
+                    parentWidth={
+                      thisRef.current ? thisRef.current.offsetWidth : 0
+                    }
+                  />
                 )
               })
             )
@@ -321,7 +344,7 @@ const MyBoards = () => {
                     src={`data:image/png;base64,${bufferToBase64(
                       image.data.data
                     )}`}
-                    alt='Image'
+                    alt={`Thumbnail image of ${image.prompt}`}
                     className='image-thumbnail'
                     thumbnail
                   />
@@ -408,16 +431,8 @@ const MyBoards = () => {
           </Modal.Footer>
         </Modal>
       </Container>
-    </>
+    </BoardsStateContext.Provider>
   )
-}
-
-function bufferToBase64(buffer) {
-  let binary = ''
-  let bytes = new Uint8Array(buffer) // Uint8Array is an array of 8 integers (cuz a byte is 4 binary digits)
-  const len = bytes.byteLength // the length in bytes of the array
-  for (let i = 0; i < len; i++) binary += String.fromCharCode(bytes[i]) // concatenate every byte into a string
-  return window.btoa(binary)
 }
 
 // not used???

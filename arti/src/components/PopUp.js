@@ -39,17 +39,21 @@ export default function PopUp({
   const [saveStatus, setSaveStatus] = useState('Saving...')
   const [disabledItems, setDisabledItems] = useState([])
 
-  const handleItemClick = (index) => {
+  const handleItemClick = async (event) => {
+    console.log(event)
+    await saveBoard(event)
     const newDisabledItems = [...disabledItems]
-    newDisabledItems[index] = true
+    newDisabledItems[event.target.parentElement.id] = true
     setDisabledItems(newDisabledItems)
   }
 
   // boards to save to function
   const saveBoard = async (e) => {
+    e.preventDefault()
     try {
+      console.log('e: ', e.target.parentElement.name)
       const imageUpdates = [JSON.stringify(image)]
-      const boardName = e.target.name
+      const boardName = e.target.innerText
       const body = {
         boardName: boardName,
         imageUpdates: imageUpdates,
@@ -76,6 +80,7 @@ export default function PopUp({
       }
     } catch (error) {
       console.log(error.message)
+      setSaveStatus(`An error occurred`)
     }
   }
 
@@ -106,7 +111,13 @@ export default function PopUp({
           <Col>
             <div className={styles['save-btn-wrapper']}>
               <p
-                className={`${showSaving ? 'd-inline text-success' : 'd-none'}`}
+                className={`${
+                  showSaving ? 'd-inline text-success' : 'd-none'
+                } ${
+                  saveStatus === 'An error occurred'
+                    ? 'text-danger'
+                    : 'text-success'
+                }`}
               >
                 {saveStatus}
               </p>
@@ -118,14 +129,15 @@ export default function PopUp({
                       <Dropdown.Item
                         key={i}
                         name={board.boardName}
-                        onClick={(e) => {
-                          saveBoard(e)
-                          handleItemClick(i)
-                        }}
+                        onClick={handleItemClick}
+                        id={i}
                         disabled={disabledItems[i]}
                       >
                         {/* Adds dynamic styling where there's a checkmark if option has been clicked */}
-                        <div className='d-flex justify-content-between'>
+                        <div
+                          className='d-flex justify-content-between'
+                          name={board.boardName}
+                        >
                           <p
                             className={`my-0 ${
                               disabledItems[i] ? 'text-secondary' : ''

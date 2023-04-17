@@ -41,3 +41,9 @@
   object-fit: cover;
   margin-bottom: 1rem;
 }
+
+/* Thr wrapper that contains the Create Board btn */
+.create-wrapper {
+  display: flex;
+  justify-content: center;
+}

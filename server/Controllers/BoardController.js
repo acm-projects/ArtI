@@ -126,7 +126,10 @@ async function addOrDeleteImage(req, res, next) {
     if (
       !(await Board.findOne({ username: username, boardName: boardName }, {}))
     )
-      throw createHttpError(404, 'No board found.')
+      throw createHttpError(
+        404,
+        `Board with name of "${boardName}" from "${username} was not found."`
+      )
 
     //Gets the thumbnail from the user's board the Mongoose® way
     const findThumbnail = await Board.aggregate([
