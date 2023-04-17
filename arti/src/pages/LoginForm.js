@@ -86,49 +86,24 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
     <Row className='login-container'>
       <Col sm='6' className=' side-column'>
         <div className='side-container'>
-          <h1>
-            <em>Welcome</em>
-          </h1>
-          <h1>
-            <em>to</em>
-          </h1>
-          <h1>
-            ART<em>i.</em>
-          </h1>
+          
         </div>
       </Col>
       <Col sm='6'>
         <div className='side-container'>
-          <h1>Sign In</h1>
-          {/* <form className='login-form' onSubmit={handleSubmit}>
-            <div className='login-form-control'>
-              <input
-                className='login-input'
-                type='text'
-                placeholder='username'
-                onChange={handleChange}
-                name='username'
-                value={formData.username}
-              />
-              <input
-                className='login-input'
-                type='password'
-                placeholder='password'
-                onChange={handleChange}
-                name='password'
-                value={formData.password}
-              />
-            </div>
-
-            <Button text='Log In.' />
-            <button className='login-btn'>Log In</button>
-          </form> */}
-
+          <h1 className = 'welcome-title'> 
+          Welcome to <span className = 'arti-title'> ART <em> i </em> </span> . 
+          </h1>
+          <h2 className = 'welcome-subtitle'> 
+          Welcome back to Arti. Please enter your details.</h2>
+        
           <Form className='my-3 w-75' onSubmit={handleSubmit}>
+
+            <h3 className = 'username-field'> Username <span className = "asterisk"> * </span> </h3>
             {/* USERNAME INPUT */}
             <FloatingLabel
               className='mb-3'
-              label='Username'
+              label='abc123'
               controlId='usernameInput'
             >
               <Form.Control
@@ -139,9 +114,10 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               />
             </FloatingLabel>
 
+            <h3 className = 'password-field'> Password <span className = "asterisk"> * </span>  </h3>
             {/* PASSWORD INPUT */}
             <InputGroup className='mb-3'>
-              <FloatingLabel label='Password' controlId='passwordInput'>
+              <FloatingLabel label='**********' controlId='passwordInput'>
                 <Form.Control
                   className='login-input'
                   // The showPassword state lets the input to toggle the visibility of the text
@@ -170,7 +146,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               type='submit'
               className='login-btn w-100'
             >
-              Log In
+              <span className = "login-button-style">Log In.</span>
             </Button>
 
             {/* Login Status */}

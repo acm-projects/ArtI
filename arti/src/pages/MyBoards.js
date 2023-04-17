@@ -293,13 +293,14 @@ async function getBoards(user) {
   // use the axios package by importing at the top
   // set it to a variable so u can access the stuff sent by backend
   const username = user.username
+  console.log(username)
   const getUrl = `http://localhost:8080/api/v1/boards/${username}`
   try {
     const response = await axios(getUrl)
 
     return response.data
   } catch (error) {
-    console.log(error.message)
+    console.log('From getBoards ',error.message)
   }
   // do stuff with it
 }
