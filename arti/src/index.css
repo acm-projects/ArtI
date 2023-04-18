@@ -53,7 +53,7 @@ input:focus {
   box-shadow: 0 0 0 0.25rem rgba(255, 77, 0, 0.25) !important;
 }
 
-@media (max-width: 767.98) {
+@media screen and (max-width: 767.98) {
   body {
     padding-top: 0;
     padding-bottom: 5rem;

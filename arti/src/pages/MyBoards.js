@@ -21,7 +21,8 @@ import axios from 'axios'
 import Board from '../components/Board'
 import BoardExpand from '../components/BoardExpand'
 import { UserAndBoardContext } from '../App'
-// import { bufferToBase64 } from '../utils/BufferToBase64.js'
+import { bufferToBase64 } from '../utils/BufferToBase64.js'
+import BoardPopup from '../components/BoardPopup'
 
 export const BoardsStateContext = createContext()
 
@@ -40,6 +41,7 @@ const MyBoards = () => {
   // const [expand, setExpand] = useState(false)
 
   const boardStateValues = {
+    user,
     selectedBoard,
     setSelectedBoard,
     showImageModal,
@@ -316,23 +318,23 @@ const MyBoards = () => {
                 return (
                   <>
                     <Col key={boardIndex} xs={12} md={6}>
-                      <Accordion>
-                        <Board
-                          key={boardIndex}
-                          board={board}
-                          boardIndex={boardIndex}
-                          parentWidth={
-                            thisRef.current ? thisRef.current.offsetWidth : 0
-                          }
-                        />
+                      {/* <Accordion> */}
+                      <Board
+                        key={boardIndex}
+                        board={board}
+                        boardIndex={boardIndex}
+                        parentWidth={
+                          thisRef.current ? thisRef.current.offsetWidth : 0
+                        }
+                      />
 
-                        <Accordion.Collapse eventKey={boardIndex}>
+                      {/* <Accordion.Collapse eventKey={boardIndex}>
                           <BoardExpand
                             board={board}
                             boardIndex={boardIndex}
                           ></BoardExpand>
                         </Accordion.Collapse>
-                      </Accordion>
+                      </Accordion> */}
                     </Col>
                   </>
                 )
@@ -344,99 +346,13 @@ const MyBoards = () => {
         </Row>
 
         {/* Popup when Board is clicked */}
-        {/*selectedBoard !== null && (
-          <div className='board-popup'>
-            <div
-              className='board-popup-background'
-              onClick={() => setSelectedBoard(null)}
-            />
-            <div className='board-popup-content'>
-              <Row>
-                <h2>{boards[selectedBoard].boardName} </h2>
-              </Row>
-              <Row className='images-container'>
-                {boards[selectedBoard].images.map((image, imageIndex) => (
-                  // <Col key={imageIndex}>
-                  <button
-                    key={imageIndex}
-                    className='image-btn'
-                    onClick={() => {
-                      setNewImageURL(
-                        `data:image/png;base64,${bufferToBase64(
-                          image.data.data
-                        )}`
-                      )
-                      setShowImageModal(true)
-                      setSelectedImage(image.id)
-                    }}
-                  >
-                    <Image
-                      src={`data:image/png;base64,${bufferToBase64(
-                        image.data.data
-                      )}`}
-                      alt={`Thumbnail image of ${image.prompt}`}
-                      className='image-thumbnail'
-                      thumbnail
-                    />
-                  </button>
-                  // </Col>
-                ))}
-              </Row>
-
-              {/* <Button variant='primary' onClick={handleShowAddImageModal}>
-                Add Image
-              </Button> 
-              <Row>
-                <Col sm={6}></Col>
-                <Col sm={6} className='d-flex justify-content-end'>
-                  <Button
-                    variant='secondary'
-                    onClick={() => {
-                      deleteBoard(user, boards[selectedBoard].boardName)
-                      handleCloseModal()
-                    }}
-                    className='mx-1'
-                  >
-                    Delete Board
-                  </Button>
-                  <Button
-                    variant='secondary'
-                    onClick={() => setSelectedBoard(null)}
-                    className='mx-1'
-                  >
-                    Close
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-
-            {/* Modal for adding images manually to the board not needed ??? */}
-        {/* <Modal show={showAddImageModal} onHide={handleCloseAddImageModal}>
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  Add Image to {boards[selectedBoard]?.name}
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>Image URL</p>
-                <FormControl
-                  type='text'
-                  placeholder='https://example.com/image.jpg'
-                  value={newImageURL}
-                  onChange={(e) => setNewImageURL(e.target.value)}
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant='secondary' onClick={handleCloseAddImageModal}>
-                  Cancel
-                </Button>
-                <Button variant='primary' onClick={handleAddImageToBoard}>
-                  Add Image
-                </Button>
-              </Modal.Footer>
-            </Modal> 
-          </div>
-        )}*/}
+        {selectedBoard !== null && (
+          <BoardPopup
+            boards={boards}
+            deleteBoard={deleteBoard}
+            handleCloseModal={handleCloseModal}
+          />
+        )}
 
         {/* Modal that shows when clicking image in BoardPopup */}
         <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>

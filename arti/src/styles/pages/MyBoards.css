@@ -28,19 +28,26 @@
   z-index: 1;
 }
 
+/* @keyframes popup {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80vw;
+  }
+} */
+
 .board-popup-content {
   background-color: #303030;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 1rem;
   z-index: 2;
+  /* animation: popup 200ms ease normal; */
   width: 80vw;
 }
 
 .image-thumbnail {
-  max-width: 128px;
-  max-height: 128px;
   object-fit: cover;
-  margin-bottom: 1rem;
 }
 
 /* The wrapper that contains the Create Board btn */
@@ -52,13 +59,29 @@
 .images-container {
   overflow: scroll;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  /* place-items: center; */
-  margin: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 256px));
+  grid-template-rows: repeat(auto-fit, minmax(64px, 256px));
+  place-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  max-height: 60vh;
+  padding: 1rem;
+  background: #222;
+  border-radius: 0.375rem;
 }
 
 .image-btn {
   all: unset;
   width: 100%;
   background: none;
+}
+
+@media screen and (max-width: 767.98) {
+  .board-popup {
+    bottom: 5rem !important;
+  }
+  .board-popup-content {
+    width: 90vw;
+  }
 }
