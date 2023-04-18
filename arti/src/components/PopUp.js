@@ -39,6 +39,7 @@ export default function PopUp({
   const [saveStatus, setSaveStatus] = useState('Saving...')
   const [disabledItems, setDisabledItems] = useState([])
 
+  // Adds the clicked item to disableItems so it won't be clicked again
   const handleItemClick = async (event) => {
     console.log(event)
     await saveBoard(event)
@@ -137,11 +138,14 @@ export default function PopUp({
                         <div
                           className='d-flex justify-content-between'
                           name={board.boardName}
+                          id={i}
                         >
                           <p
                             className={`my-0 ${
                               disabledItems[i] ? 'text-secondary' : ''
                             }`}
+                            id={i}
+                            name={board.boardName}
                           >
                             {board.boardName}
                           </p>

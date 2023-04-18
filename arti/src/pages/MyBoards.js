@@ -6,9 +6,9 @@ import {
   FormControl,
   Modal,
   Button,
-  Card,
   Image,
   Spinner,
+  Accordion,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -19,8 +19,9 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import Board from '../components/Board'
+import BoardExpand from '../components/BoardExpand'
 import { UserAndBoardContext } from '../App'
-import { bufferToBase64 } from '../utils/BufferToBase64.js'
+// import { bufferToBase64 } from '../utils/BufferToBase64.js'
 
 export const BoardsStateContext = createContext()
 
@@ -35,7 +36,8 @@ const MyBoards = () => {
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
-  const [parentWidth, setParentWidth] = useState(0)
+  // const [parentWidth, setParentWidth] = useState(0)
+  // const [expand, setExpand] = useState(false)
 
   const boardStateValues = {
     selectedBoard,
@@ -44,11 +46,15 @@ const MyBoards = () => {
     setShowImageModal,
     selectedImage,
     setSelectedImage,
+    // expand,
+    // setExpand,
+    newImageURL,
+    setNewImageURL,
   }
 
   useEffect(() => {
     console.log('width', thisRef.current ? thisRef.current.offsetWidth : 0)
-  }, [thisRef.current])
+  }, [])
 
   // Manually calling the the API to get all the boards of the user
   async function getBoards(user) {
@@ -242,6 +248,7 @@ const MyBoards = () => {
           </Col>
         </Row>
 
+        {/* Search Board */}
         <Row className='py-4'>
           <Col xs={12}>
             <FormControl
@@ -253,6 +260,7 @@ const MyBoards = () => {
           </Col>
         </Row>
 
+        {/* Create Board Button */}
         <Row>
           <div className='create-wrapper'>
             <Button
@@ -300,18 +308,33 @@ const MyBoards = () => {
           {/* Renders a spinner to show loading if boards is empty */}
           {boards !== undefined ? (
             boards.length === 0 ? (
-              <Spinner animation='border' />
+              <Col className='d-flex justify-content-center'>
+                <Spinner animation='border' />
+              </Col>
             ) : (
               boards.map((board, boardIndex) => {
                 return (
-                  <Board
-                    key={boardIndex}
-                    board={board}
-                    boardIndex={boardIndex}
-                    parentWidth={
-                      thisRef.current ? thisRef.current.offsetWidth : 0
-                    }
-                  />
+                  <>
+                    <Col key={boardIndex} xs={12} md={6}>
+                      <Accordion>
+                        <Board
+                          key={boardIndex}
+                          board={board}
+                          boardIndex={boardIndex}
+                          parentWidth={
+                            thisRef.current ? thisRef.current.offsetWidth : 0
+                          }
+                        />
+
+                        <Accordion.Collapse eventKey={boardIndex}>
+                          <BoardExpand
+                            board={board}
+                            boardIndex={boardIndex}
+                          ></BoardExpand>
+                        </Accordion.Collapse>
+                      </Accordion>
+                    </Col>
+                  </>
                 )
               })
             )
@@ -321,58 +344,74 @@ const MyBoards = () => {
         </Row>
 
         {/* Popup when Board is clicked */}
-        {selectedBoard !== null && (
+        {/*selectedBoard !== null && (
           <div className='board-popup'>
             <div
               className='board-popup-background'
               onClick={() => setSelectedBoard(null)}
             />
             <div className='board-popup-content'>
-              <h2>{boards[selectedBoard].boardName} </h2>
-              {boards[selectedBoard].images.map((image, imageIndex) => (
-                <div
-                  key={imageIndex}
-                  onClick={() => {
-                    setNewImageURL(
-                      `data:image/png;base64,${bufferToBase64(image.data.data)}`
-                    )
-                    setShowImageModal(true)
-                    setSelectedImage(image.id)
-                  }}
-                >
-                  <Image
-                    src={`data:image/png;base64,${bufferToBase64(
-                      image.data.data
-                    )}`}
-                    alt={`Thumbnail image of ${image.prompt}`}
-                    className='image-thumbnail'
-                    thumbnail
-                  />
-                </div>
-              ))}
+              <Row>
+                <h2>{boards[selectedBoard].boardName} </h2>
+              </Row>
+              <Row className='images-container'>
+                {boards[selectedBoard].images.map((image, imageIndex) => (
+                  // <Col key={imageIndex}>
+                  <button
+                    key={imageIndex}
+                    className='image-btn'
+                    onClick={() => {
+                      setNewImageURL(
+                        `data:image/png;base64,${bufferToBase64(
+                          image.data.data
+                        )}`
+                      )
+                      setShowImageModal(true)
+                      setSelectedImage(image.id)
+                    }}
+                  >
+                    <Image
+                      src={`data:image/png;base64,${bufferToBase64(
+                        image.data.data
+                      )}`}
+                      alt={`Thumbnail image of ${image.prompt}`}
+                      className='image-thumbnail'
+                      thumbnail
+                    />
+                  </button>
+                  // </Col>
+                ))}
+              </Row>
 
               {/* <Button variant='primary' onClick={handleShowAddImageModal}>
                 Add Image
-              </Button> */}
-              <Button
-                variant='secondary'
-                onClick={() => {
-                  deleteBoard(user, boards[selectedBoard].boardName)
-                  handleCloseModal()
-                }}
-              >
-                Delete Board
-              </Button>
-              <Button
-                variant='secondary'
-                onClick={() => setSelectedBoard(null)}
-              >
-                Close
-              </Button>
+              </Button> 
+              <Row>
+                <Col sm={6}></Col>
+                <Col sm={6} className='d-flex justify-content-end'>
+                  <Button
+                    variant='secondary'
+                    onClick={() => {
+                      deleteBoard(user, boards[selectedBoard].boardName)
+                      handleCloseModal()
+                    }}
+                    className='mx-1'
+                  >
+                    Delete Board
+                  </Button>
+                  <Button
+                    variant='secondary'
+                    onClick={() => setSelectedBoard(null)}
+                    className='mx-1'
+                  >
+                    Close
+                  </Button>
+                </Col>
+              </Row>
             </div>
 
             {/* Modal for adding images manually to the board not needed ??? */}
-            {/* <Modal show={showAddImageModal} onHide={handleCloseAddImageModal}>
+        {/* <Modal show={showAddImageModal} onHide={handleCloseAddImageModal}>
               <Modal.Header closeButton>
                 <Modal.Title>
                   Add Image to {boards[selectedBoard]?.name}
@@ -395,9 +434,9 @@ const MyBoards = () => {
                   Add Image
                 </Button>
               </Modal.Footer>
-            </Modal> */}
+            </Modal> 
           </div>
-        )}
+        )}*/}
 
         {/* Modal that shows when clicking image in BoardPopup */}
         <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>

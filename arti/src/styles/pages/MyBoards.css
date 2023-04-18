@@ -33,17 +33,32 @@
   padding: 2rem;
   border-radius: 1rem;
   z-index: 2;
+  width: 80vw;
 }
 
 .image-thumbnail {
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 128px;
+  max-height: 128px;
   object-fit: cover;
   margin-bottom: 1rem;
 }
 
-/* Thr wrapper that contains the Create Board btn */
+/* The wrapper that contains the Create Board btn */
 .create-wrapper {
   display: flex;
   justify-content: center;
+}
+
+.images-container {
+  overflow: scroll;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* place-items: center; */
+  margin: 2rem 0;
+}
+
+.image-btn {
+  all: unset;
+  width: 100%;
+  background: none;
 }
