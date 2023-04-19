@@ -32,13 +32,10 @@ const MyBoards = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [newBoardName, setNewBoardName] = useState('')
   const [showModal, setShowModal] = useState(false)
-  // const [showAddImageModal, setShowAddImageModal] = useState(false) -- not needed???
   const [newImageURL, setNewImageURL] = useState('')
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
-  // const [parentWidth, setParentWidth] = useState(0)
-  // const [expand, setExpand] = useState(false)
 
   const boardStateValues = {
     user,
@@ -48,8 +45,6 @@ const MyBoards = () => {
     setShowImageModal,
     selectedImage,
     setSelectedImage,
-    // expand,
-    // setExpand,
     newImageURL,
     setNewImageURL,
   }
@@ -108,6 +103,7 @@ const MyBoards = () => {
     }
   }
 
+  // Calling the API to update the database for the deleted board
   async function deleteBoard(user, deleteThisBoard) {
     try {
       const username = user.username
@@ -134,32 +130,20 @@ const MyBoards = () => {
   }
 
   // Calling the API to delete the imageToDelete from the one of the user's boards
-  async function deleteImage(user, userBoard, boardImages, imageToDelete) {
+  async function deleteImage(user, userBoard, imageToDelete) {
     try {
-      // console.log('hello')
       const username = user.username
       const boardName = userBoard
-      let images = boardImages
-      // console.log('boardname: ', boardName)
-      // console.log('images in the board: ', images)
       const imagesToDelete = imageToDelete
-      // console.log('selected image: ', imagesToDelete)
       console.log('deleting details: ', {
         boardName: boardName,
-        imagesInBoard: images,
         selectedImage: imageToDelete,
       })
       const isCustomThumbnail = user.customThumbnail
       const postUrl = `/api/v1/boards/${username}/add-delete`
 
-      // for (let i = 0; i < images.length; i++) {
-      //   images[i] = images[i].id
-      //   console.log(`this is the image id at ${i}: ${images[i]} `)
-      // }
-
       const response = await axios.post(postUrl, {
         boardName: boardName,
-        images: images,
         imageUpdates: [imagesToDelete],
         deleteImage: true,
         isCustomThumbnail: isCustomThumbnail,
@@ -178,27 +162,6 @@ const MyBoards = () => {
     }
   }
 
-  // async function handleGettingBoards() {
-  //   const bArr = await getBoards(user)
-  //   setBoards(bArr)
-  // }
-
-  // not used???
-  // const handleAddBoard = () => {
-  //   if (boards.some((board) => board.boardName === modalSearchTerm)) {
-  //     alert('A board with this name already exists.')
-  //     return
-  //   }
-
-  //   const newBoard = {
-  //     name: modalSearchTerm,
-  //     images: newImageURL ? [newImageURL] : [],
-  //   }
-  //   setBoards([...boards, newBoard])
-  //   setModalSearchTerm('')
-  //   setNewImageURL('')
-  // }
-
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
   }
@@ -210,36 +173,6 @@ const MyBoards = () => {
   const handleCloseModal = () => {
     setShowModal(false)
   }
-
-  // made this inline
-  // const handleModalSearch = (event) => {
-  //   setNewBoardName(event.target.value)
-  // }
-
-  // made this inline
-  // const handleBoardClick = (boardIndex) => {
-  //   setSelectedBoard(boardIndex)
-  // }
-
-  // made this inline
-  // const closeBoard = () => {
-  //   setSelectedBoard(null)
-  // }
-
-  // not needed???
-  // const handleShowAddImageModal = () => {
-  //   setShowAddImageModal(true)
-  // }
-  // const handleCloseAddImageModal = () => {
-  //   setShowAddImageModal(false)
-  // }
-  // const handleAddImageToBoard = () => {
-  //   const newBoards = [...boards]
-  //   newBoards[selectedBoard].images.push(newImageURL)
-  //   setBoards(newBoards)
-  //   setNewImageURL('')
-  //   handleCloseAddImageModal()
-  // }
 
   return (
     <BoardsStateContext.Provider value={boardStateValues}>
@@ -318,23 +251,23 @@ const MyBoards = () => {
                 return (
                   <>
                     <Col key={boardIndex} xs={12} md={6}>
-                      {/* <Accordion> */}
-                      <Board
-                        key={boardIndex}
-                        board={board}
-                        boardIndex={boardIndex}
-                        parentWidth={
-                          thisRef.current ? thisRef.current.offsetWidth : 0
-                        }
-                      />
+                      <Accordion>
+                        <Board
+                          key={boardIndex}
+                          board={board}
+                          boardIndex={boardIndex}
+                          parentWidth={
+                            thisRef.current ? thisRef.current.offsetWidth : 0
+                          }
+                        />
 
-                      {/* <Accordion.Collapse eventKey={boardIndex}>
+                        <Accordion.Collapse eventKey={boardIndex}>
                           <BoardExpand
                             board={board}
                             boardIndex={boardIndex}
                           ></BoardExpand>
                         </Accordion.Collapse>
-                      </Accordion> */}
+                      </Accordion>
                     </Col>
                   </>
                 )
@@ -375,7 +308,6 @@ const MyBoards = () => {
                 await deleteImage(
                   user,
                   boards[selectedBoard].boardName,
-                  boards[selectedBoard].images,
                   selectedImage
                 )
                 setShowImageModal(false)
@@ -389,22 +321,6 @@ const MyBoards = () => {
     </BoardsStateContext.Provider>
   )
 }
-
-// not used???
-// async function getSingleBoard(user) {
-//   const username = user.username
-//   const boardName = user.boardName
-
-//   try {
-//     const getUrl = `/api/v1/boards/${username}/${boardName}`
-
-//     const response = await axios.post(getUrl)
-//     console.log(response)
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
-
 // not yet needed - but soon...
 async function changeThumbnailOrBoardName(user) {
   try {

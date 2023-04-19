@@ -2,10 +2,12 @@ import '../index.css'
 import '../styles/pages/ImageGen.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
+
+export const ItemsContext = createContext()
 
 const ImageGen = () => {
   //button functionality of popup, show/hide popup
@@ -13,6 +15,12 @@ const ImageGen = () => {
   const [promptInput, setPrompt] = useState('')
   const [image, setImage] = useState({})
   const [showSaving, setShowSaving] = useState(false)
+  const [disabledItems, setDisabledItems] = useState([])
+
+  const values = {
+    disabledItems,
+    setDisabledItems,
+  }
 
   // Functions for showing/closing modal popup
   const handleShow = async () => {
@@ -31,6 +39,7 @@ const ImageGen = () => {
   const handleClose = () => {
     setShow(false)
     setShowSaving(false)
+    setDisabledItems([])
   }
 
   // Submits the prompt to generate an image from our API
@@ -77,35 +86,36 @@ const ImageGen = () => {
   }
 
   return (
-    <div className='generator-container'>
-      <Backdrop />
-      <Row className='my-auto'>
-        <Container>
-          <div className='image-input-container'>
-            <Row>
-              <Col>
-                <h3>
-                  Enter a detailed description for what you want to create.
-                </h3>
+    <ItemsContext.Provider value={values}>
+      <div className='generator-container'>
+        <Backdrop />
+        <Row className='my-auto'>
+          <Container>
+            <div className='image-input-container'>
+              <Row>
+                <Col>
+                  <h3>
+                    Enter a detailed description for what you want to create.
+                  </h3>
 
-                <div className='generate-bar mb-3'>
-                  <input
-                    className='image-input'
-                    onChange={onChangeHandler}
-                    type='text'
-                    placeholder='Enter your prompt...'
-                    value={promptInput}
-                  />
-                  <GenerateBtn onClick={handleSubmit} text='Generate' />
-                </div>
-                <div className='btn-wrapper'>
-                  <Button variant='secondary' onClick={randomizePrompt}>
-                    Randomize Prompt
-                  </Button>
-                </div>
-                <div className='popup-container'>
-                  <div className='generated-img'>
-                    {/* <button
+                  <div className='generate-bar mb-3'>
+                    <input
+                      className='image-input'
+                      onChange={onChangeHandler}
+                      type='text'
+                      placeholder='Enter your prompt...'
+                      value={promptInput}
+                    />
+                    <GenerateBtn onClick={handleSubmit} text='Generate' />
+                  </div>
+                  <div className='btn-wrapper'>
+                    <Button variant='secondary' onClick={randomizePrompt}>
+                      Randomize Prompt
+                    </Button>
+                  </div>
+                  <div className='popup-container'>
+                    <div className='generated-img'>
+                      {/* <button
             className='popup-button'
             variant='primary'
             onClick={handleShow}
@@ -113,29 +123,30 @@ const ImageGen = () => {
             <i className='bi bi-plus-lg'></i>
           </button> */}
 
-                    <PopUp
-                      show={show}
-                      handleClose={handleClose}
-                      image={image}
-                      showSaving={showSaving}
-                      setShowSaving={setShowSaving}
-                    />
+                      <PopUp
+                        show={show}
+                        handleClose={handleClose}
+                        image={image}
+                        showSaving={showSaving}
+                        setShowSaving={setShowSaving}
+                      />
 
-                    {/* <img
+                      {/* <img
               src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
               alt='img of travis scott raging'
               className='img'
             /> */}
+                    </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </Row>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </Row>
 
-      {/* <img src={imageUrl} alt={promptInput} className='img' /> */}
-    </div>
+        {/* <img src={imageUrl} alt={promptInput} className='img' /> */}
+      </div>
+    </ItemsContext.Provider>
   )
 }
 export default ImageGen
