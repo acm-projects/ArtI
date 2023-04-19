@@ -134,32 +134,24 @@ const MyBoards = () => {
   }
 
   // Calling the API to delete the imageToDelete from the one of the user's boards
-  async function deleteImage(user, userBoard, boardImages, imageToDelete) {
+  async function deleteImage(user, userBoard, imageToDelete) {
     try {
       // console.log('hello')
       const username = user.username
       const boardName = userBoard
-      let images = boardImages
       // console.log('boardname: ', boardName)
       // console.log('images in the board: ', images)
       const imagesToDelete = imageToDelete
       // console.log('selected image: ', imagesToDelete)
       console.log('deleting details: ', {
         boardName: boardName,
-        imagesInBoard: images,
         selectedImage: imageToDelete,
       })
       const isCustomThumbnail = user.customThumbnail
       const postUrl = `/api/v1/boards/${username}/add-delete`
 
-      // for (let i = 0; i < images.length; i++) {
-      //   images[i] = images[i].id
-      //   console.log(`this is the image id at ${i}: ${images[i]} `)
-      // }
-
       const response = await axios.post(postUrl, {
         boardName: boardName,
-        images: images,
         imageUpdates: [imagesToDelete],
         deleteImage: true,
         isCustomThumbnail: isCustomThumbnail,
@@ -375,7 +367,6 @@ const MyBoards = () => {
                 await deleteImage(
                   user,
                   boards[selectedBoard].boardName,
-                  boards[selectedBoard].images,
                   selectedImage
                 )
                 setShowImageModal(false)

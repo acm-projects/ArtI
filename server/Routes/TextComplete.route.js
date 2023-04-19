@@ -10,14 +10,14 @@ router.post('/', async(req, res, next) => {
         })
         const openai = new OpenAIApi(configuration);
 
-        const textApiInput = "Generate a random prompt for an artist to draw"
+        const textApiInput = "Create a random prompt for an artist to draw, specify an art style that it should be in."
 
         const textResponse = await openai.createCompletion(
             {
                 model: "text-davinci-003",
                 prompt: ""+ textApiInput +"",
                 max_tokens: 50,
-                temperature: 0.9
+                temperature: .99
             } 
         ) 
         console.log(textResponse.data.choices[0].text)
