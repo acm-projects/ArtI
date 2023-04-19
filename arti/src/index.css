@@ -17,7 +17,7 @@ body {
   padding: 0;
   background-color: var(--body-bg-color) !important;
   color: var(--text-color);
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter';
 }
 
 h1,
@@ -26,7 +26,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', 40px;
 }
 
 img {
@@ -53,11 +53,46 @@ input:focus {
   box-shadow: 0 0 0 0.25rem rgba(255, 77, 0, 0.25) !important;
 }
 
-@media screen and (max-width: 767.98) {
-  body {
-    padding-top: 0;
-    padding-bottom: 5rem;
-  }
+.toggle-password-btn {
+  border: 2px solid var(--border-color) !important;
+  background-color: var(--body-bg-color) !important;
+  border-top-right-radius: 25px !important;
+  border-bottom-right-radius: 25px !important;
+}
+
+.login-btn {
+  background-color: var(--text-color) !important;
+  border-radius: 15px !important;
+}
+
+.welcome-title {
+  font-size: 20px;
+}
+
+.arti-title {
+  font-family: 'Playfair Display', serif;
+}
+
+.welcome-subtitle {
+  font-size: 12px;
+  color: #9d9d9d;
+}
+
+.arti-italic {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+}
+
+.username-field {
+  font-size: 13px;
+}
+
+.password-field {
+  font-size: 13px;
+}
+
+.asterisk {
+  color: #ff4b4b;
 }
 /* END OF BOILERPLATE */
 
