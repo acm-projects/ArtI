@@ -6,8 +6,8 @@
 
 /* IMAGE GEN STUFF */
 .generator-container {
-  height: 100vh;
-  height: 100svh;
+  height: calc(100vh - 5rem);
+  height: calc(100sv - 5rem);
   display: grid;
   place-items: center;
   width: 100%;
@@ -82,6 +82,11 @@
 /* RESPONSIVE STUFF */
 @media (max-width: 767.98px) {
   /* ImageGen Stuff */
+  .generator-container {
+    height: 100vh;
+    height: 100svh;
+  }
+
   .image-input-container h3 {
     text-align: center;
     margin-bottom: 1.5rem;

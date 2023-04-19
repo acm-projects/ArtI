@@ -6,6 +6,7 @@ import { createContext, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
+import Loading from '../components/Loading'
 
 export const ItemsContext = createContext()
 
@@ -16,6 +17,7 @@ const ImageGen = () => {
   const [image, setImage] = useState({})
   const [showSaving, setShowSaving] = useState(false)
   const [disabledItems, setDisabledItems] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const values = {
     disabledItems,
@@ -26,12 +28,7 @@ const ImageGen = () => {
   const handleShow = async () => {
     try {
       setShow(true)
-      // gets the boards owned by user
-      // const response = await axios(`/api/v1/boards/${user.username}`)
-      // if (response.status === 200) {
-      //   setBoards(response.data)
-      //   console.log('calling api', boards)
-      // }
+      setLoading(false)
     } catch (error) {
       console.error(error.message)
     }
@@ -45,6 +42,7 @@ const ImageGen = () => {
   // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
     e.preventDefault()
+    setLoading(true)
 
     const postUrl = '/api/v1/imageai'
     try {
@@ -108,6 +106,11 @@ const ImageGen = () => {
                     />
                     <GenerateBtn onClick={handleSubmit} text='Generate' />
                   </div>
+                  {loading && (
+                    <div>
+                      <Loading />
+                    </div>
+                  )}
                   <div className='btn-wrapper'>
                     <Button variant='secondary' onClick={randomizePrompt}>
                       Randomize Prompt
@@ -115,14 +118,6 @@ const ImageGen = () => {
                   </div>
                   <div className='popup-container'>
                     <div className='generated-img'>
-                      {/* <button
-            className='popup-button'
-            variant='primary'
-            onClick={handleShow}
-          >
-            <i className='bi bi-plus-lg'></i>
-          </button> */}
-
                       <PopUp
                         show={show}
                         handleClose={handleClose}
@@ -130,12 +125,6 @@ const ImageGen = () => {
                         showSaving={showSaving}
                         setShowSaving={setShowSaving}
                       />
-
-                      {/* <img
-              src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
-              alt='img of travis scott raging'
-              className='img'
-            /> */}
                     </div>
                   </div>
                 </Col>
@@ -143,8 +132,6 @@ const ImageGen = () => {
             </div>
           </Container>
         </Row>
-
-        {/* <img src={imageUrl} alt={promptInput} className='img' /> */}
       </div>
     </ItemsContext.Provider>
   )

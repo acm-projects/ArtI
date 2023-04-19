@@ -86,48 +86,52 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   return (
     <Row className='login-container'>
       <Col sm='6' className=' side-column'>
-        <div className='side-container'>
-          
-        </div>
+        <div className='side-container'></div>
       </Col>
       <Col sm='6'>
         <div className='side-container'>
-          <h1 className = 'welcome-title'> 
-          Welcome to <span className = 'arti-title'> ART <em> i </em> </span> . 
+          <h1 className='welcome-title'>
+            Welcome to{' '}
+            <span className='arti-title'>
+              ART <em>i</em>
+            </span>
+            .
           </h1>
-          <h2 className = 'welcome-subtitle'> 
-          Welcome back to Arti. Please enter your details.</h2>
-        
-          <Form className='my-3 w-75' onSubmit={handleSubmit}>
+          <h2 className='welcome-subtitle'>Please enter your details.</h2>
 
-            <h3 className = 'username-field'> Username <span className = "asterisk"> * </span> </h3>
+          <Form className='my-3 w-75' onSubmit={handleSubmit}>
+            <h3 className='username-field'>
+              {' '}
+              Username <span className='asterisk'> * </span>{' '}
+            </h3>
             {/* USERNAME INPUT */}
-            <FloatingLabel
-              className='mb-3'
-              label='abc123'
-              controlId='usernameInput'
-            >
+            <InputGroup className='mb-3'>
+              {/* <FloatingLabel className='mb-3' controlId='usernameInput'> */}
               <Form.Control
-                className='login-input'
-                placeholder='Username'
+                className='login-input usernameInput'
+                placeholder='abc123'
                 onChange={handleChange}
                 name='username'
               />
-            </FloatingLabel>
+              {/* </FloatingLabel> */}
+            </InputGroup>
 
-            <h3 className = 'password-field'> Password <span className = "asterisk"> * </span>  </h3>
+            <h3 className='password-field'>
+              {' '}
+              Password <span className='asterisk'> * </span>{' '}
+            </h3>
             {/* PASSWORD INPUT */}
             <InputGroup className='mb-3'>
-              <FloatingLabel label='**********' controlId='passwordInput'>
-                <Form.Control
-                  className='login-input'
-                  // The showPassword state lets the input to toggle the visibility of the text
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Password'
-                  name='password'
-                  onChange={handleChange}
-                />
-              </FloatingLabel>
+              {/* <FloatingLabel label='**********' controlId='passwordInput'> */}
+              <Form.Control
+                className='login-input'
+                // The showPassword state lets the input to toggle the visibility of the text
+                type={showPassword ? 'text' : 'password'}
+                placeholder='**********'
+                name='password'
+                onChange={handleChange}
+              />
+              {/* </FloatingLabel> */}
               <Button
                 variant='secondary'
                 className='toggle-password-btn'
@@ -147,7 +151,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               type='submit'
               className='login-btn w-100'
             >
-              <span className = "login-button-style">Log In.</span>
+              <span className='login-button-style'>Log In.</span>
             </Button>
 
             {/* Login Status */}

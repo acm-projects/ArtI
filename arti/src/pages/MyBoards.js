@@ -19,7 +19,6 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import Board from '../components/Board'
-import BoardExpand from '../components/BoardExpand'
 import { UserAndBoardContext } from '../App'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardPopup from '../components/BoardPopup'
@@ -250,25 +249,11 @@ const MyBoards = () => {
               boards.map((board, boardIndex) => {
                 return (
                   <>
-                    <Col key={boardIndex} xs={12} md={6}>
-                      <Accordion>
-                        <Board
-                          key={boardIndex}
-                          board={board}
-                          boardIndex={boardIndex}
-                          parentWidth={
-                            thisRef.current ? thisRef.current.offsetWidth : 0
-                          }
-                        />
-
-                        <Accordion.Collapse eventKey={boardIndex}>
-                          <BoardExpand
-                            board={board}
-                            boardIndex={boardIndex}
-                          ></BoardExpand>
-                        </Accordion.Collapse>
-                      </Accordion>
-                    </Col>
+                    <Board
+                      key={board.boardName}
+                      board={board}
+                      boardIndex={boardIndex}
+                    />
                   </>
                 )
               })

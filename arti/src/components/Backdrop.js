@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles/components/backdrop.module.css'
 
-export default function Backdrop({ circleSize, lineSize }) {
+export default function Backdrop() {
   return (
     <>
       <div className={`${styles['bg-circle']} ${styles.circle1}`}></div>

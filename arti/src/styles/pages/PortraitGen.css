@@ -1,6 +1,6 @@
 .portrait-gen-container {
-  height: 100vh;
-  height: 100svh;
+  height: calc(100vh - 5rem);
+  height: calc(100sv - 5rem);
   display: grid;
   place-items: center;
 }
@@ -52,4 +52,13 @@
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
+}
+
+/* RESPONSIVE STUFF */
+@media (max-width: 767.98px) {
+  /* ImageGen Stuff */
+  .portrait-gen-container {
+    height: 100vh;
+    height: 100svh;
+  }
 }
