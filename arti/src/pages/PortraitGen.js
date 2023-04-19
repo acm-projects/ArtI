@@ -5,7 +5,7 @@ import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
 import { UserAndBoardContext } from '../App'
-import { Container } from 'react-bootstrap'
+import { Container, Row, Col, Dropdown } from 'react-bootstrap'
 
 const PortraitGen = () => {
   const { user } = useContext(UserAndBoardContext)
@@ -15,26 +15,27 @@ const PortraitGen = () => {
 
   const [buttonPopup, setButtonPopup] = useState(false)
   const [image, setImage] = useState('')
+  const [sexOption, setSexOption] = useState('')
   // const [boardsArray, setBoardsArray] = useState([])
 
   //Function calls the portrait gen api
   async function handleChange() {
     const age = ageInput.current.value
-    const gender = genderInput.current.value
+    // const gender = genderInput.current.value
     let url = ''
 
-    if (age === '' && gender === 'None') {
+    if (age === '' && sexOption === 'None') {
       url = 'https://fakeface.rest/face/json'
-    } else if (age === '' && (gender === 'male' || 'female')) {
-      url = `https://fakeface.rest/face/json?gender=${gender}`
-    } else if (age !== '' && gender === 'None') {
+    } else if (age === '' && (sexOption === 'male' || 'female')) {
+      url = `https://fakeface.rest/face/json?gender=${sexOption}`
+    } else if (age !== '' && sexOption === 'None') {
       const max_age = parseInt(age) + 1
       const min_age = parseInt(age) - 1
       url = `https://fakeface.rest/face/json?minimum_age=${min_age}&maximum_age=${max_age}`
     } else {
       const max_age = parseInt(age) + 1
       const min_age = parseInt(age) - 1
-      url = `https://fakeface.rest/face/json?minimum_age=${min_age}&maximum_age=${max_age}&gender=${gender}`
+      url = `https://fakeface.rest/face/json?minimum_age=${min_age}&maximum_age=${max_age}&gender=${sexOption}`
     }
     console.log(url)
 
@@ -64,33 +65,52 @@ const PortraitGen = () => {
         <div className='portrait-input-container'>
           <h2>What will this portrait look like?</h2>
 
-          <div className='text-inputs'>
-            <input
-              ref={ageInput}
-              className='age-input'
-              type='text'
-              placeholder='Age'
-            />
+          <Row className='text-inputs my-2'>
+            {/* Row for Age */}
+            <Col xs={12} md={6} className='my-2'>
+              <input
+                ref={ageInput}
+                className='age-input'
+                type='number'
+                placeholder='Age'
+              />
+            </Col>
 
-            <div className='gender-input'>
-              <label htmlFor='Gender'>Gender</label>
-              <select ref={genderInput} name='Gender' id='Gender'>
-                <option>None</option>
-                <option value='female'>female</option>
-                <option value='male'>male</option>
-              </select>
-            </div>
-          </div>
+            <Col xs={12} md={6} className='my-2'>
+              <Dropdown>
+                <Dropdown.Toggle className='gender-input'>Sex</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => setSexOption('Female')}>
+                    Female
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setSexOption('Male')}>
+                    Male
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* <div className='gender-input'>
+                  <label htmlFor='Gender'>Gender</label>
+                  <select ref={genderInput} name='Gender' id='Gender'>
+                    <option>None</option>
+                    <option value='female'>female</option>
+                    <option value='male'>male</option>
+                  </select>
+                </div> */}
+            </Col>
+          </Row>
 
-          <PortraitGenBtn onClick={handleChange} text='Generate' />
-          {<img src={image} alt='AI Face' />}
-          <button type='button' onClick={handleChange}>
+          <Row className='my-2'>
+            <PortraitGenBtn onClick={handleChange} text='Generate' />
+          </Row>
+
+          {image && <img src={image} alt='AI Face' />}
+          {/* <button type='button' onClick={handleChange}>
             New image
-          </button>
+          </button> */}
         </div>
 
         <div className='popup-container'>
-          <button onClick={() => setButtonPopup(true)}>save</button>
+          {/* <button onClick={() => setButtonPopup(true)}>save</button> */}
           {/* <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}

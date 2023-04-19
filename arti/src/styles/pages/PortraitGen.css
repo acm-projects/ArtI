@@ -16,7 +16,7 @@
 
 .text-inputs {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -29,26 +29,31 @@
   background-color: var(--body-bg-color);
   outline: none;
   border: var(--border-color) solid 2px;
-  border-radius: 50px;
-  width: 15%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  border-radius: var(--border-radius);
+  width: 100%;
+  padding: 10px 1rem;
   text-align: center;
 }
 
 .gender-input {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
+  background-color: var(--body-bg-color);
+  border: var(--border-color) solid 2px;
+  width: 100%;
+  padding: 10px 0;
 }
 
 .portrait-btn {
   color: var(--text-color);
   background-color: var(--body-bg-color);
-  border: #562611 solid 2px;
-  border-top-right-radius: 10px;
+  /* border: #562611 solid 2px; */
+  border: var(--border-color) solid 2px;
+  border-radius: var(--border-radius);
+  /* border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 10px; */
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;

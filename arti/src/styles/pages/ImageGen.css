@@ -47,8 +47,8 @@
   background-color: var(--body-bg-color);
   outline: none;
   border: var(--border-color) solid 2px;
-  border-bottom-left-radius: 50px;
-  border-top-left-radius: 50px;
+  border-bottom-left-radius: var(--border-radius);
+  border-top-left-radius: var(--border-radius);
   height: 3.5rem;
   width: 75%;
   padding: 1rem;
@@ -65,8 +65,8 @@
   background-color: var(--body-bg-color);
   outline: none;
   border: var(--border-color) solid 2px;
-  border-bottom-right-radius: 50px;
-  border-top-right-radius: 50px;
+  border-bottom-right-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
   height: 3.5rem;
   width: 15%;
   cursor: pointer;
@@ -96,14 +96,14 @@
   }
 
   .generate-bar .image-input {
-    border-radius: 50px;
+    border-radius: var(--border-radius);
     width: 100%;
     margin-bottom: 1rem;
     font-size: 1rem;
   }
 
   .generate-bar .generate-btn {
-    border-radius: 50px;
+    border-radius: var(--border-radius);
     width: 50%;
     font-size: 1rem;
   }

@@ -96,7 +96,7 @@ const ImageGen = () => {
                     Enter a detailed description for what you want to create.
                   </h3>
 
-                  <div className='generate-bar mb-3'>
+                  <div className='generate-bar my-4'>
                     <input
                       className='image-input'
                       onChange={onChangeHandler}

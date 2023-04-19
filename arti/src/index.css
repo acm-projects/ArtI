@@ -4,6 +4,7 @@
   --body-bg-color: #111;
   --border-color: #d0c5c5;
   --circle-base-size: 450px;
+  --border-radius: 0.375rem;
 }
 
 *,
