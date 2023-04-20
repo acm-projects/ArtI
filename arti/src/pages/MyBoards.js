@@ -29,12 +29,13 @@ const MyBoards = () => {
   const thisRef = useRef(null)
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
   const [searchTerm, setSearchTerm] = useState('')
-  const [newBoardName, setNewBoardName] = useState('')
+  // const [newBoardName, setNewBoardName] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [newImageURL, setNewImageURL] = useState('')
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const boardNameRef = useRef(null)
 
   const boardStateValues = {
     user,
@@ -46,6 +47,8 @@ const MyBoards = () => {
     setSelectedImage,
     newImageURL,
     setNewImageURL,
+    showModal,
+    setShowModal,
   }
 
   useEffect(() => {
@@ -94,9 +97,12 @@ const MyBoards = () => {
       if (boards === undefined) setBoards([response.data])
       else {
         // TODO :: this is prob inefficient since im calling the api again but at least it's safe
-        const bArr = await getBoards(user)
+        // const bArr = await getBoards(user)
+        const bArr = await [...boards, response.data]
+        console.log('Updated state of boards: ', bArr)
         setBoards(bArr)
       }
+      // setNewBoardName('')
     } catch (error) {
       console.log(error.message)
     }
@@ -117,11 +123,14 @@ const MyBoards = () => {
       if (boards === undefined) setBoards([response.data])
       else {
         // TODO :: this is prob inefficient since im calling the api again but at least it's safe
-        const bArr = await getBoards(user)
+        // const bArr = await getBoards(user)
+        const bArr = await boards.filter(
+          (board) => board.boardName !== boardName
+        )
+        console.log('Updated state of boards: ', bArr)
         setBoards(bArr)
       }
 
-      setNewBoardName('')
       setSelectedBoard(null) // closes the BoardsPopup
     } catch (error) {
       console.log(error.message)
@@ -165,14 +174,6 @@ const MyBoards = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleShowModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
-
   return (
     <BoardsStateContext.Provider value={boardStateValues}>
       <Container>
@@ -199,7 +200,7 @@ const MyBoards = () => {
           <div className='create-wrapper'>
             <Button
               variant='primary'
-              onClick={handleShowModal}
+              onClick={() => setShowModal(true)}
               className='add-boards-button'
             >
               Create Board
@@ -208,7 +209,12 @@ const MyBoards = () => {
         </Row>
 
         {/* Modal for creating new boards */}
-        <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal
+          show={showModal}
+          onHide={() => {
+            setShowModal(false)
+          }}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Create New Board</Modal.Title>
           </Modal.Header>
@@ -217,19 +223,20 @@ const MyBoards = () => {
             <FormControl
               type='text'
               placeholder='e.g. background inspo'
-              value={newBoardName}
-              onChange={(e) => setNewBoardName(e.target.value)}
+              // value={newBoardName}
+              // onChange={(e) => setNewBoardName(e.target.value)}
+              ref={boardNameRef}
             />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleCloseModal}>
+            <Button variant='secondary' onClick={() => setShowModal(false)}>
               Cancel
             </Button>
             <Button
               variant='primary'
               onClick={() => {
-                createNewBoard(user, newBoardName)
-                handleCloseModal()
+                createNewBoard(user, boardNameRef.current.value)
+                setShowModal(false)
               }}
             >
               Add Board
@@ -253,6 +260,7 @@ const MyBoards = () => {
                       key={board.boardName}
                       board={board}
                       boardIndex={boardIndex}
+                      deleteBoard={deleteBoard}
                     />
                   </>
                 )
@@ -265,11 +273,7 @@ const MyBoards = () => {
 
         {/* Popup when Board is clicked */}
         {selectedBoard !== null && (
-          <BoardPopup
-            boards={boards}
-            deleteBoard={deleteBoard}
-            handleCloseModal={handleCloseModal}
-          />
+          <BoardPopup boards={boards} deleteBoard={deleteBoard} />
         )}
 
         {/* Modal that shows when clicking image in BoardPopup */}

@@ -12,6 +12,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
     setNewImageURL,
     setShowImageModal,
     setSelectedImage,
+    setShowModal,
   } = useContext(BoardsStateContext)
   return (
     <>
@@ -45,6 +46,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                   alt={`Thumbnail image of ${image.prompt}`}
                   className='image-thumbnail'
                   thumbnail
+                  loading='lazy'
                 />
               </button>
               // </Col>
@@ -61,7 +63,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                 variant='secondary'
                 onClick={() => {
                   deleteBoard(user, boards[selectedBoard].boardName)
-                  handleCloseModal()
+                  setShowModal(false)
                 }}
                 className='mx-1'
               >

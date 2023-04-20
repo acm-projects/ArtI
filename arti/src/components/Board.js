@@ -5,15 +5,19 @@ import {
   Image,
   useAccordionButton,
   Accordion,
+  Button,
+  Row,
 } from 'react-bootstrap'
 import styles from '../styles/components/board.module.css'
 import { BoardsStateContext } from '../pages/MyBoards'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardExpand from '../components/BoardExpand'
 
-export default function Board({ board, boardIndex, callback }) {
-  const { setSelectedBoard } = useContext(BoardsStateContext)
+export default function Board({ board, boardIndex, callback, deleteBoard }) {
+  const { user, setSelectedBoard } = useContext(BoardsStateContext)
   const { boardName, images } = board
+
+  // uses react-bootstrap accordion stuff
   const expander = useAccordionButton(
     boardIndex,
     () => callback && callback(boardIndex)
@@ -21,7 +25,7 @@ export default function Board({ board, boardIndex, callback }) {
 
   return (
     <>
-      <Col xs={12} md={6}>
+      <Col xs={12} md={6} lg={4} className={`${styles.board}`}>
         <Accordion>
           <div className={`my-2 ${styles['board-container']}`}>
             <button
@@ -31,44 +35,26 @@ export default function Board({ board, boardIndex, callback }) {
                 expander()
               }}
             >
-              <Card>
+              <Card className={`${styles['board-card']}`}>
                 <Card.Body>
-                  <Card.Title className='pb-3'>{boardName}</Card.Title>
+                  <Card.Title className='pb-3 d-flex justify-content-between'>
+                    <h5>{boardName}</h5>
+                    <h5>{board.images.length}</h5>
+                  </Card.Title>
 
-                  <div className={`${styles['image-previews']}`}>
-                    <Col xs={6} className={`${styles['thumbnail-container']}`}>
-                      {board.thumbnail ? (
-                        <Image
-                          className={`${styles.thumbnail}`}
-                          src={`data:image/png;base64,${bufferToBase64(
-                            board.thumbnail.data.data
-                          )}`}
-                          rounded={true}
-                          key={boardIndex}
-                        />
-                      ) : (
-                        <>No Images Yet</>
-                      )}
-                    </Col>
-                    <Col xs={6} className={`${styles['previews-container']}`}>
-                      {images.map((image, i) => {
-                        if (image.id === board.thumbnail.id) return <></>
-                        else if (i <= 3)
-                          // only shows 4 placeholders
-                          return (
-                            <Image
-                              key={i}
-                              className={`${styles.preview}`}
-                              src={`data:image/png;base64,${bufferToBase64(
-                                image.data.data
-                              )}`}
-                              rounded={true}
-                            />
-                          )
-                        else return <p>+{images.length - (i + 1)} more</p>
-                      })}
-                    </Col>
-                  </div>
+                  {board.thumbnail ? (
+                    <Image
+                      className={`${styles.thumbnail}`}
+                      src={`data:image/png;base64,${bufferToBase64(
+                        board.thumbnail.data.data
+                      )}`}
+                      rounded={true}
+                      key={boardIndex}
+                      loading='lazy'
+                    />
+                  ) : (
+                    <>No Images Yet</>
+                  )}
                 </Card.Body>
               </Card>
             </button>
