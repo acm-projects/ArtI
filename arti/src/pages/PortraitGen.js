@@ -3,6 +3,7 @@ import PortraitGenBtn from '../components/PortraitGenBtn'
 import { useRef, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
+import Backdrop from '../components/Backdrop'
 
 const PortraitGen = ({ user }) => {
   const ageInput = useRef(null)
@@ -47,16 +48,7 @@ const PortraitGen = ({ user }) => {
 
   return (
     <div className='portrait-gen-container'>
-      <div className='bg-circle circle1'></div>
-      <div className='bg-circle circle2'></div>
-      <div className='bg-circle circle3'></div>
-      <div className='bg-circle circle4'></div>
-
-      <div className='tiny-lines line1'></div>
-      <div className='tiny-lines line2'></div>
-      <div className='tiny-lines line3'></div>
-      <div className='tiny-lines line4'></div>
-
+      <Backdrop></Backdrop>
       {/* <header>
       <h1>
         Portrait Generator

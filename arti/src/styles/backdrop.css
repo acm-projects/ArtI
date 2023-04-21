@@ -1,105 +1,84 @@
 :root{
   /* i think u define variables */
-  --line-width: 20%;
+  --circle-base-size: 850px;
+}
+
+*{
+  /* outline: 1px solid red; */ /* border outline for debugging */
+  overflow: hidden;  /* disables overflow scroll */
 }
 
 /* TODO :: make circles and lines responsive */
+/* bottom right circle */
 .bg-circle {
   border-radius: 50%;
   /* Position */
   position: absolute;
-  top: calc(50% + 50px);
-  left: 50%;
+  top: calc(85% + 50px);
+  left: 85%;
   transform: translate(-50%, -50%);
-  /* animation: infinite circleAnimation 5s; */
+  animation: fadeIn 10s 1s;
 }
 
-/* @keyframes circleAnimation{
-  from{
-    transform: scale(1) translate(-50%, -50%);
+/*fade in animation for blue balls heheh*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+
   to{
-    transform: scale(0.5) translate(-50%, -50%);
+    opacity: 1;
   }
-} */
-
-.circle1 {
-  width: calc(var(--circle-base-size) + 0px);
-  height: calc(var(--circle-base-size) + 0px);
-  background-color: #99441f;
-  z-index: -1;
+  
 }
 
-.circle2 {
-  width: calc(var(--circle-base-size) + 25px);
-  height: calc(var(--circle-base-size) + 25px);
-  background-color: #733317;
-  z-index: -2;
+/* top left circle */
+.bg-circle1 {
+  border-radius: 50%;
+  /* Position */
+  position: absolute;
+  top: calc(5% + 50px);
+  left: 10%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 10s 1s;
 }
 
-.circle3 {
-  width: calc(var(--circle-base-size) + 50px);
-  height: calc(var(--circle-base-size) + 50px);
-  background-color: #562611;
+/* bottom right circle gradient */
+/*less gradient*/
+.radial-gradient {
+  background-image: radial-gradient(
+    farthest-corner at 10% 25%,
+    #8cbab4 18%,
+    #52908c 35%,
+    #1b3b38 50%
+  );
+}
+
+/* top left circle gradient */
+/*more gradient*/
+.radial-gradient1 {
+  background-image: radial-gradient(
+    farthest-corner at 85% 90%,
+    #8cbab4 20%,
+    #52908c 30%,
+    #284543 40%,
+    #102220 50%,
+    #081110 60%
+  );
+}
+
+/* circle top left */
+.circle {
+  width: calc(var(--circle-base-size) + 75px);
+  height: calc(var(--circle-base-size) + 75px);
   z-index: -3;
 }
 
-.circle4 {
+/* circle bottom right */
+.circle1 {
   width: calc(var(--circle-base-size) + 75px);
   height: calc(var(--circle-base-size) + 75px);
-  background-color: #31180d;
-  z-index: -4;
+  z-index: -3;
 }
 
-.tiny-lines {
-  border-radius: 5px;
-  /* Position */
-  position: absolute;
-  height: 10px;
-  z-index: -1;
-  transition: all 5s;
-  /* name duration method */
-  animation: lineAnimation 5s normal;
-}
 
-@keyframes lineAnimation {
-  from{
-    width: 0;
-  }
-  to{
-    width: var(--line-width)
-  }
-}
-
-.line1 {
-  background-color: #371e13;
-  /* width: calc(var(--line-width) + 35%); */
-  --line-width: 55%;
-  top: 20%;
-  left: 0;
-}
-
-.line2 {
-  background-color: #562611;
-  /* width: calc(var(--line-width) + 20%); */
-  --line-width: 40%;
-  top: 35%;
-  left: 0;
-}
-
-.line3 {
-  background-color: #562611;
-  /* width: calc(var(--line-width) + 20%); */
-  --line-width: 40%;
-
-  bottom: 35%;
-  right: 0;
-}
-
-.line4 {
-  background-color: #31180d;
-  /* width: calc(var(--line-width) + 30%); */
-  --line-width: 50%;
-  bottom: 22.5%;
-  right: 0;
-}

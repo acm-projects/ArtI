@@ -3,7 +3,6 @@
   --text-color: #9d9d9d;
   --body-bg-color: #111;
   --border-color: #d0c5c5;
-  --circle-base-size: 450px;
 }
 
 *,
@@ -62,7 +61,7 @@ img {
 .nav-bar {
   display: flex;
   justify-content: center;
-  background-color: #222;
+  background-color: transparent;
   padding: 1rem 0;
   width: 100%;
 }
