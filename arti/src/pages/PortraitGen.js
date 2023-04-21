@@ -53,7 +53,7 @@ const PortraitGen = () => {
 
   return (
     <div className='portrait-gen-container'>
-      <Backdrop />
+      <Backdrop page={'portraitgen'} />
 
       {/* <header>
       <h1>

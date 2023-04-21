@@ -96,9 +96,7 @@ const App = () => {
                 <Route path='/myboards' element={<MyBoards />} />
                 <Route
                   path='/myprofile'
-                  element={
-                    <Profile user={user} setIsLoggedIn={setisLoggedIn} />
-                  }
+                  element={<Profile setIsLoggedIn={setisLoggedIn} />}
                 ></Route>
               </Route>
             </Routes>

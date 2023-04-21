@@ -9,6 +9,7 @@ import {
   Image,
   Spinner,
   Accordion,
+  Form,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -28,7 +29,7 @@ export const BoardsStateContext = createContext()
 const MyBoards = () => {
   const thisRef = useRef(null)
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
-  const [searchTerm, setSearchTerm] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
   // const [newBoardName, setNewBoardName] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [newImageURL, setNewImageURL] = useState('')
@@ -36,6 +37,7 @@ const MyBoards = () => {
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
   const boardNameRef = useRef(null)
+  const searchRef = useRef(null)
 
   const boardStateValues = {
     user,
@@ -50,10 +52,6 @@ const MyBoards = () => {
     showModal,
     setShowModal,
   }
-
-  useEffect(() => {
-    console.log('width', thisRef.current ? thisRef.current.offsetWidth : 0)
-  }, [])
 
   // Manually calling the the API to get all the boards of the user
   async function getBoards(user) {
@@ -96,13 +94,10 @@ const MyBoards = () => {
       // Updating how boards should be rendered on the page using useState
       if (boards === undefined) setBoards([response.data])
       else {
-        // TODO :: this is prob inefficient since im calling the api again but at least it's safe
-        // const bArr = await getBoards(user)
         const bArr = await [...boards, response.data]
         console.log('Updated state of boards: ', bArr)
         setBoards(bArr)
       }
-      // setNewBoardName('')
     } catch (error) {
       console.log(error.message)
     }
@@ -170,8 +165,22 @@ const MyBoards = () => {
     }
   }
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value)
+  const handleSearch = async (event) => {
+    event.preventDefault()
+    // setSearchTerm(event.target.value)
+    // just for a loading effect
+    setBoards([])
+    let currentBoards
+    if (boards === undefined) currentBoards = await getBoards(user)
+    else currentBoards = boards
+    const filteredBoards = currentBoards.filter((board) => {
+      console.log(board.boardName.includes(searchRef.current.value))
+      return board.boardName.includes(searchRef.current.value)
+    })
+    console.log(searchRef.current.value)
+    if (searchRef.current.value === '') setBoards(currentBoards)
+    else if (filteredBoards.length === 0) setBoards(undefined)
+    else setBoards(filteredBoards)
   }
 
   return (
@@ -186,12 +195,24 @@ const MyBoards = () => {
         {/* Search Board */}
         <Row className='py-4'>
           <Col xs={12}>
-            <FormControl
-              type='text'
-              placeholder='Search for Board...'
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+            <Form onSubmit={handleSearch}>
+              <Row>
+                <Col xs={10}>
+                  <FormControl
+                    type='text'
+                    placeholder='Search for Board...'
+                    // value={searchTerm}
+                    // onChange={handleSearch}
+                    ref={searchRef}
+                  />
+                </Col>
+                <Col xs={2}>
+                  <Button variant='secondary' type='submit'>
+                    Search
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
           </Col>
         </Row>
 
@@ -224,7 +245,7 @@ const MyBoards = () => {
               type='text'
               placeholder='e.g. background inspo'
               // value={newBoardName}
-              // onChange={(e) => setNewBoardName(e.target.value)}
+              // onChange={(e) => setNewBoardName(e.target.value)}---onChange makes it slow
               ref={boardNameRef}
             />
           </Modal.Body>
@@ -255,19 +276,17 @@ const MyBoards = () => {
             ) : (
               boards.map((board, boardIndex) => {
                 return (
-                  <>
-                    <Board
-                      key={board.boardName}
-                      board={board}
-                      boardIndex={boardIndex}
-                      deleteBoard={deleteBoard}
-                    />
-                  </>
+                  <Board
+                    key={board.boardName}
+                    board={board}
+                    boardIndex={boardIndex}
+                    deleteBoard={deleteBoard}
+                  />
                 )
               })
             )
           ) : (
-            <Col className='text-center'>There are no available boards</Col>
+            <Col className='text-center'>No Boards found</Col>
           )}
         </Row>
 

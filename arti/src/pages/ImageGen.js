@@ -86,7 +86,7 @@ const ImageGen = () => {
   return (
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
-        <Backdrop />
+        <Backdrop page={'imagegen'} />
         <Row className='my-auto'>
           <Container>
             <div className='image-input-container'>
