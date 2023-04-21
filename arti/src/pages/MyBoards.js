@@ -10,6 +10,7 @@ import {
   Spinner,
   Accordion,
   Form,
+  InputGroup,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -196,22 +197,18 @@ const MyBoards = () => {
         <Row className='py-4'>
           <Col xs={12}>
             <Form onSubmit={handleSearch}>
-              <Row>
-                <Col xs={10}>
-                  <FormControl
-                    type='text'
-                    placeholder='Search for Board...'
-                    // value={searchTerm}
-                    // onChange={handleSearch}
-                    ref={searchRef}
-                  />
-                </Col>
-                <Col xs={2}>
-                  <Button variant='secondary' type='submit'>
-                    Search
-                  </Button>
-                </Col>
-              </Row>
+              <InputGroup>
+                <FormControl
+                  type='text'
+                  placeholder='Search for Board...'
+                  // value={searchTerm}
+                  // onChange={handleSearch}
+                  ref={searchRef}
+                />
+                <Button variant='secondary' type='submit'>
+                  <i className='bi bi-search'></i>
+                </Button>
+              </InputGroup>
             </Form>
           </Col>
         </Row>
