@@ -1,8 +1,18 @@
-import React, { useState } from 'react'
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+import React, { useContext, useState } from 'react'
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Modal,
+  Dropdown,
+} from 'react-bootstrap'
 import '../styles/pages/Profile.css'
+import { UserAndBoardContext } from '../App'
 
-export default function Profile({ user, setIsLoggedIn }) {
+export default function Profile({ setIsLoggedIn }) {
+  const { user, boards } = useContext(UserAndBoardContext)
   const { username, email, firstName, lastName } = user
   // const [editForm, setEditForm] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -135,6 +145,11 @@ export default function Profile({ user, setIsLoggedIn }) {
                   </Col>
                 </Row>
               </fieldset>
+              <Row className='mt-4'>
+                <Col xs={12} className='d-flex justify-content-end'>
+                  <Button variant='warning'>Edit</Button>
+                </Col>
+              </Row>
             </Form>
           </Col>
         </Row>
@@ -142,30 +157,55 @@ export default function Profile({ user, setIsLoggedIn }) {
         {/* Settings & Privacy */}
         <Row className='py-4'>
           <Col xs={12}>
-            <h2 className='profile-header'>Settings & Privacy</h2>
+            <h2 className='profile-header'>Settings</h2>
           </Col>
           <Col xs={12} md={6}>
-            <h3 className='my-3'>Category 1</h3>
-            <Form>
-              <Form.Switch label='Setting 1' />
-              <Form.Switch label='Setting 2' />
-              <Form.Switch label='Setting 3' />
-            </Form>
+            <h3 className='my-3'>Board Settiings</h3>
+            <Row className='my-3'>
+              <Form>
+                <Form.Switch label='Boards Popup / Accordion' />
+                {/* <Form.Switch label='Setting 2' /> */}
+                {/* <Form.Switch label='Setting 3' /> */}
+              </Form>
+            </Row>
+            <Row className='my-3'>
+              <Dropdown>
+                <Dropdown.Toggle variant='secondary'>
+                  Default Board
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {boards.map((board) => {
+                    return <Dropdown.Item>{board.boardName}</Dropdown.Item>
+                  })}
+                  {/* <Dropdown.Item>blah</Dropdown.Item>
+                  <Dropdown.Item>blah</Dropdown.Item>
+                  <Dropdown.Item>blah</Dropdown.Item> */}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Row>
           </Col>
-          <Col xs={12} md={6}>
+          {/* <Col xs={12} md={6}>
             <h3 className='my-3'>Category 2</h3>
             <Form>
               <Form.Switch label='Setting 1' />
               <Form.Switch label='Setting 2' />
               <Form.Switch label='Setting 3' />
             </Form>
-          </Col>
+          </Col> */}
         </Row>
 
         {/* Help & Support */}
         <Row className='py-4'>
           <Col xs={12}>
             <h2 className='profile-header'>Help & Support</h2>
+          </Col>
+
+          <Col xs={12}>
+            <h3>Board Display Setting</h3>
+            <p>
+              A board can be pressed and expands to show its images (Accordion)
+              or show a popup containing the images.
+            </p>
           </Col>
         </Row>
       </Container>

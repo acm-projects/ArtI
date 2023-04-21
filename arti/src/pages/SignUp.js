@@ -104,7 +104,11 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
         <Col>
           <form className='signup-form' onSubmit={handleSubmit}>
             <div className='form-ctrl'>
-              <h2>Sign Up.</h2>
+              
+              <h2 className = "main-signup-caption">Sign Up.</h2>
+              <h3 className = "signup-caption">Welcome to Arti. Please enter in your details below.</h3>
+
+              <h4 className = "signup-subtitles"> E-mail* </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='email'
@@ -119,6 +123,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                 <label htmlFor='email'>email address</label>
               </div>
 
+              <h4 className = "signup-subtitles">First Name*</h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -133,6 +138,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                 <label htmlFor='firstname'>first name</label>
               </div>
 
+              <h4 className = "signup-subtitles">Last Name*</h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -147,6 +153,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                 <label htmlFor='lastname'>last name</label>
               </div>
 
+              <h4 className = "signup-subtitles">Username*</h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -161,6 +168,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                 <label htmlFor='username'>username</label>
               </div>
 
+              <h4 className = "signup-subtitles">Password*</h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='password'
@@ -175,6 +183,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                 <label htmlFor='password'>password</label>
               </div>
 
+              <h4 className = "signup-subtitles">Confirm Password*</h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='password'

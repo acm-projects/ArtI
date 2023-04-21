@@ -6,8 +6,8 @@
 
 /* IMAGE GEN STUFF */
 .generator-container {
-  height: 100vh;
-  height: 100svh;
+  height: calc(100vh - 5rem);
+  height: calc(100sv - 5rem);
   display: grid;
   place-items: center;
   width: 100%;
@@ -47,8 +47,8 @@
   background-color: var(--body-bg-color);
   outline: none;
   border: var(--border-color) solid 2px;
-  border-bottom-left-radius: 50px;
-  border-top-left-radius: 50px;
+  border-bottom-left-radius: var(--border-radius);
+  border-top-left-radius: var(--border-radius);
   height: 3.5rem;
   width: 75%;
   padding: 1rem;
@@ -65,8 +65,8 @@
   background-color: var(--body-bg-color);
   outline: none;
   border: var(--border-color) solid 2px;
-  border-bottom-right-radius: 50px;
-  border-top-right-radius: 50px;
+  border-bottom-right-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
   height: 3.5rem;
   width: 15%;
   cursor: pointer;
@@ -82,6 +82,11 @@
 /* RESPONSIVE STUFF */
 @media (max-width: 767.98px) {
   /* ImageGen Stuff */
+  .generator-container {
+    height: 100vh;
+    height: 100svh;
+  }
+
   .image-input-container h3 {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -91,14 +96,14 @@
   }
 
   .generate-bar .image-input {
-    border-radius: 50px;
+    border-radius: var(--border-radius);
     width: 100%;
     margin-bottom: 1rem;
     font-size: 1rem;
   }
 
   .generate-bar .generate-btn {
-    border-radius: 50px;
+    border-radius: var(--border-radius);
     width: 50%;
     font-size: 1rem;
   }

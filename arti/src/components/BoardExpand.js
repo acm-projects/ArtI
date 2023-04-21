@@ -14,41 +14,39 @@ export default function BoardExpand({ board, boardIndex }) {
   } = useContext(BoardsStateContext)
   const { images } = board
   return (
-    <>
-      <div
-        className={`${styles['board-expand']}`}
-        // className={`${styles['board-expand']} ${
-        //   expand && boardIndex === selectedBoard
-        //     ? styles['board-expand-show']
-        //     : styles['']
-        // }`}
-        // style={{
-        //   width: parentWidth - 16,
-        //   left: (boardIndex + 1) % 2 === 0 ? -(parentWidth / 2) : 0,
-        // }}
-      >
-        {images.map((image, i) => {
-          return (
-            <button
-              className={`${styles['image-btn']}`}
-              onClick={() => {
-                setShowImageModal(true)
-                setSelectedImage(image.id)
-                setNewImageURL(
-                  `data:image/png;base64,${bufferToBase64(image.data.data)}`
-                )
-              }}
-            >
-              <Image
-                key={i}
-                src={`data:image/png;base64,${bufferToBase64(image.data.data)}`}
-                alt={`Image of ${image.prompt}`}
-                rounded={true}
-              />
-            </button>
-          )
-        })}
-      </div>
-    </>
+    <div
+      className={`${styles['board-expand']}`}
+      // className={`${styles['board-expand']} ${
+      //   expand && boardIndex === selectedBoard
+      //     ? styles['board-expand-show']
+      //     : styles['']
+      // }`}
+      // style={{
+      //   width: parentWidth - 16,
+      //   left: (boardIndex + 1) % 2 === 0 ? -(parentWidth / 2) : 0,
+      // }}
+    >
+      {images.map((image, i) => {
+        return (
+          <button
+            className={`${styles['image-btn']}`}
+            onClick={() => {
+              setShowImageModal(true)
+              setSelectedImage(image.id)
+              setNewImageURL(
+                `data:image/png;base64,${bufferToBase64(image.data.data)}`
+              )
+            }}
+          >
+            <Image
+              key={image.id}
+              src={`data:image/png;base64,${bufferToBase64(image.data.data)}`}
+              alt={`Image of ${image.prompt}`}
+              rounded={true}
+            />
+          </button>
+        )
+      })}
+    </div>
   )
 }

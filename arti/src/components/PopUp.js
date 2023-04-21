@@ -6,6 +6,7 @@ import { DropdownButton, Dropdown, Row, Col, Container } from 'react-bootstrap'
 import axios from 'axios'
 import { useContext, useState } from 'react'
 import { UserAndBoardContext } from '../App'
+import { ItemsContext } from '../pages/ImageGen'
 
 const saveImage = () => {
   //log for on click
@@ -36,8 +37,8 @@ export default function PopUp({
   setShowSaving,
 }) {
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
+  const { disabledItems, setDisabledItems } = useContext(ItemsContext)
   const [saveStatus, setSaveStatus] = useState('Saving...')
-  const [disabledItems, setDisabledItems] = useState([])
 
   // Adds the clicked item to disableItems so it won't be clicked again
   const handleItemClick = async (event) => {

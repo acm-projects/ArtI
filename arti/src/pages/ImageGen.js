@@ -2,10 +2,13 @@ import '../index.css'
 import '../styles/pages/ImageGen.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
+import Loading from '../components/Loading'
+
+export const ItemsContext = createContext()
 
 const ImageGen = () => {
   //button functionality of popup, show/hide popup
@@ -13,17 +16,19 @@ const ImageGen = () => {
   const [promptInput, setPrompt] = useState('')
   const [image, setImage] = useState({})
   const [showSaving, setShowSaving] = useState(false)
+  const [disabledItems, setDisabledItems] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  const values = {
+    disabledItems,
+    setDisabledItems,
+  }
 
   // Functions for showing/closing modal popup
   const handleShow = async () => {
     try {
       setShow(true)
-      // gets the boards owned by user
-      // const response = await axios(`/api/v1/boards/${user.username}`)
-      // if (response.status === 200) {
-      //   setBoards(response.data)
-      //   console.log('calling api', boards)
-      // }
+      setLoading(false)
     } catch (error) {
       console.error(error.message)
     }
@@ -31,11 +36,13 @@ const ImageGen = () => {
   const handleClose = () => {
     setShow(false)
     setShowSaving(false)
+    setDisabledItems([])
   }
 
   // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
     e.preventDefault()
+    setLoading(true)
 
     const postUrl = '/api/v1/imageai'
     try {
@@ -77,65 +84,56 @@ const ImageGen = () => {
   }
 
   return (
-    <div className='generator-container'>
-      <Backdrop />
-      <Row className='my-auto'>
-        <Container>
-          <div className='image-input-container'>
-            <Row>
-              <Col>
-                <h3>
-                  Enter a detailed description for what you want to create.
-                </h3>
+    <ItemsContext.Provider value={values}>
+      <div className='generator-container'>
+        <Backdrop page={'imagegen'} />
+        <Row className='my-auto'>
+          <Container>
+            <div className='image-input-container'>
+              <Row>
+                <Col>
+                  <h3>
+                    Enter a detailed description for what you want to create.
+                  </h3>
 
-                <div className='generate-bar mb-3'>
-                  <input
-                    className='image-input'
-                    onChange={onChangeHandler}
-                    type='text'
-                    placeholder='Enter your prompt...'
-                    value={promptInput}
-                  />
-                  <GenerateBtn onClick={handleSubmit} text='Generate' />
-                </div>
-                <div className='btn-wrapper'>
-                  <Button variant='secondary' onClick={randomizePrompt}>
-                    Randomize Prompt
-                  </Button>
-                </div>
-                <div className='popup-container'>
-                  <div className='generated-img'>
-                    {/* <button
-            className='popup-button'
-            variant='primary'
-            onClick={handleShow}
-          >
-            <i className='bi bi-plus-lg'></i>
-          </button> */}
-
-                    <PopUp
-                      show={show}
-                      handleClose={handleClose}
-                      image={image}
-                      showSaving={showSaving}
-                      setShowSaving={setShowSaving}
+                  <div className='generate-bar my-4'>
+                    <input
+                      className='image-input'
+                      onChange={onChangeHandler}
+                      type='text'
+                      placeholder='Enter your prompt...'
+                      value={promptInput}
                     />
-
-                    {/* <img
-              src='https://pbs.twimg.com/media/EbvB35oXgAAiQsH.jpg'
-              alt='img of travis scott raging'
-              className='img'
-            /> */}
+                    <GenerateBtn onClick={handleSubmit} text='Generate' />
                   </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </Row>
-
-      {/* <img src={imageUrl} alt={promptInput} className='img' /> */}
-    </div>
+                  {loading && (
+                    <div>
+                      <Loading />
+                    </div>
+                  )}
+                  <div className='btn-wrapper'>
+                    <Button variant='secondary' onClick={randomizePrompt}>
+                      Randomize Prompt
+                    </Button>
+                  </div>
+                  <div className='popup-container'>
+                    <div className='generated-img'>
+                      <PopUp
+                        show={show}
+                        handleClose={handleClose}
+                        image={image}
+                        showSaving={showSaving}
+                        setShowSaving={setShowSaving}
+                      />
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </Row>
+      </div>
+    </ItemsContext.Provider>
   )
 }
 export default ImageGen

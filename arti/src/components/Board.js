@@ -1,79 +1,72 @@
 import React, { useCallback, useContext } from 'react'
-import { Card, Col, Image, useAccordionButton } from 'react-bootstrap'
+import {
+  Card,
+  Col,
+  Image,
+  useAccordionButton,
+  Accordion,
+  Button,
+  Row,
+} from 'react-bootstrap'
 import styles from '../styles/components/board.module.css'
 import { BoardsStateContext } from '../pages/MyBoards'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
+import BoardExpand from '../components/BoardExpand'
 
-export default function Board({ board, boardIndex, parentWidth, callback }) {
-  const {
-    setSelectedBoard,
-    // setShowImageModal,
-    // setSelectedImage,
-    // expand,
-    // setExpand,
-  } = useContext(BoardsStateContext)
+export default function Board({ board, boardIndex, callback }) {
+  const { user, setSelectedBoard } = useContext(BoardsStateContext)
   const { boardName, images } = board
+
+  // uses react-bootstrap accordion stuff
   const expander = useAccordionButton(
     boardIndex,
     () => callback && callback(boardIndex)
   )
-  // const [colSize, setColSize] = useState(6)
-
-  // useEffect(() => {
-  //   if (window.innerWidth >= 768) setColSize(4)
-  // }, [])
 
   return (
-    <div className={`my-2 ${styles['board-container']}`}>
-      {/* <Col xs={12} md={colSize} className={`my-2 ${styles['board-container']}`}> */}
-      <button
-        className={styles['board-btn']}
-        onClick={() => {
-          // setExpand((current) => (current = !expand))
-          setSelectedBoard(boardIndex)
-          expander()
-        }}
-      >
-        {/* <Card onClick={() => setSelectedBoard(boardIndex)}> */}
-        <Card>
-          <Card.Body>
-            <Card.Title className='pb-3'>{boardName}</Card.Title>
+    <Col xs={12} md={6} lg={4} className={`${styles.board}`}>
+      <Accordion>
+        <div className={`my-2 ${styles['board-container']}`}>
+          <button
+            className={styles['board-btn']}
+            onClick={() => {
+              setSelectedBoard(boardIndex)
+              expander()
+            }}
+          >
+            <Card className={`${styles['board-card']}`}>
+              <Card.Body>
+                <Card.Title className='pb-3 d-flex justify-content-between'>
+                  <h5>{boardName}</h5>
+                  <h5>{board.images.length}</h5>
+                </Card.Title>
 
-            <div className={`${styles['image-previews']}`}>
-              <Col xs={6} className={`${styles['thumbnail-container']}`}>
-                <Image
-                  className={`${styles.thumbnail}`}
-                  src={`data:image/png;base64,${bufferToBase64(
-                    board.thumbnail.data.data
-                  )}`}
-                  rounded={true}
-                  key={boardIndex}
-                />
-              </Col>
-              <Col xs={6} className={`${styles['previews-container']}`}>
-                {images.map((image, i) => {
-                  if (image.id === board.thumbnail.id) return <></>
-                  else if (i <= 3)
-                    // only shows 4 placeholders
-                    return (
-                      <Image
-                        key={i}
-                        className={`${styles.preview}`}
-                        src={`data:image/png;base64,${bufferToBase64(
-                          image.data.data
-                        )}`}
-                        rounded={true}
-                      />
-                    )
-                  else return <p>+{images.length - (i + 1)} more</p>
-                })}
-              </Col>
-            </div>
-          </Card.Body>
-        </Card>
-      </button>
+                {board.thumbnail ? (
+                  <Image
+                    className={`${styles.thumbnail}`}
+                    src={`data:image/png;base64,${bufferToBase64(
+                      board.thumbnail.data.data
+                    )}`}
+                    rounded={true}
+                    key={boardName}
+                    loading='lazy'
+                  />
+                ) : (
+                  <>No Images Yet</>
+                )}
+              </Card.Body>
+            </Card>
+          </button>
+        </div>
 
-      {/* </Col> */}
-    </div>
+        <Accordion.Collapse eventKey={boardIndex}>
+          <BoardExpand
+            board={board}
+            boardIndex={boardIndex}
+            key={boardName}
+          ></BoardExpand>
+        </Accordion.Collapse>
+      </Accordion>
+    </Col>
   )
 }

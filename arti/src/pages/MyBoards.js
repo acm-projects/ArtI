@@ -9,6 +9,8 @@ import {
   Image,
   Spinner,
   Accordion,
+  Form,
+  InputGroup,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -19,7 +21,6 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import Board from '../components/Board'
-import BoardExpand from '../components/BoardExpand'
 import { UserAndBoardContext } from '../App'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardPopup from '../components/BoardPopup'
@@ -29,16 +30,15 @@ export const BoardsStateContext = createContext()
 const MyBoards = () => {
   const thisRef = useRef(null)
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [newBoardName, setNewBoardName] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
+  // const [newBoardName, setNewBoardName] = useState('')
   const [showModal, setShowModal] = useState(false)
-  // const [showAddImageModal, setShowAddImageModal] = useState(false) -- not needed???
   const [newImageURL, setNewImageURL] = useState('')
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
-  // const [parentWidth, setParentWidth] = useState(0)
-  // const [expand, setExpand] = useState(false)
+  const boardNameRef = useRef(null)
+  const searchRef = useRef(null)
 
   const boardStateValues = {
     user,
@@ -48,15 +48,11 @@ const MyBoards = () => {
     setShowImageModal,
     selectedImage,
     setSelectedImage,
-    // expand,
-    // setExpand,
     newImageURL,
     setNewImageURL,
+    showModal,
+    setShowModal,
   }
-
-  useEffect(() => {
-    console.log('width', thisRef.current ? thisRef.current.offsetWidth : 0)
-  }, [])
 
   // Manually calling the the API to get all the boards of the user
   async function getBoards(user) {
@@ -99,8 +95,8 @@ const MyBoards = () => {
       // Updating how boards should be rendered on the page using useState
       if (boards === undefined) setBoards([response.data])
       else {
-        // TODO :: this is prob inefficient since im calling the api again but at least it's safe
-        const bArr = await getBoards(user)
+        const bArr = await [...boards, response.data]
+        console.log('Updated state of boards: ', bArr)
         setBoards(bArr)
       }
     } catch (error) {
@@ -108,6 +104,7 @@ const MyBoards = () => {
     }
   }
 
+  // Calling the API to update the database for the deleted board
   async function deleteBoard(user, deleteThisBoard) {
     try {
       const username = user.username
@@ -122,11 +119,14 @@ const MyBoards = () => {
       if (boards === undefined) setBoards([response.data])
       else {
         // TODO :: this is prob inefficient since im calling the api again but at least it's safe
-        const bArr = await getBoards(user)
+        // const bArr = await getBoards(user)
+        const bArr = await boards.filter(
+          (board) => board.boardName !== boardName
+        )
+        console.log('Updated state of boards: ', bArr)
         setBoards(bArr)
       }
 
-      setNewBoardName('')
       setSelectedBoard(null) // closes the BoardsPopup
     } catch (error) {
       console.log(error.message)
@@ -136,13 +136,9 @@ const MyBoards = () => {
   // Calling the API to delete the imageToDelete from the one of the user's boards
   async function deleteImage(user, userBoard, imageToDelete) {
     try {
-      // console.log('hello')
       const username = user.username
       const boardName = userBoard
-      // console.log('boardname: ', boardName)
-      // console.log('images in the board: ', images)
       const imagesToDelete = imageToDelete
-      // console.log('selected image: ', imagesToDelete)
       console.log('deleting details: ', {
         boardName: boardName,
         selectedImage: imageToDelete,
@@ -170,68 +166,23 @@ const MyBoards = () => {
     }
   }
 
-  // async function handleGettingBoards() {
-  //   const bArr = await getBoards(user)
-  //   setBoards(bArr)
-  // }
-
-  // not used???
-  // const handleAddBoard = () => {
-  //   if (boards.some((board) => board.boardName === modalSearchTerm)) {
-  //     alert('A board with this name already exists.')
-  //     return
-  //   }
-
-  //   const newBoard = {
-  //     name: modalSearchTerm,
-  //     images: newImageURL ? [newImageURL] : [],
-  //   }
-  //   setBoards([...boards, newBoard])
-  //   setModalSearchTerm('')
-  //   setNewImageURL('')
-  // }
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value)
+  const handleSearch = async (event) => {
+    event.preventDefault()
+    // setSearchTerm(event.target.value)
+    // just for a loading effect
+    setBoards([])
+    let currentBoards
+    if (boards === undefined) currentBoards = await getBoards(user)
+    else currentBoards = boards
+    const filteredBoards = currentBoards.filter((board) => {
+      console.log(board.boardName.includes(searchRef.current.value))
+      return board.boardName.includes(searchRef.current.value)
+    })
+    console.log(searchRef.current.value)
+    if (searchRef.current.value === '') setBoards(currentBoards)
+    else if (filteredBoards.length === 0) setBoards(undefined)
+    else setBoards(filteredBoards)
   }
-
-  const handleShowModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
-
-  // made this inline
-  // const handleModalSearch = (event) => {
-  //   setNewBoardName(event.target.value)
-  // }
-
-  // made this inline
-  // const handleBoardClick = (boardIndex) => {
-  //   setSelectedBoard(boardIndex)
-  // }
-
-  // made this inline
-  // const closeBoard = () => {
-  //   setSelectedBoard(null)
-  // }
-
-  // not needed???
-  // const handleShowAddImageModal = () => {
-  //   setShowAddImageModal(true)
-  // }
-  // const handleCloseAddImageModal = () => {
-  //   setShowAddImageModal(false)
-  // }
-  // const handleAddImageToBoard = () => {
-  //   const newBoards = [...boards]
-  //   newBoards[selectedBoard].images.push(newImageURL)
-  //   setBoards(newBoards)
-  //   setNewImageURL('')
-  //   handleCloseAddImageModal()
-  // }
 
   return (
     <BoardsStateContext.Provider value={boardStateValues}>
@@ -245,12 +196,20 @@ const MyBoards = () => {
         {/* Search Board */}
         <Row className='py-4'>
           <Col xs={12}>
-            <FormControl
-              type='text'
-              placeholder='Search for Board...'
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+            <Form onSubmit={handleSearch}>
+              <InputGroup>
+                <FormControl
+                  type='text'
+                  placeholder='Search for Board...'
+                  // value={searchTerm}
+                  // onChange={handleSearch}
+                  ref={searchRef}
+                />
+                <Button variant='secondary' type='submit'>
+                  <i className='bi bi-search'></i>
+                </Button>
+              </InputGroup>
+            </Form>
           </Col>
         </Row>
 
@@ -259,7 +218,7 @@ const MyBoards = () => {
           <div className='create-wrapper'>
             <Button
               variant='primary'
-              onClick={handleShowModal}
+              onClick={() => setShowModal(true)}
               className='add-boards-button'
             >
               Create Board
@@ -268,7 +227,12 @@ const MyBoards = () => {
         </Row>
 
         {/* Modal for creating new boards */}
-        <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal
+          show={showModal}
+          onHide={() => {
+            setShowModal(false)
+          }}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Create New Board</Modal.Title>
           </Modal.Header>
@@ -277,19 +241,20 @@ const MyBoards = () => {
             <FormControl
               type='text'
               placeholder='e.g. background inspo'
-              value={newBoardName}
-              onChange={(e) => setNewBoardName(e.target.value)}
+              // value={newBoardName}
+              // onChange={(e) => setNewBoardName(e.target.value)}---onChange makes it slow
+              ref={boardNameRef}
             />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleCloseModal}>
+            <Button variant='secondary' onClick={() => setShowModal(false)}>
               Cancel
             </Button>
             <Button
               variant='primary'
               onClick={() => {
-                createNewBoard(user, newBoardName)
-                handleCloseModal()
+                createNewBoard(user, boardNameRef.current.value)
+                setShowModal(false)
               }}
             >
               Add Board
@@ -308,42 +273,23 @@ const MyBoards = () => {
             ) : (
               boards.map((board, boardIndex) => {
                 return (
-                  <>
-                    <Col key={boardIndex} xs={12} md={6}>
-                      {/* <Accordion> */}
-                      <Board
-                        key={boardIndex}
-                        board={board}
-                        boardIndex={boardIndex}
-                        parentWidth={
-                          thisRef.current ? thisRef.current.offsetWidth : 0
-                        }
-                      />
-
-                      {/* <Accordion.Collapse eventKey={boardIndex}>
-                          <BoardExpand
-                            board={board}
-                            boardIndex={boardIndex}
-                          ></BoardExpand>
-                        </Accordion.Collapse>
-                      </Accordion> */}
-                    </Col>
-                  </>
+                  <Board
+                    key={board.boardName}
+                    board={board}
+                    boardIndex={boardIndex}
+                    deleteBoard={deleteBoard}
+                  />
                 )
               })
             )
           ) : (
-            <Col className='text-center'>There are no available boards</Col>
+            <Col className='text-center'>No Boards found</Col>
           )}
         </Row>
 
         {/* Popup when Board is clicked */}
         {selectedBoard !== null && (
-          <BoardPopup
-            boards={boards}
-            deleteBoard={deleteBoard}
-            handleCloseModal={handleCloseModal}
-          />
+          <BoardPopup boards={boards} deleteBoard={deleteBoard} />
         )}
 
         {/* Modal that shows when clicking image in BoardPopup */}
@@ -383,22 +329,6 @@ const MyBoards = () => {
     </BoardsStateContext.Provider>
   )
 }
-
-// not used???
-// async function getSingleBoard(user) {
-//   const username = user.username
-//   const boardName = user.boardName
-
-//   try {
-//     const getUrl = `/api/v1/boards/${username}/${boardName}`
-
-//     const response = await axios.post(getUrl)
-//     console.log(response)
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
-
 // not yet needed - but soon...
 async function changeThumbnailOrBoardName(user) {
   try {

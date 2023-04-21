@@ -1,13 +1,14 @@
 :root {
   /* i think u define variables */
-  --line-width: 20%;
+  --line-width-imagegen: 20%;
+  --line-width-portraitgen: 20%;
 }
 
 .bg-circle {
   border-radius: 50%;
   /* Position */
   position: absolute;
-  top: calc(50%);
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -48,43 +49,85 @@
   z-index: -1;
   transition: all 5s;
   /* name duration method */
-  animation: lineAnimation 5s normal;
 }
 
-@keyframes lineAnimation {
+.tiny-lines.imagegen {
+  animation: lineAnimationImageGen 5s normal;
+  width: var(--line-width-imagegen);
+}
+
+.tiny-lines.portraitgen {
+  animation: lineAnimationPortraitGen 5s normal;
+  width: var(--line-width-portraitgen);
+}
+
+@keyframes lineAnimationImageGen {
   from {
     width: 1%;
   }
   to {
-    width: var(--line-width);
+    width: var(--line-width-imagegen);
   }
 }
 
-.line1 {
+@keyframes lineAnimationPortraitGen {
+  from {
+    width: var(--line-width-imagegen);
+  }
+  to {
+    width: var(--line-width-portraitgen);
+  }
+}
+
+.line1.imagegen {
   background-color: #371e13;
-  --line-width: 55%;
+  --line-width-imagegen: 55%;
   top: 20%;
   left: 0;
 }
-
-.line2 {
+.line2.imagegen {
   background-color: #562611;
-  --line-width: 40%;
+  --line-width-imagegen: 40%;
   top: 35%;
   left: 0;
 }
-
-.line3 {
+.line3.imagegen {
   background-color: #562611;
-  --line-width: 40%;
-
+  --line-width-imagegen: 40%;
   bottom: 35%;
   right: 0;
 }
-
-.line4 {
+.line4.imagegen {
   background-color: #31180d;
-  --line-width: 50%;
+  --line-width-imagegen: 50%;
+  bottom: 22.5%;
+  right: 0;
+}
+.line1.portraitgen {
+  --line-width-imagegen: 55%;
+  background-color: #371e13;
+  --line-width-portraitgen: 45%;
+  top: 20%;
+  left: 0;
+}
+.line2.portraitgen {
+  --line-width-imagegen: 40%;
+  background-color: #562611;
+  --line-width-portraitgen: 50%;
+  top: 35%;
+  left: 0;
+}
+.line3.portraitgen {
+  --line-width-imagegen: 40%;
+  background-color: #562611;
+  --line-width-portraitgen: 50%;
+  bottom: 35%;
+  right: 0;
+}
+.line4.portraitgen {
+  --line-width-imagegen: 50%;
+  background-color: #31180d;
+  --line-width-portraitgen: 40%;
   bottom: 22.5%;
   right: 0;
 }
