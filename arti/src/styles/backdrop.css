@@ -40,7 +40,7 @@
   top: calc(5% + 50px);
   left: 10%;
   transform: translate(-50%, -50%);
-  animation: fadeIn 10s 1s;
+  animation: fadeIn 10s 0s;
 }
 
 /* bottom right circle gradient */
@@ -48,7 +48,7 @@
 .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
-    #8cbab4 18%,
+    #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
@@ -59,7 +59,7 @@
 .radial-gradient1 {
   background-image: radial-gradient(
     farthest-corner at 85% 90%,
-    #8cbab4 20%,
+    #8cbab4 18%,
     #52908c 30%,
     #284543 40%,
     #102220 50%,
