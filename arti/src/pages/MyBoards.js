@@ -353,6 +353,9 @@ const MyBoards = () => {
           </Modal.Header>
           <Modal.Body>
             <Image src={newImageURL} alt='Image' fluid />
+            {/* <h2>
+              {image.prompt}
+            </h2> */}
           </Modal.Body>
           <Modal.Footer>
             <Button
