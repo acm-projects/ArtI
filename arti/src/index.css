@@ -325,79 +325,7 @@ input:focus {
 
 /*end of sign up form and login form section*/
 
-/* TODO :: make circles and lines responsive */
-.bg-circle {
-  border-radius: 50%;
-  /* Position */
-  position: absolute;
-  top: calc(50% + 50px);
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
-.circle1 {
-  width: calc(var(--circle-base-size) + 0px);
-  height: calc(var(--circle-base-size) + 0px);
-  background-color: #99441f;
-  z-index: -1;
-}
-
-.circle2 {
-  width: calc(var(--circle-base-size) + 25px);
-  height: calc(var(--circle-base-size) + 25px);
-  background-color: #733317;
-  z-index: -2;
-}
-
-.circle3 {
-  width: calc(var(--circle-base-size) + 50px);
-  height: calc(var(--circle-base-size) + 50px);
-  background-color: #562611;
-  z-index: -3;
-}
-
-.circle4 {
-  width: calc(var(--circle-base-size) + 75px);
-  height: calc(var(--circle-base-size) + 75px);
-  background-color: #31180d;
-  z-index: -4;
-}
-
-.tiny-lines {
-  border-radius: 5px;
-  /* Position */
-  position: absolute;
-  height: 10px;
-  z-index: -1;
-}
-
-.line1 {
-  background-color: #371e13;
-  width: 55%;
-  top: 20%;
-  left: 0;
-}
-
-.line2 {
-  background-color: #562611;
-  width: 40%;
-  top: 35%;
-  left: 0;
-}
-
-.line3 {
-  background-color: #562611;
-  width: 40%;
-  bottom: 35%;
-  right: 0;
-}
-
-.line4 {
-  background-color: #31180d;
-  width: 50%;
-  bottom: 22.5%;
-  right: 0;
-}
 
 /* IMAGE GEN STUFF */
 .generator-container {
@@ -521,41 +449,6 @@ input:focus {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-}
-
-.tiny-lines {
-  border-radius: 5px;
-  /* Position */
-  position: absolute;
-  height: 10px;
-}
-
-.line1 {
-  background-color: #371e13;
-  width: 55%;
-  top: 20%;
-  left: 0;
-}
-
-.line2 {
-  background-color: #562611;
-  width: 40%;
-  top: 35%;
-  left: 0;
-}
-
-.line3 {
-  background-color: #562611;
-  width: 40%;
-  bottom: 35%;
-  right: 0;
-}
-
-.line4 {
-  background-color: #31180d;
-  width: 50%;
-  bottom: 22.5%;
-  right: 0;
 }
 
 .popup {

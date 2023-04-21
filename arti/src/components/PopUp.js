@@ -97,7 +97,7 @@ export default function PopUp({
               >
                 {saveStatus}
               </p>
-              {/* //do dropdown from bootstrap using code from discord chat */}
+              {/* dropdown for board selection in popup -- implement button to put image in a new board (create board in popup)? */}
               <DropdownButton id='board-select' title='Choose Board'>
                 {boards.map((board, i) => {
                   return (
