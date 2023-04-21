@@ -17,18 +17,8 @@ export default function Backdrop({ page }) {
         className={`${styles['bg-circle']} ${styles.circle4} ${styles[page]}`}
       ></div>
 
-      <div
-        className={`${styles['tiny-lines']} ${styles.line1} ${styles[page]}`}
-      ></div>
-      <div
-        className={`${styles['tiny-lines']} ${styles.line2} ${styles[page]}`}
-      ></div>
-      <div
-        className={`${styles['tiny-lines']} ${styles.line3} ${styles[page]}`}
-      ></div>
-      <div
-        className={`${styles['tiny-lines']} ${styles.line4} ${styles[page]}`}
-      ></div>
+      <div className='bg-circle radial-gradient circle'></div>
+      <div className='bg-circle1 radial-gradient1 circle1'></div>
     </>
   )
 }
