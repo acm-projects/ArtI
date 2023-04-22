@@ -307,6 +307,7 @@ const MyBoards = () => {
             </h2>
           </Modal.Body>
           <Modal.Footer>
+            <Button variant='secondary'>Set As Thumbnail</Button>
             <Button
               variant='secondary'
               onClick={() => setShowImageModal(false)}
