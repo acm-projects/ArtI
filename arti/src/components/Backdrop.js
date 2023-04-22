@@ -3,7 +3,7 @@ import '../styles/backdrop.css'
 
 export default function Backdrop({ page }) {
   return (
-    <div className=''>
+    <div className='backdrop-container'>
       {/* <div
         className={`${styles['bg-circle']} ${styles.circle1} ${styles[page]}`}
       ></div>

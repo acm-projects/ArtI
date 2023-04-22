@@ -301,6 +301,7 @@ const MyBoards = () => {
             <Image src={newImageURL} alt='Image' fluid />
           </Modal.Body>
           <Modal.Footer>
+            <Button variant='secondary'>Set As Thumbnail</Button>
             <Button
               variant='secondary'
               onClick={() => setShowImageModal(false)}
