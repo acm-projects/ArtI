@@ -119,6 +119,8 @@ async function addOrDeleteImage(req, res, next) {
     const isCustomThumbnail = req.body.isCustomThumbnail
     const options = { new: true }
 
+    console.log(boardName)
+
     //Error handling
     if (!(await Board.findOne({ username: username })))
       throw createHttpError(404, 'User does not exist.')
@@ -150,11 +152,11 @@ async function addOrDeleteImage(req, res, next) {
 
     if (!shouldDelete) {
       imageUpdates = imageUpdates.map((image) => {
-        let theImage = JSON.parse(image)
+        let theImage = image
         return new Image({
           id: theImage.id,
           data: Buffer.from(theImage.data, 'base64'),
-          contentType: 'image/png',
+          contentType: 'image/jpeg',
           prompt: theImage.prompt,
         })
       })

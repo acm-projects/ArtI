@@ -37,6 +37,7 @@ const MyBoards = () => {
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const [selectedImagePrompt, setSelectedImagePrompt] = useState('')
   const boardNameRef = useRef(null)
   const searchRef = useRef(null)
 
@@ -52,6 +53,8 @@ const MyBoards = () => {
     setNewImageURL,
     showModal,
     setShowModal,
+    selectedImagePrompt,
+    setSelectedImagePrompt
   }
 
   // Manually calling the the API to get all the boards of the user
@@ -299,9 +302,9 @@ const MyBoards = () => {
           </Modal.Header>
           <Modal.Body>
             <Image src={newImageURL} alt='Image' fluid />
-            {/* <h2>
-              {image.prompt}
-            </h2> */}
+            <h2>
+              {selectedImagePrompt}
+            </h2>
           </Modal.Body>
           <Modal.Footer>
             <Button

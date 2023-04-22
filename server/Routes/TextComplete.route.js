@@ -21,8 +21,12 @@ router.post('/', async(req, res, next) => {
             } 
         ) 
         console.log(textResponse.data.choices[0].text)
-        const randomPrompt = textResponse.data.choices[0].text
-
+        let randomPrompt = textResponse.data.choices[0].text
+        console.log(randomPrompt.indexOf("Draw"))
+        if(randomPrompt.indexOf("Draw") > -1){
+            randomPrompt = randomPrompt.replace("Draw", "Create");
+        }
+        console.log(randomPrompt)
         res.json({
             message: "Success!",
             prompt: randomPrompt
