@@ -1,11 +1,16 @@
-:root{
+:root {
   /* i think u define variables */
   --circle-base-size: 850px;
 }
 
-*{
+/* fixed for scrolling due to big circles */
+html {
+  overflow: hidden;
+}
+
+* {
   /* outline: 1px solid red; */ /* border outline for debugging */
-  overflow: hidden;  /* disables overflow scroll */
+  /* overflow: hidden;  disables overflow scroll */
 }
 /*TODO: fade in and out from one gradient to another*/
 /* TODO :: make circles and lines responsive */
@@ -13,7 +18,7 @@
 /*fade animation for pulsate during image*/
 @keyframes fade {
   0% {
-    opacity: .25;
+    opacity: 0.25;
   }
 
   35% {
@@ -21,21 +26,23 @@
   }
 
   70% {
-    opacity: .25;
+    opacity: 0.25;
   }
 
   100% {
     opacity: 1;
   }
-
-  
 }
 
 /*fade in for regular animation*/
 @keyframes fadeIn {
-  from{ opacity: 0; }
+  from {
+    opacity: 0;
+  }
 
-  to{ opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 /* bottom right circle */
@@ -47,7 +54,6 @@
   left: 85%;
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
-
 }
 
 /*2nd gradient pseudo-element*/
@@ -82,16 +88,16 @@
     #52908c 35%,
     #1b3b38 50%
   );
-} 
+}
 
 /*bottom right circle switch gradient*/
 .switch-gradient {
   background-image: radial-gradient(
-  farthest-corner at 10% 25%,
-  #c9d3d2 20%,
-  #828e8d 35%,
-  #363b3a 50%
-);
+    farthest-corner at 10% 25%,
+    #c9d3d2 20%,
+    #828e8d 35%,
+    #363b3a 50%
+  );
 }
 
 /* top left circle gradient */
@@ -115,7 +121,7 @@
 }
 
 /*circle bottom right (switch)*/
-.circle-fill{
+.circle-fill {
   width: calc(var(--circle-base-size) + 75px);
   height: calc(var(--circle-base-size) + 75px);
   z-index: -3;
@@ -127,5 +133,3 @@
   height: calc(var(--circle-base-size) + 75px);
   z-index: -3;
 }
-
-
