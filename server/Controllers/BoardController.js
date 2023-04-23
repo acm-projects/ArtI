@@ -152,7 +152,7 @@ async function addOrDeleteImage(req, res, next) {
 
     if (!shouldDelete) {
       imageUpdates = imageUpdates.map((image) => {
-        let theImage = image
+        let theImage = JSON.parse(image)
         return new Image({
           id: theImage.id,
           data: Buffer.from(theImage.data, 'base64'),

@@ -44,7 +44,7 @@ export default function Board({ board, boardIndex, callback }) {
                 {board.thumbnail ? (
                   <Image
                     className={`${styles.thumbnail}`}
-                    src={`data:image/png;base64,${bufferToBase64(
+                    src={`data:image/jpeg;base64,${bufferToBase64(
                       board.thumbnail.data.data
                     )}`}
                     rounded={true}

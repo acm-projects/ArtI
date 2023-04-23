@@ -3,7 +3,7 @@ export default () => {
   mongoose.set('strictQuery', false)
   mongoose
     .connect(
-      `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`,
+      'mongodb+srv://arti.bvq3rzx.mongodb.net/?retryWrites=true&w=majority',
       {
         dbName: 'artiDB',
         user: process.env.DB_USERNAME,

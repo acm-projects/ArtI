@@ -104,7 +104,7 @@ export default function PopUp({
         <Row className='mb-4'>
           <Col>
             <Container>
-              {<img src={`data:image/png;base64,${image.data}`} alt='Prompt' />}
+              {<img src={`data:image/jpeg;base64,${image.data}`} alt='Prompt' />}
             </Container>
           </Col>
         </Row>
