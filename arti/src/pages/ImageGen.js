@@ -39,6 +39,7 @@ const ImageGen = () => {
     setDisabledItems([])
   }
 
+
   // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
     e.preventDefault()
@@ -104,7 +105,7 @@ const ImageGen = () => {
                       placeholder='Enter your prompt...'
                       value={promptInput}
                     />
-                    <GenerateBtn onClick={handleSubmit} text='Generate' />
+                    <GenerateBtn onClick={handleSubmit} text='Generate'/>
                   </div>
                   {loading && (
                     <div>

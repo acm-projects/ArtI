@@ -12,6 +12,7 @@ import styles from '../styles/components/board.module.css'
 import { BoardsStateContext } from '../pages/MyBoards'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardExpand from '../components/BoardExpand'
+import Backdrop from './Backdrop'
 
 export default function Board({ board, boardIndex, callback }) {
   const { user, setSelectedBoard } = useContext(BoardsStateContext)
@@ -25,6 +26,7 @@ export default function Board({ board, boardIndex, callback }) {
 
   return (
     <Col xs={12} md={6} lg={4} className={`${styles.board}`}>
+      <Backdrop></Backdrop>
       <Accordion>
         <div className={`my-2 ${styles['board-container']}`}>
           <button

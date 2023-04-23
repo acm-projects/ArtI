@@ -17,9 +17,9 @@ export default function Backdrop({ page }) {
         className={`${styles['bg-circle']} ${styles.circle4} ${styles[page]}`}
       ></div> */}
 
+     { /* bottom right circle, 1: top left circle */ }
       <div className='bg-circle radial-gradient circle'></div>
       <div className='bg-circle1 radial-gradient1 circle1'></div>
-      <div className='bg-fill-circle switch-gradient'></div>
     </>
   )
 }
