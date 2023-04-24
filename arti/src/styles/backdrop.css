@@ -10,6 +10,7 @@ html{
 /*TODO: fade in and out from one gradient to another -- possible using a -1z-index div and fadeIn (pulsate version)*/
 /* TODO :: make circles and lines responsive */
 
+
 /*pulsate animation for during image generation*/
 @keyframes pulsate {
   0% {
@@ -50,7 +51,7 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
   /*if image is generating--implement into a function?*/
-  /*animation: fade 10s ease-in-out infinite alternate;*/
+  /*animation: pulsate 10s ease-in-out infinite alternate;*/
 }
 
 /* top left circle */
@@ -63,7 +64,7 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
   /*if image is generating--implement into a function?*/
- /* animation: fade 10s ease-in-out infinite alternate;*/
+ /* animation: pulsate 10s ease-in-out infinite alternate;*/
 }
 
 /* bottom right circle gradient */

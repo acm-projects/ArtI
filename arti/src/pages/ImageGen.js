@@ -3,6 +3,7 @@ import '../styles/pages/ImageGen.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
 import { createContext, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
@@ -18,6 +19,7 @@ const ImageGen = () => {
   const [showSaving, setShowSaving] = useState(false)
   const [disabledItems, setDisabledItems] = useState([])
   const [loading, setLoading] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   const values = {
     disabledItems,
@@ -39,11 +41,13 @@ const ImageGen = () => {
     setDisabledItems([])
   }
 
-
-  // Submits the prompt to generate an image from our API
+  // Submits the prompt to generate an image fro)m our API
   async function handleSubmit(e) {
     e.preventDefault()
-    setLoading(true)
+    setLoading(true)    
+
+    setIsVisible(!isVisible && setLoading(true))
+
 
     const postUrl = '/api/v1/imageai'
     try {
@@ -65,6 +69,7 @@ const ImageGen = () => {
     } catch (error) {
       console.log(error.message)
     }
+    setIsVisible(false);
   }
 
   const onChangeHandler = (event) => {
@@ -87,7 +92,9 @@ const ImageGen = () => {
   return (
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
-        <Backdrop page={'imagegen'} />
+        <CSSTransition in={isVisible} timeout={300} classNames='pulsate'>
+          <Backdrop page={'imagegen'} />
+        </CSSTransition>
         <Row className='my-auto'>
           <Container>
             <div className='image-input-container'>
