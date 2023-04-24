@@ -108,10 +108,6 @@ img {
     font-size: 0.75rem;
   }
 
-  /* Sign up Stuff */
-  .input-wrapper {
-    margin-bottom: 0.5rem;
-  }
 
   /* ImageGen Stuff */
   .image-input-container h3 {
@@ -216,29 +212,36 @@ img {
 /*End of MyProfile DropDown Menu*/
 /*End of Navbar section*/
 
-/*sign up form section*/
-
 /*signup section*/
+
+  .input-wrapper {
+    margin-bottom: 0.5rem;
+  }
+
+.signup-container {
+  min-height: 100vh;
+  position: relative;
+}
+
+
 .signup-form .input-wrapper input {
-  background-color: #111;
+  background-color: transparent;
   border: 1px solid #9d9d9d;
 
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 8px 12px;
-
   color: #9d9d9d;
   font-size: 1rem;
+
   width: 100%;
+  height: 30px;
+  
 }
 
-/* TODO :: fix this */
-.signup-form {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* min-height: 100vh; */
-}
+.input-wrapper {
+  width: 30%
 
+}
 .signup-form .form-ctrl {
   display: flex;
   flex-direction: column;
@@ -262,6 +265,20 @@ img {
 .signup-subtitles {
   font-size: 12px;
 }
+
+.background-image {
+  background-image: url("assets/signup-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
 /*signup section*/
 
 /*image properties for login*/
@@ -273,9 +290,7 @@ img {
   flex: 1;
   background-position: center top;
   background-repeat: no-repeat;
-  background-size: auto;
-  
-  
+  background-size: 860px 650px;
 
   /* duration, how many times it will run, direction of animation, name of animation */
   animation: 3s 1 normal coverFade;
@@ -292,6 +307,7 @@ img {
 
 .side-column > h1 {
   font-size: max(3rem, 5rem) !important;
+
 }
 
 .login-container {
@@ -304,6 +320,7 @@ img {
   justify-content: center;
   align-items: center;
   height: 100%;
+
 }
 
 .form-header {
@@ -313,10 +330,13 @@ img {
 /*end image properties*/
 
 /*login section*/
+
+
 .login-input {
+  height: 30px !important;
   background-color: var(--body-bg-color) !important;
   border: 1px solid var(--border-color) !important;
-  border-radius: 15px !important;
+  border-radius: 10px !important;
 }
 
 .login-input[name='password'] {
@@ -329,19 +349,21 @@ input:focus {
 }
 
 .toggle-password-btn {
-  border: 2px solid var(--border-color) !important;
+  height: 34px !important;
+  border: 1px solid var(--border-color) !important;
   background-color: var(--body-bg-color) !important;
   border-top-right-radius: 25px !important;
   border-bottom-right-radius: 25px !important;
 }
 
 .login-btn {
+  height: 35px !important;
   background-color: var(--text-color) !important;
   border-radius: 15px !important;
 }
 
 .welcome-title {
-  font-size: 20px; 
+  font-size: 25px; 
 }
 
 .arti-title {
@@ -349,6 +371,7 @@ input:focus {
 }
 
 .welcome-subtitle {
+  font-weight: normal;
   font-size: 12px; 
   color: #9D9D9D;
 }
@@ -359,10 +382,12 @@ input:focus {
 }
 
 .username-field {
+  font-weight: normal;
   font-size: 13px;
 }
 
 .password-field {
+  font-weight: normal;
   font-size: 13px;
 }
 
@@ -371,8 +396,6 @@ input:focus {
 }
 
 /*end login part*/
-
-/*end of sign up form section*/
 
 /* TODO :: make circles and lines responsive */
 .bg-circle {

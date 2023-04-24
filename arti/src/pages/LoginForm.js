@@ -90,13 +90,15 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
         </div>
       </Col>
       <Col sm='6'>
+        
+
         <div className='side-container'>
           <h1 className = 'welcome-title'> 
           Welcome to <span className = 'arti-title'> ART <em> i </em> </span> . 
           </h1>
           <h2 className = 'welcome-subtitle'> 
           Welcome back to Arti. Please enter your details.</h2>
-        
+          
           <Form className='my-3 w-75' onSubmit={handleSubmit}>
 
             <h3 className = 'username-field'> Username <span className = "asterisk"> * </span> </h3>
@@ -115,9 +117,11 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
             </FloatingLabel>
 
             <h3 className = 'password-field'> Password <span className = "asterisk"> * </span>  </h3>
+           
             {/* PASSWORD INPUT */}
             <InputGroup className='mb-3'>
               <FloatingLabel label='**********' controlId='passwordInput'>
+
                 <Form.Control
                   className='login-input'
                   // The showPassword state lets the input to toggle the visibility of the text
@@ -127,6 +131,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
                   onChange={handleChange}
                 />
               </FloatingLabel>
+
               <Button
                 variant='secondary'
                 className='toggle-password-btn'
@@ -160,10 +165,13 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               <p>{loginStatus}</p>
             </div>
           </Form>
+          
 
           {/* Footer */}
           <footer>
-            <Link to='/signup'>New to ArtI? Sign Up.</Link>
+            <Link to='/signup'>
+              New to ArtI? Sign Up.
+              </Link>
           </footer>
         </div>
       </Col>
