@@ -63,6 +63,7 @@ const ImageGen = () => {
       } else throw new Error('No Prompt Entered!')
     } catch (error) {
       console.log(error.message)
+      setLoading(false)
     }
   }
 
