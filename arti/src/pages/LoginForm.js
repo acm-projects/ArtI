@@ -151,7 +151,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               type='submit'
               className='login-btn w-100'
             >
-              <span className = "login-button-style">Log In.</span>
+              <span className = "login-button-style">Login.</span>
             </Button>
 
             {/* Login Status */}

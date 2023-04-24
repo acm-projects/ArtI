@@ -105,6 +105,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
         <Col>
           <form className='signup-form' onSubmit={handleSubmit}>
             <div className='form-ctrl'>
+            <Link to='/'><span className = 'backbutton-style'>Go Back</span></Link>
               
               <h2 className = "main-signup-caption">Sign Up.</h2>
               <h3 className = "signup-caption">Welcome to Arti. Please enter in your details below.</h3>
@@ -214,11 +215,9 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
               </p>
               <div className='input-wrapper'>
                 <Button variant='secondary' type='submit' className='login-btn'>
-                  Sign Up
+                  <span clasName = 'signup-button-style'> Sign Up. </span>
                 </Button>
               </div>
-
-              <Link to='/'>Go Back</Link>
             </div>
           </form>
         </Col>
