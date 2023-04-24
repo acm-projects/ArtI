@@ -19,6 +19,17 @@
   z-index: 50;
 }
 
+::-webkit-scrollbar {
+  width: 0.1rem;
+}
+::-webkit-scrollbar-track {
+  background-color: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: aquamarine;
+}
+
 .board-popup-background {
   position: fixed;
   top: 0;

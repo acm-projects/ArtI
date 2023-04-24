@@ -26,7 +26,6 @@ export default function Board({ board, boardIndex, callback }) {
 
   return (
     <Col xs={12} md={6} lg={4} className={`${styles.board}`}>
-      <Backdrop></Backdrop>
       <Accordion>
         <div className={`my-2 ${styles['board-container']}`}>
           <button

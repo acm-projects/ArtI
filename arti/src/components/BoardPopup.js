@@ -30,7 +30,11 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
         <div className='board-popup-content'>
           <Row>
             <div>
-              <div contentEditable={true} onInput={(e) => setEditedName(true)}>
+              <div
+                contentEditable={true}
+                onInput={(e) => setEditedName(true)}
+                suppressContentEditableWarning={true}
+              >
                 <h2>{boards[selectedBoard].boardName} </h2>
               </div>
             </div>
