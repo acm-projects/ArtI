@@ -305,7 +305,9 @@ const MyBoards = () => {
             <Modal.Title>Image</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Image src={newImageURL} alt='Image' fluid />
+            <div className='w-100 d-flex justify-content-center'>
+              <Image src={newImageURL} alt='Image' fluid />
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary'>Set As Thumbnail</Button>

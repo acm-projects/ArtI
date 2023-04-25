@@ -56,9 +56,21 @@
   z-index: 2;
   /* animation: popup 200ms ease normal; */
   width: 80vw;
+  animation: scaleIn 150ms ease normal;
 }
 
-@key .image-thumbnail {
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* animation that fadesIn */
+
+.image-thumbnail {
   object-fit: cover;
 }
 

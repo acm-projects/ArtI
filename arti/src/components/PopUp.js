@@ -103,7 +103,7 @@ export default function PopUp({
         {/* <h4>Choose a board...</h4> */}
         <Row className='mb-4'>
           <Col>
-            <Container>
+            <Container className='w-100 d-flex justify-content-center'>
               {<img src={`data:image/png;base64,${image.data}`} alt='Prompt' />}
             </Container>
           </Col>
