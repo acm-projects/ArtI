@@ -21,13 +21,13 @@
   /* outline: 1px solid red; */ /* border outline for debugging */
   /* overflow: hidden;  disables overflow scroll */
 }
-/*TODO: fade in and out from one gradient to another*/
+/*TODO: fade in and out from one gradient to another -- possible using a -1z-index div and fadeIn (pulsate version)*/
 /* TODO :: make circles and lines responsive */
 
-/*fade animation for pulsate during image*/
-@keyframes fade {
+/*pulsate animation for during image generation*/
+@keyframes pulsate {
   0% {
-    opacity: 0.25;
+    opacity: 0;
   }
 
   35% {
@@ -35,7 +35,7 @@
   }
 
   70% {
-    opacity: 0.25;
+    opacity: 0;
   }
 
   100% {
@@ -44,6 +44,8 @@
 }
 
 /*fade in for regular animation*/
+/*can be used for pulsate by using infinte + alternate, but keeping separate from pulsate anim just in case
+function for image gen buffer with pulsate needs separate keyframes or sum*/
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -63,18 +65,8 @@
   left: 85%;
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
-}
-
-/*2nd gradient pseudo-element*/
-.bg-fill-circle {
-  border-radius: 50%;
-  /* Position */
-  position: absolute;
-  top: calc(85% + 50px);
-  left: 85%;
-  transform: translate(-50%, -50%);
-  animation: fadeIn 10s ease 10s;
-  z-index: -1;
+  /*if image is generating--implement into a function?*/
+  /*animation: fade 10s ease-in-out infinite alternate;*/
 }
 
 /* top left circle */
@@ -86,10 +78,11 @@
   left: 10%;
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
+  /*if image is generating--implement into a function?*/
+  /* animation: fade 10s ease-in-out infinite alternate;*/
 }
 
 /* bottom right circle gradient */
-/*less gradient*/
 .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
@@ -99,44 +92,24 @@
   );
 }
 
-/*bottom right circle switch gradient*/
-.switch-gradient {
-  background-image: radial-gradient(
-    farthest-corner at 10% 25%,
-    #c9d3d2 20%,
-    #828e8d 35%,
-    #363b3a 50%
-  );
-}
-
 /* top left circle gradient */
-/*more gradient*/
 .radial-gradient1 {
   background-image: radial-gradient(
     farthest-corner at 85% 90%,
-    #8cbab4 18%,
-    #52908c 30%,
-    #284543 40%,
-    #102220 50%,
-    #081110 60%
+    #8cbab4 20%,
+    #52908c 35%,
+    #1b3b38 50%
   );
 }
 
-/* circle bottom right */
+/* circle top left */
 .circle1 {
   width: calc(var(--circle-base-size) + 75px);
   height: calc(var(--circle-base-size) + 75px);
   z-index: -3;
 }
 
-/*circle bottom right (switch)*/
-.circle-fill {
-  width: calc(var(--circle-base-size) + 75px);
-  height: calc(var(--circle-base-size) + 75px);
-  z-index: -3;
-}
-
-/* circle top left */
+/* circle bottom right */
 .circle {
   width: calc(var(--circle-base-size) + 75px);
   height: calc(var(--circle-base-size) + 75px);

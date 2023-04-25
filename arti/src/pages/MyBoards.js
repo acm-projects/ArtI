@@ -24,6 +24,7 @@ import Board from '../components/Board'
 import { UserAndBoardContext } from '../App'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardPopup from '../components/BoardPopup'
+import Backdrop from '../components/Backdrop'
 
 export const BoardsStateContext = createContext()
 
@@ -146,6 +147,7 @@ const MyBoards = () => {
         boardName: boardName,
         selectedImage: imageToDelete,
       })
+      console.time('deleteImage')
       const isCustomThumbnail = user.customThumbnail
       const postUrl = `/api/v1/boards/${username}/add-delete`
 
@@ -157,6 +159,9 @@ const MyBoards = () => {
       })
 
       console.log('Deleted an image: ', response.data)
+      console.timeEnd('deleteImage')
+
+      setShowImageModal(false)
 
       // This is re-rendering boards by mutating the boards on the front-end (idk which is better -- calling api or mutating on front-end)
       const newBoards = boards.map((board) => {
@@ -190,6 +195,8 @@ const MyBoards = () => {
   return (
     <BoardsStateContext.Provider value={boardStateValues}>
       <Container>
+        <Backdrop></Backdrop>
+
         <Row className='py-4'>
           <Col xs={12}>
             <h1>{user.username}'s Boards </h1>
@@ -301,7 +308,9 @@ const MyBoards = () => {
             <Modal.Title>Image</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Image src={newImageURL} alt='Image' fluid />
+            <div className='w-100 d-flex justify-content-center'>
+              <Image src={newImageURL} alt='Image' fluid />
+            </div>
             <h2>
               {selectedImagePrompt}
             </h2>
@@ -316,13 +325,12 @@ const MyBoards = () => {
             </Button>
             <Button
               variant='secondary'
-              onClick={async () => {
-                await deleteImage(
+              onClick={() => {
+                deleteImage(
                   user,
                   boards[selectedBoard].boardName,
                   selectedImage
                 )
-                setShowImageModal(false)
               }}
             >
               Delete Image

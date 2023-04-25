@@ -37,9 +37,19 @@
   transition: transform 200ms;
 }
 
+.help-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 576px) {
   .logout-wrapper p {
     display: none;
+  }
+
+  .intro-wrapper {
+    flex-direction: column;
   }
 }

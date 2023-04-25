@@ -52,7 +52,7 @@ export default function Profile({ setIsLoggedIn }) {
         {/* Welcome Person and Logout Button */}
         <Row className='py-4'>
           <div className='intro-wrapper'>
-            <div className='profile-intro'>
+            <div className='profile-intro my-2'>
               {!user.profilePic ? (
                 <h1>
                   <button className='profile-pic-btn' onClick={handleModalShow}>
@@ -68,7 +68,7 @@ export default function Profile({ setIsLoggedIn }) {
 
             <Button
               onClick={handleLogout}
-              className='logout-wrapper'
+              className='logout-wrapper my-2'
               variant='secondary'
             >
               <h3>Logout</h3>
@@ -162,36 +162,37 @@ export default function Profile({ setIsLoggedIn }) {
           <Col xs={12} md={6}>
             <h3 className='my-3'>Board Settiings</h3>
             <Row className='my-3'>
-              <Form>
-                <Form.Switch label='Boards Popup / Accordion' />
-                {/* <Form.Switch label='Setting 2' /> */}
-                {/* <Form.Switch label='Setting 3' /> */}
-              </Form>
+              <div className='help-container'>
+                <Form>
+                  <Form.Switch label='Boards Popup / Accordion' />
+                </Form>
+                <a href='#boardDisplayHelp'>
+                  <i className='bi bi-question-circle text-white mx-4'></i>
+                </a>
+              </div>
             </Row>
             <Row className='my-3'>
-              <Dropdown>
-                <Dropdown.Toggle variant='secondary'>
-                  Default Board
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {boards.map((board) => {
-                    return <Dropdown.Item>{board.boardName}</Dropdown.Item>
-                  })}
-                  {/* <Dropdown.Item>blah</Dropdown.Item>
-                  <Dropdown.Item>blah</Dropdown.Item>
-                  <Dropdown.Item>blah</Dropdown.Item> */}
-                </Dropdown.Menu>
-              </Dropdown>
+              <div className='help-container'>
+                <Dropdown>
+                  <Dropdown.Toggle variant='secondary'>
+                    Default Board
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {boards !== undefined ? (
+                      boards.map((board) => {
+                        return <Dropdown.Item>{board.boardName}</Dropdown.Item>
+                      })
+                    ) : (
+                      <>No boards available</>
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+                <a href='#defaultBoardHelp'>
+                  <i className='bi bi-question-circle text-white mx-4'></i>
+                </a>
+              </div>
             </Row>
           </Col>
-          {/* <Col xs={12} md={6}>
-            <h3 className='my-3'>Category 2</h3>
-            <Form>
-              <Form.Switch label='Setting 1' />
-              <Form.Switch label='Setting 2' />
-              <Form.Switch label='Setting 3' />
-            </Form>
-          </Col> */}
         </Row>
 
         {/* Help & Support */}
@@ -200,11 +201,18 @@ export default function Profile({ setIsLoggedIn }) {
             <h2 className='profile-header'>Help & Support</h2>
           </Col>
 
-          <Col xs={12}>
+          <Col xs={12} className='my-4' id='boardDisplayHelp'>
             <h3>Board Display Setting</h3>
             <p>
               A board can be pressed and expands to show its images (Accordion)
               or show a popup containing the images.
+            </p>
+          </Col>
+          <Col xs={12} className='my-4' id='defaultBoardHelp'>
+            <h3>Default Board</h3>
+            <p>
+              Choose which board you want your generated image to be quickly
+              saved
             </p>
           </Col>
         </Row>
