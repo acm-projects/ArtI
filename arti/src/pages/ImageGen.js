@@ -87,7 +87,7 @@ const ImageGen = () => {
   return (
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
-        <Backdrop page={'imagegen'} />
+        <Backdrop page={'imagegen'} loading={loading} />
         <Row className='my-auto'>
           <Container>
             <div className='image-input-container'>
@@ -105,13 +105,17 @@ const ImageGen = () => {
                       placeholder='Enter your prompt...'
                       value={promptInput}
                     />
-                    <GenerateBtn onClick={handleSubmit} text='Generate' />
+                    <GenerateBtn
+                      onClick={handleSubmit}
+                      onSubmit={handleSubmit}
+                      text='Generate'
+                    />
                   </div>
-                  {loading && (
+                  {/* {loading && (
                     <div>
                       <Loading />
                     </div>
-                  )}
+                  )} */}
                   <div className='btn-wrapper'>
                     <Button variant='secondary' onClick={randomizePrompt}>
                       Randomize Prompt

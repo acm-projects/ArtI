@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/backdrop.css'
 
-export default function Backdrop({ page }) {
+export default function Backdrop({ page, loading }) {
   return (
     <div className='backdrop-container'>
       {/* <div
@@ -18,8 +18,16 @@ export default function Backdrop({ page }) {
       ></div> */}
 
       {/* bottom right circle, 1: top left circle */}
-      <div className='bg-circle radial-gradient circle'></div>
-      <div className='bg-circle1 radial-gradient1 circle1'></div>
+      <div
+        className={`bg-circle radial-gradient circle ${
+          loading ? 'pulsate' : ''
+        }`}
+      ></div>
+      <div
+        className={`bg-circle1 radial-gradient1 circle1 ${
+          loading ? 'pulsate' : ''
+        }`}
+      ></div>
     </div>
   )
 }
