@@ -93,7 +93,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
           <h1 className='welcome-title'>
             Welcome to{' '}
             <span className='arti-title'>
-              ART <em>i</em>
+              ART<em>i</em>
             </span>
             .
           </h1>
@@ -127,7 +127,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
                 className='login-input'
                 // The showPassword state lets the input to toggle the visibility of the text
                 type={showPassword ? 'text' : 'password'}
-                placeholder='**********'
+                placeholder='Password'
                 name='password'
                 onChange={handleChange}
               />

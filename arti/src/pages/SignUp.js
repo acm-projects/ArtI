@@ -99,16 +99,21 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
   }
 
   return (
-    <div className='signup-container'>
-      <Row className='my-auto'>
+    <>
+      <div className='background-image'></div>
+      <Row className='signup-container my-auto'>
         <Col>
           <form className='signup-form' onSubmit={handleSubmit}>
             <div className='form-ctrl'>
-              
-              <h2 className = "main-signup-caption">Sign Up.</h2>
-              <h3 className = "signup-caption">Welcome to Arti. Please enter in your details below.</h3>
+              <h2 className='main-signup-caption'>Sign Up.</h2>
+              <h3 className='signup-caption'>
+                Welcome to Arti. Please enter in your details below.
+              </h3>
 
-              <h4 className = "signup-subtitles"> E-mail* </h4>
+              <h4 className='signup-subtitles'>
+                {' '}
+                E-mail<span className='asterisk'> * </span>{' '}
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='email'
@@ -120,10 +125,12 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.email}
                   required
                 />
-                <label htmlFor='email'>email address</label>
+                <label htmlFor='email'>jane.doe@gmail.com</label>
               </div>
 
-              <h4 className = "signup-subtitles">First Name*</h4>
+              <h4 className='signup-subtitles'>
+                First Name<span className='asterisk'> * </span>
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -135,10 +142,12 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.firstname}
                   required
                 />
-                <label htmlFor='firstname'>first name</label>
+                <label htmlFor='firstname'>Jane</label>
               </div>
 
-              <h4 className = "signup-subtitles">Last Name*</h4>
+              <h4 className='signup-subtitles'>
+                Last Name<span className='asterisk'> * </span>
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -150,10 +159,12 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.lastname}
                   required
                 />
-                <label htmlFor='lastname'>last name</label>
+                <label htmlFor='lastname'>Doe</label>
               </div>
 
-              <h4 className = "signup-subtitles">Username*</h4>
+              <h4 className='signup-subtitles'>
+                Username<span className='asterisk'> * </span>
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='text'
@@ -165,10 +176,12 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.username}
                   required
                 />
-                <label htmlFor='username'>username</label>
+                <label htmlFor='username'>abc123</label>
               </div>
 
-              <h4 className = "signup-subtitles">Password*</h4>
+              <h4 className='signup-subtitles'>
+                Password<span className='asterisk'> * </span>
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='password'
@@ -180,10 +193,12 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.password}
                   required
                 />
-                <label htmlFor='password'>password</label>
+                <label htmlFor='password'>**********</label>
               </div>
 
-              <h4 className = "signup-subtitles">Confirm Password*</h4>
+              <h4 className='signup-subtitles'>
+                Confirm Password<span className='asterisk'> * </span>
+              </h4>
               <div className='form-floating input-wrapper'>
                 <input
                   type='password'
@@ -195,7 +210,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
                   value={formData.cpassword}
                   required
                 />
-                <label htmlFor='cpassword'>confirm password</label>
+                <label htmlFor='cpassword'>**********</label>
               </div>
 
               {/* <Button
@@ -222,7 +237,7 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
           </form>
         </Col>
       </Row>
-    </div>
+    </>
   )
 }
 
