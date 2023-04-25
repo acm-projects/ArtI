@@ -58,7 +58,7 @@
   width: 80vw;
 }
 
-.image-thumbnail {
+@key .image-thumbnail {
   object-fit: cover;
 }
 
