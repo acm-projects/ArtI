@@ -97,7 +97,7 @@ const ImageGen = () => {
                     Enter a detailed description for what you want to create.
                   </h3>
 
-                  <div className='generate-bar my-4'>
+                  <form className='generate-bar my-4' onSubmit={handleSubmit}>
                     <input
                       className='image-input'
                       onChange={onChangeHandler}
@@ -110,7 +110,7 @@ const ImageGen = () => {
                       onSubmit={handleSubmit}
                       text='Generate'
                     />
-                  </div>
+                  </form>
                   {/* {loading && (
                     <div>
                       <Loading />
