@@ -7,7 +7,7 @@
 /* IMAGE GEN STUFF */
 .generator-container {
   height: calc(100vh - 5rem);
-  height: calc(100sv - 5rem);
+  height: calc(100svh - 5rem);
   display: grid;
   place-items: center;
   width: 100%;
@@ -32,6 +32,15 @@
 /* animation for on click generate (not a priority) */
 .image-input-container[slideup='1'] {
   animation: slideup 1s 1;
+}
+
+.image-input-container > .row {
+  width: 80%;
+}
+
+.image-input-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .generate-bar {
@@ -68,7 +77,7 @@
   border-bottom-right-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   height: 3.5rem;
-  width: 15%;
+  width: 25%;
   cursor: pointer;
   transition: all 150ms ease-in-out;
   font-size: larger;
@@ -91,6 +100,10 @@
     text-align: center;
     margin-bottom: 1.5rem;
   }
+
+  .image-input-container > .row {
+    width: 100%;
+  }
   .generate-bar {
     flex-direction: column !important;
   }
@@ -104,7 +117,7 @@
 
   .generate-bar .generate-btn {
     border-radius: var(--border-radius);
-    width: 50%;
+    width: 100%;
     font-size: 1rem;
   }
 }

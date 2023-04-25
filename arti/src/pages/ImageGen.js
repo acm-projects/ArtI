@@ -88,8 +88,8 @@ const ImageGen = () => {
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
         <Backdrop page={'imagegen'} loading={loading} />
-        <Row className='my-auto'>
-          <Container>
+        <Row className='my-auto w-100'>
+          <Container fluid>
             <div className='image-input-container'>
               <Row>
                 <Col>

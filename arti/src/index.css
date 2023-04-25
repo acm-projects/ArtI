@@ -51,7 +51,7 @@ img {
 }
 
 input:focus {
-  box-shadow: 0 0 0 0.25rem rgba(255, 77, 0, 0.25) !important;
+  box-shadow: 0 0 0 0.25rem rgb(140, 186, 180, 0.5) !important;
 }
 
 @media screen and (max-width: 767.98px) {
