@@ -73,10 +73,13 @@
 
 .welcome-title {
   font-size: 20px;
+  font-weight: bold;
+  font-size: 2em;
 }
 
 .arti-title {
   font-family: 'Playfair Display', serif;
+  font-weight: normal;
 }
 
 .welcome-subtitle {

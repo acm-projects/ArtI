@@ -102,115 +102,127 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
     <>
       <div className='background-image'></div>
       <Row className='signup-container my-auto'>
-        <Col>
+        <Col xs={12} md={4}>
           <form className='signup-form' onSubmit={handleSubmit}>
             <div className='form-ctrl'>
-              <h2 className='main-signup-caption'>Sign Up.</h2>
-              <h3 className='signup-caption'>
+              <h2 className='main-signup-caption mt-4 mb-2'>Sign Up.</h2>
+              <h3 className='signup-caption mb-2'>
                 Welcome to Arti. Please enter in your details below.
               </h3>
 
-              <h4 className='signup-subtitles'>
-                {' '}
-                E-mail<span className='asterisk'> * </span>{' '}
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='email'
-                  className='form-control'
-                  placeholder='email address'
-                  onChange={handleChange}
-                  name='email'
-                  id='email'
-                  value={formData.email}
-                  required
-                />
-                <label htmlFor='email'>jane.doe@gmail.com</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  {' '}
+                  E-mail<span className='asterisk'> * </span>{' '}
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='email'
+                    className='form-control'
+                    placeholder='email address'
+                    onChange={handleChange}
+                    name='email'
+                    id='email'
+                    value={formData.email}
+                    required
+                  />
+                  <label htmlFor='email'>jane.doe@gmail.com</label>
+                </div>
               </div>
 
-              <h4 className='signup-subtitles'>
-                First Name<span className='asterisk'> * </span>
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='first name'
-                  onChange={handleChange}
-                  name='firstname'
-                  id='firstname'
-                  value={formData.firstname}
-                  required
-                />
-                <label htmlFor='firstname'>Jane</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  First Name<span className='asterisk'> * </span>
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='first name'
+                    onChange={handleChange}
+                    name='firstname'
+                    id='firstname'
+                    value={formData.firstname}
+                    required
+                  />
+                  <label htmlFor='firstname'>Jane</label>
+                </div>
               </div>
 
-              <h4 className='signup-subtitles'>
-                Last Name<span className='asterisk'> * </span>
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='last name'
-                  onChange={handleChange}
-                  name='lastname'
-                  id='lastname'
-                  value={formData.lastname}
-                  required
-                />
-                <label htmlFor='lastname'>Doe</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  Last Name<span className='asterisk'> * </span>
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='last name'
+                    onChange={handleChange}
+                    name='lastname'
+                    id='lastname'
+                    value={formData.lastname}
+                    required
+                  />
+                  <label htmlFor='lastname'>Doe</label>
+                </div>
               </div>
 
-              <h4 className='signup-subtitles'>
-                Username<span className='asterisk'> * </span>
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='username'
-                  onChange={handleChange}
-                  name='username'
-                  id='username'
-                  value={formData.username}
-                  required
-                />
-                <label htmlFor='username'>abc123</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  Username<span className='asterisk'> * </span>
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='username'
+                    onChange={handleChange}
+                    name='username'
+                    id='username'
+                    value={formData.username}
+                    required
+                  />
+                  <label htmlFor='username'>abc123</label>
+                </div>
               </div>
 
-              <h4 className='signup-subtitles'>
-                Password<span className='asterisk'> * </span>
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='password'
-                  className='form-control'
-                  placeholder='password'
-                  onChange={handleChange}
-                  name='password'
-                  id='password'
-                  value={formData.password}
-                  required
-                />
-                <label htmlFor='password'>**********</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  Password<span className='asterisk'> * </span>
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='password'
+                    className='form-control'
+                    placeholder='password'
+                    onChange={handleChange}
+                    name='password'
+                    id='password'
+                    value={formData.password}
+                    required
+                  />
+                  <label htmlFor='password'>**********</label>
+                </div>
               </div>
 
-              <h4 className='signup-subtitles'>
-                Confirm Password<span className='asterisk'> * </span>
-              </h4>
-              <div className='form-floating input-wrapper'>
-                <input
-                  type='password'
-                  className='form-control'
-                  placeholder='confirm password'
-                  onChange={handleChange}
-                  name='cpassword'
-                  id='cpassword'
-                  value={formData.cpassword}
-                  required
-                />
-                <label htmlFor='cpassword'>**********</label>
+              <div className='mb-1 input-container'>
+                <h4 className='signup-subtitles'>
+                  Confirm Password<span className='asterisk'> * </span>
+                </h4>
+                <div className='form-floating input-wrapper'>
+                  <input
+                    type='password'
+                    className='form-control'
+                    placeholder='confirm password'
+                    onChange={handleChange}
+                    name='cpassword'
+                    id='cpassword'
+                    value={formData.cpassword}
+                    required
+                  />
+                  <label htmlFor='cpassword'>**********</label>
+                </div>
               </div>
 
               {/* <Button
@@ -226,10 +238,16 @@ const SignUp = ({ loggedIn, setLoggedIn, setUser }) => {
               >
                 {status.message}
               </p>
-              <div className='input-wrapper'>
-                <Button variant='secondary' type='submit' className='login-btn'>
-                  Sign Up
-                </Button>
+              <div className='mb-1 input-container'>
+                <div className='input-wrapper w-100'>
+                  <Button
+                    variant='secondary'
+                    type='submit'
+                    className='login-btn w-100'
+                  >
+                    <span clasName='signup-button-style'> Sign Up. </span>
+                  </Button>
+                </div>
               </div>
 
               <Link to='/'>Go Back</Link>
