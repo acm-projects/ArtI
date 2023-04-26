@@ -31,13 +31,13 @@
     opacity: 0;
   }
 
-  35% {
+  /* 35% {
     opacity: 1;
   }
 
   70% {
     opacity: 0;
-  }
+  } */
 
   100% {
     opacity: 1;
@@ -83,25 +83,30 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   /* animation: fade 10s ease-in-out infinite alternate;*/
 }
 
+.bg-circle.pulsate,
+.bg-circle1.pulsate {
+  animation: pulsate 1s alternate-reverse infinite;
+}
+
 /* bottom right circle gradient */
-.radial-gradient {
+/* .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
     #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
-}
+} */
 
 /* top left circle gradient */
-.radial-gradient1 {
+/* .radial-gradient1 {
   background-image: radial-gradient(
     farthest-corner at 85% 90%,
     #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
-}
+} */
 
 /* circle top left */
 .circle1 {
@@ -115,4 +120,12 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   width: calc(var(--circle-base-size) + 75px);
   height: calc(var(--circle-base-size) + 75px);
   z-index: -3;
+}
+
+@media (max-width: 767.98px) {
+  .backdrop-container {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
 }

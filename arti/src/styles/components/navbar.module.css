@@ -1,7 +1,8 @@
 /* Navbar section*/
 .nav-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   background-color: transparent;
   padding: 1rem 0;
   width: 100%;
@@ -17,10 +18,77 @@
   position: fixed;
   bottom: 0;
   height: 5rem;
+  background-color: #111;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  margin: 0 3rem;
+  font-size: 3em;
+}
+
+.nav-links {
+  display: flex;
+  list-style-type: none;
+  margin: 0 3rem;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 0 0 4rem;
+  display: grid;
+  place-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #9d9d9d;
+  font-size: 1.1rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.link-icon {
+  display: grid;
+  text-align: center;
+}
+
+.link-icon > p {
+  margin: 0;
+  font-size: 1.25em;
+}
+
+.link-icon > i {
+  display: none;
+}
+
+.active {
+  color: white;
+  opacity: 1;
+  font-weight: bold;
+}
+
+.profile-link > p {
+  display: none;
+}
+
+.profile-link > i {
+  display: block;
+  font-size: 2.5em;
 }
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
+  .nav-bar {
+    justify-content: center;
+  }
+
+  .logo {
+    display: none;
+  }
   .nav-links li {
     margin: 0 0.75rem !important;
   }
@@ -46,47 +114,7 @@
 
   .link-icon > p {
     font-size: 0.75rem;
+    display: inline;
   }
-}
-
-.nav-links {
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  margin: 0 1rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #9d9d9d;
-  font-size: 1.1rem;
-  transition: color 0.2s ease-in-out;
-}
-
-.nav-links a:hover {
-  color: #fff;
-}
-
-.link-icon {
-  display: grid;
-  text-align: center;
-}
-
-.link-icon > p {
-  margin: 0;
-}
-
-.link-icon > i {
-  display: none;
-}
-
-.active {
-  color: white;
-  opacity: 1;
-  font-weight: bold;
 }
 /*End of Navbar section*/

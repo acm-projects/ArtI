@@ -37,7 +37,8 @@ export default function PopUp({
   setShowSaving,
 }) {
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
-  const { disabledItems, setDisabledItems } = useContext(ItemsContext)
+  const { disabledItems, setDisabledItems, colorPalette, setColorPalette } =
+    useContext(ItemsContext)
   const [saveStatus, setSaveStatus] = useState('Saving...')
 
   // Adds the clicked item to disableItems so it won't be clicked again
