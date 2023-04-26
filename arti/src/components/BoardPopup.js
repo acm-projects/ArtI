@@ -13,6 +13,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
     setShowImageModal,
     setSelectedImage,
     setShowModal,
+    setSelectedImagePrompt,
   } = useContext(BoardsStateContext)
   const [editedNamed, setEditedName] = useState(false)
 
@@ -51,6 +52,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                   )
                   setShowImageModal(true)
                   setSelectedImage(image.id)
+                  setSelectedImagePrompt(image.prompt)
                 }}
               >
                 <Image

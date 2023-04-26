@@ -101,6 +101,14 @@
   background: none;
 }
 
+.color-palettes {
+  display: flex;
+}
+
+.color-swatch {
+  display: inline-block;
+}
+
 @media screen and (max-width: 767.98) {
   .board-popup {
     bottom: 5rem !important;

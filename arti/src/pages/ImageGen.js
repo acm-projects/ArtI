@@ -6,7 +6,8 @@ import { createContext, useState } from 'react'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
-import Loading from '../components/Loading'
+// import Loading from '../components/Loading'
+import { ColorExtractor } from 'react-color-extractor'
 
 export const ItemsContext = createContext()
 
@@ -18,6 +19,7 @@ const ImageGen = () => {
   const [showSaving, setShowSaving] = useState(false)
   const [disabledItems, setDisabledItems] = useState([])
   const [loading, setLoading] = useState(false)
+  const [colorPalette, setColorPalette] = useState()
 
   const values = {
     disabledItems,
@@ -87,7 +89,11 @@ const ImageGen = () => {
   return (
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
-        <Backdrop page={'imagegen'} loading={loading} />
+        <Backdrop
+          page={'imagegen'}
+          loading={loading}
+          colorPalette={colorPalette}
+        />
         <Row className='my-auto w-100'>
           <Container fluid>
             <div className='image-input-container'>
@@ -109,6 +115,10 @@ const ImageGen = () => {
                       onClick={handleSubmit}
                       onSubmit={handleSubmit}
                       text='Generate'
+                    />
+                    <ColorExtractor
+                      src={`data:image/png;base64,${image.data}`}
+                      getColors={(colors) => setColorPalette(colors)}
                     />
                   </form>
                   {/* {loading && (

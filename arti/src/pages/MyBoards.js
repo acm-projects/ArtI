@@ -25,6 +25,7 @@ import { UserAndBoardContext } from '../App'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardPopup from '../components/BoardPopup'
 import Backdrop from '../components/Backdrop'
+import { ColorExtractor } from 'react-color-extractor'
 
 export const BoardsStateContext = createContext()
 
@@ -38,6 +39,8 @@ const MyBoards = () => {
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const [selectedImagePrompt, setSelectedImagePrompt] = useState('')
+  const [colorPalette, setColorPalette] = useState([])
   const boardNameRef = useRef(null)
   const searchRef = useRef(null)
 
@@ -53,6 +56,8 @@ const MyBoards = () => {
     setNewImageURL,
     showModal,
     setShowModal,
+    selectedImagePrompt,
+    setSelectedImagePrompt,
   }
 
   // Manually calling the the API to get all the boards of the user
@@ -147,6 +152,9 @@ const MyBoards = () => {
       console.time('deleteImage')
       const isCustomThumbnail = user.customThumbnail
       const postUrl = `/api/v1/boards/${username}/add-delete`
+
+      // binary search since image id's are sorted
+      console.log(boards)
 
       const response = await axios.post(postUrl, {
         boardName: boardName,
@@ -306,8 +314,38 @@ const MyBoards = () => {
           </Modal.Header>
           <Modal.Body>
             <div className='w-100 d-flex justify-content-center'>
-              <Image src={newImageURL} alt='Image' fluid />
+              <Image src={newImageURL} alt={selectedImagePrompt} fluid />
             </div>
+            <Row className='my-3'>
+              <h4>Prompt:</h4>
+              <p>{selectedImagePrompt}</p>
+            </Row>
+            <Row className='my-3'>
+              <ColorExtractor
+                src={newImageURL}
+                getColors={(colors) => setColorPalette(colors)}
+              />
+              <h4>Color Palette:</h4>
+              <div className='color-palettes'>
+                {colorPalette !== undefined ? (
+                  colorPalette.map((color, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          backgroundColor: color,
+                          width: '50px',
+                          height: '50px',
+                        }}
+                        className='color-swatch'
+                      ></div>
+                    )
+                  })
+                ) : (
+                  <></>
+                )}
+              </div>
+            </Row>
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary'>Set As Thumbnail</Button>

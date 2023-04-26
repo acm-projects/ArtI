@@ -89,24 +89,24 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
 }
 
 /* bottom right circle gradient */
-.radial-gradient {
+/* .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
     #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
-}
+} */
 
 /* top left circle gradient */
-.radial-gradient1 {
+/* .radial-gradient1 {
   background-image: radial-gradient(
     farthest-corner at 85% 90%,
     #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
-}
+} */
 
 /* circle top left */
 .circle1 {
