@@ -11,6 +11,8 @@ import {
   Accordion,
   Form,
   InputGroup,
+  OverlayTrigger,
+  Tooltip,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -330,15 +332,20 @@ const MyBoards = () => {
                 {colorPalette !== undefined ? (
                   colorPalette.map((color, i) => {
                     return (
-                      <div
+                      <OverlayTrigger
                         key={i}
-                        style={{
-                          backgroundColor: color,
-                          width: '50px',
-                          height: '50px',
-                        }}
-                        className='color-swatch'
-                      ></div>
+                        placement='top'
+                        overlay={<Tooltip id={`tooltip-${i}`}>{color}</Tooltip>}
+                      >
+                        <button
+                          style={{
+                            backgroundColor: color,
+                            width: '50px',
+                            height: '50px',
+                          }}
+                          className='color-swatch'
+                        ></button>
+                      </OverlayTrigger>
                     )
                   })
                 ) : (
