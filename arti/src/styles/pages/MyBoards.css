@@ -108,6 +108,15 @@
 
 .color-swatch {
   display: inline-block;
+  border: 0;
+  transition: all 150ms ease;
+}
+
+.color-swatch:hover,
+.color-swatch:focus {
+  cursor: pointer;
+  outline: 2px solid #fff;
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 767.98) {
