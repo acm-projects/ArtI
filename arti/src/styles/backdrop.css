@@ -71,9 +71,9 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
 .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
-    #8cbab4 20%,
-    #52908c 35%,
-    #1b3b38 50%
+    #194b44 20%,
+    #1a3835 35%,
+    #081211 50%
   );
   
 } 
