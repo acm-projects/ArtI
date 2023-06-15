@@ -19,6 +19,18 @@
   z-index: 50;
 }
 
+::-webkit-scrollbar {
+  width: 0.1rem;
+  height: 0.1rem;
+}
+::-webkit-scrollbar-track {
+  background-color: #222;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: aquamarine;
+}
+
 .board-popup-background {
   position: fixed;
   top: 0;
@@ -45,7 +57,19 @@
   z-index: 2;
   /* animation: popup 200ms ease normal; */
   width: 80vw;
+  animation: scaleIn 150ms ease normal;
 }
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* animation that fadesIn */
 
 .image-thumbnail {
   object-fit: cover;
@@ -76,6 +100,23 @@
   all: unset;
   width: 100%;
   background: none;
+}
+
+.color-palettes {
+  display: flex;
+}
+
+.color-swatch {
+  display: inline-block;
+  border: 0;
+  transition: all 150ms ease;
+}
+
+.color-swatch:hover,
+.color-swatch:focus {
+  cursor: pointer;
+  outline: 2px solid #fff;
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 767.98) {

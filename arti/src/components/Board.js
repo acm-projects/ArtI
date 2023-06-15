@@ -26,7 +26,6 @@ export default function Board({ board, boardIndex, callback }) {
 
   return (
     <Col xs={12} md={6} lg={4} className={`${styles.board}`}>
-      <Backdrop></Backdrop>
       <Accordion>
         <div className={`my-2 ${styles['board-container']}`}>
           <button
@@ -46,7 +45,7 @@ export default function Board({ board, boardIndex, callback }) {
                 {board.thumbnail ? (
                   <Image
                     className={`${styles.thumbnail}`}
-                    src={`data:image/png;base64,${bufferToBase64(
+                    src={`data:image/jpeg;base64,${bufferToBase64(
                       board.thumbnail.data.data
                     )}`}
                     rounded={true}

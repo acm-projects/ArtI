@@ -90,14 +90,16 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
       </Col>
       <Col sm='6'>
         <div className='side-container'>
-          <h1 className='welcome-title'>
-            Welcome to{' '}
-            <span className='arti-title'>
-              ART <em>i</em>
-            </span>
-            .
-          </h1>
-          <h2 className='welcome-subtitle'>Please enter your details.</h2>
+          <div className='w-75'>
+            <h1 className='welcome-title'>
+              Welcome to{' '}
+              <span className='arti-title'>
+                ART<em>i</em>
+              </span>
+              .
+            </h1>
+            <h2 className='welcome-subtitle'>Please enter your details.</h2>
+          </div>
 
           <Form className='my-3 w-75' onSubmit={handleSubmit}>
             <h3 className='username-field'>
@@ -127,7 +129,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
                 className='login-input'
                 // The showPassword state lets the input to toggle the visibility of the text
                 type={showPassword ? 'text' : 'password'}
-                placeholder='**********'
+                placeholder='Password'
                 name='password'
                 onChange={handleChange}
               />
@@ -151,7 +153,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
               type='submit'
               className='login-btn w-100'
             >
-              <span className='login-button-style'>Log In.</span>
+              <span className='login-button-style'>Login.</span>
             </Button>
 
             {/* Login Status */}

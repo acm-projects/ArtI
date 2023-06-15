@@ -11,6 +11,8 @@ import {
   Accordion,
   Form,
   InputGroup,
+  OverlayTrigger,
+  Tooltip,
 } from 'react-bootstrap'
 import React, {
   useState,
@@ -24,6 +26,8 @@ import Board from '../components/Board'
 import { UserAndBoardContext } from '../App'
 import { bufferToBase64 } from '../utils/BufferToBase64.js'
 import BoardPopup from '../components/BoardPopup'
+import Backdrop from '../components/Backdrop'
+import { ColorExtractor } from 'react-color-extractor'
 
 export const BoardsStateContext = createContext()
 
@@ -37,6 +41,8 @@ const MyBoards = () => {
   const [selectedBoard, setSelectedBoard] = useState(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const [selectedImagePrompt, setSelectedImagePrompt] = useState('')
+  const [colorPalette, setColorPalette] = useState([])
   const boardNameRef = useRef(null)
   const searchRef = useRef(null)
 
@@ -52,6 +58,8 @@ const MyBoards = () => {
     setNewImageURL,
     showModal,
     setShowModal,
+    selectedImagePrompt,
+    setSelectedImagePrompt,
   }
 
   // Manually calling the the API to get all the boards of the user
@@ -143,8 +151,12 @@ const MyBoards = () => {
         boardName: boardName,
         selectedImage: imageToDelete,
       })
+      console.time('deleteImage')
       const isCustomThumbnail = user.customThumbnail
       const postUrl = `/api/v1/boards/${username}/add-delete`
+
+      // binary search since image id's are sorted
+      console.log(boards)
 
       const response = await axios.post(postUrl, {
         boardName: boardName,
@@ -154,6 +166,9 @@ const MyBoards = () => {
       })
 
       console.log('Deleted an image: ', response.data)
+      console.timeEnd('deleteImage')
+
+      setShowImageModal(false)
 
       // This is re-rendering boards by mutating the boards on the front-end (idk which is better -- calling api or mutating on front-end)
       const newBoards = boards.map((board) => {
@@ -187,6 +202,8 @@ const MyBoards = () => {
   return (
     <BoardsStateContext.Provider value={boardStateValues}>
       <Container>
+        <Backdrop></Backdrop>
+
         <Row className='py-4'>
           <Col xs={12}>
             <h1>{user.username}'s Boards </h1>
@@ -298,9 +315,47 @@ const MyBoards = () => {
             <Modal.Title>Image</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Image src={newImageURL} alt='Image' fluid />
+            <div className='w-100 d-flex justify-content-center'>
+              <Image src={newImageURL} alt={selectedImagePrompt} fluid />
+            </div>
+            <Row className='my-3'>
+              <h4>Prompt:</h4>
+              <p>{selectedImagePrompt}</p>
+            </Row>
+            <Row className='my-3'>
+              <ColorExtractor
+                src={newImageURL}
+                getColors={(colors) => setColorPalette(colors)}
+              />
+              <h4>Color Palette:</h4>
+              <div className='color-palettes'>
+                {colorPalette !== undefined ? (
+                  colorPalette.map((color, i) => {
+                    return (
+                      <OverlayTrigger
+                        key={i}
+                        placement='top'
+                        overlay={<Tooltip id={`tooltip-${i}`}>{color}</Tooltip>}
+                      >
+                        <button
+                          style={{
+                            backgroundColor: color,
+                            width: '50px',
+                            height: '50px',
+                          }}
+                          className='color-swatch'
+                        ></button>
+                      </OverlayTrigger>
+                    )
+                  })
+                ) : (
+                  <></>
+                )}
+              </div>
+            </Row>
           </Modal.Body>
           <Modal.Footer>
+            <Button variant='secondary'>Set As Thumbnail</Button>
             <Button
               variant='secondary'
               onClick={() => setShowImageModal(false)}
@@ -309,13 +364,12 @@ const MyBoards = () => {
             </Button>
             <Button
               variant='secondary'
-              onClick={async () => {
-                await deleteImage(
+              onClick={() => {
+                deleteImage(
                   user,
                   boards[selectedBoard].boardName,
                   selectedImage
                 )
-                setShowImageModal(false)
               }}
             >
               Delete Image

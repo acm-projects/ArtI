@@ -37,7 +37,8 @@ export default function PopUp({
   setShowSaving,
 }) {
   const { user, boards, setBoards } = useContext(UserAndBoardContext)
-  const { disabledItems, setDisabledItems } = useContext(ItemsContext)
+  const { disabledItems, setDisabledItems, colorPalette, setColorPalette } =
+    useContext(ItemsContext)
   const [saveStatus, setSaveStatus] = useState('Saving...')
 
   // Adds the clicked item to disableItems so it won't be clicked again
@@ -103,7 +104,7 @@ export default function PopUp({
         {/* <h4>Choose a board...</h4> */}
         <Row className='mb-4'>
           <Col>
-            <Container>
+            <Container className='w-100 d-flex justify-content-center'>
               {<img src={`data:image/png;base64,${image.data}`} alt='Prompt' />}
             </Container>
           </Col>

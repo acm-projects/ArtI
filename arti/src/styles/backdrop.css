@@ -1,11 +1,26 @@
-:root{
+:root {
   /* i think u define variables */
   --circle-base-size: 850px;
 }
 
-html{
+/* fixed for scrolling due to big circles */
+/* html {
+  overflow: hidden;
+} */
+
+.backdrop-container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: -100;
+}
+
+* {
   /* outline: 1px solid red; */ /* border outline for debugging */
-  overflow: hidden;  /* disables overflow scroll */
+  /* overflow: hidden;  disables overflow scroll */
 }
 /*TODO: fade in and out from one gradient to another -- possible using a -1z-index div and fadeIn (pulsate version)*/
 /* TODO :: make circles and lines responsive */
@@ -17,28 +32,30 @@ html{
     opacity: 0;
   }
 
-  35% {
+  /* 35% {
     opacity: 1;
   }
 
   70% {
     opacity: 0;
-  }
+  } */
 
   100% {
     opacity: 1;
   }
-
-  
 }
 
 /*fade in for regular animation*/
 /*can be used for pulsate by using infinte + alternate, but keeping separate from pulsate anim just in case
 function for image gen buffer with pulsate needs separate keyframes or sum*/
 @keyframes fadeIn {
-  from{ opacity: 0; }
+  from {
+    opacity: 0;
+  }
 
-  to{ opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 /* bottom right circle */
@@ -64,29 +81,34 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   transform: translate(-50%, -50%);
   animation: fadeIn 10s;
   /*if image is generating--implement into a function?*/
- /* animation: pulsate 10s ease-in-out infinite alternate;*/
+  
+  /* animation: fade 10s ease-in-out infinite alternate;*/
+}
+
+.bg-circle.pulsate,
+.bg-circle1.pulsate {
+  animation: pulsate 1s alternate-reverse infinite;
 }
 
 /* bottom right circle gradient */
-.radial-gradient {
+/* .radial-gradient {
   background-image: radial-gradient(
     farthest-corner at 10% 25%,
     #194b44 20%,
     #1a3835 35%,
     #081211 50%
   );
-  
-} 
+} */
 
 /* top left circle gradient */
-.radial-gradient1 {
+/* .radial-gradient1 {
   background-image: radial-gradient(
     farthest-corner at 85% 90%,
     #8cbab4 20%,
     #52908c 35%,
     #1b3b38 50%
   );
-}
+} */
 
 /* circle top left */
 .circle1 {
@@ -102,4 +124,10 @@ function for image gen buffer with pulsate needs separate keyframes or sum*/
   z-index: -3;
 }
 
-
+@media (max-width: 767.98px) {
+  .backdrop-container {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+}

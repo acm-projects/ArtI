@@ -1,5 +1,5 @@
 import '../styles/pages/MyBoards.css'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { BoardsStateContext } from '../pages/MyBoards'
 import { bufferToBase64 } from '../utils/BufferToBase64'
 import { Row, Image, Col, Button } from 'react-bootstrap'
@@ -13,7 +13,14 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
     setShowImageModal,
     setSelectedImage,
     setShowModal,
+    setSelectedImagePrompt,
   } = useContext(BoardsStateContext)
+  const [editedNamed, setEditedName] = useState(false)
+
+  function handleNewBoardName() {
+    console.log('handleNewBoardName')
+  }
+
   return (
     <>
       <div className='board-popup'>
@@ -23,7 +30,15 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
         />
         <div className='board-popup-content'>
           <Row>
-            <h2>{boards[selectedBoard].boardName} </h2>
+            <div>
+              <div
+                contentEditable={true}
+                onInput={(e) => setEditedName(true)}
+                suppressContentEditableWarning={true}
+              >
+                <h2>{boards[selectedBoard].boardName} </h2>
+              </div>
+            </div>
           </Row>
           <Row className='images-container'>
             {boards[selectedBoard].images.map((image, imageIndex) => (
@@ -33,14 +48,15 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                 className='image-btn'
                 onClick={() => {
                   setNewImageURL(
-                    `data:image/png;base64,${bufferToBase64(image.data.data)}`
+                    `data:image/jpeg;base64,${bufferToBase64(image.data.data)}`
                   )
                   setShowImageModal(true)
                   setSelectedImage(image.id)
+                  setSelectedImagePrompt(image.prompt)
                 }}
               >
                 <Image
-                  src={`data:image/png;base64,${bufferToBase64(
+                  src={`data:image/jpeg;base64,${bufferToBase64(
                     image.data.data
                   )}`}
                   alt={`Thumbnail image of ${image.prompt}`}
@@ -60,7 +76,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
             <Col sm={6}></Col>
             <Col sm={6} className='d-flex justify-content-end'>
               <Button
-                variant='secondary'
+                variant='danger'
                 onClick={() => {
                   deleteBoard(user, boards[selectedBoard].boardName)
                   setShowModal(false)
@@ -69,6 +85,11 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
               >
                 Delete Board
               </Button>
+              {editedNamed && (
+                <Button variant='warning' onClick={handleNewBoardName}>
+                  Save
+                </Button>
+              )}
               <Button
                 variant='secondary'
                 onClick={() => setSelectedBoard(null)}

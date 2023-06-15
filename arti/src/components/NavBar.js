@@ -7,21 +7,11 @@ const Navbar = ({ viewportType }) => {
     <nav
       className={`${styles['nav-bar']} navbar-static-top ${styles[viewportType]}`}
     >
+      {/* LOGO */}
+      <h1 className={`${styles.logo}`}>
+        ART<em>i</em>
+      </h1>
       <ul className={`${styles['nav-links']}`}>
-        {/* not needed??? */}
-        {/* <li>
-          <NavLink
-            to='/'
-            className={({ isActive, isPending }) =>
-              isPending ? styles.pending : isActive ? styles.active : ''
-            }
-          >
-            <div className={`${styles['link-icon']}`}>
-              <i className='bi bi-house-fill'></i>
-              <p>Home</p>
-            </div>
-          </NavLink>
-        </li> */}
         <li>
           <NavLink
             to='/imagegen'
@@ -31,7 +21,7 @@ const Navbar = ({ viewportType }) => {
           >
             <div className={`${styles['link-icon']}`}>
               <i className='bi bi-image-fill'></i>
-              <p>ImageAI</p>
+              <p>ImageGen</p>
             </div>
           </NavLink>
         </li>
@@ -44,7 +34,7 @@ const Navbar = ({ viewportType }) => {
           >
             <div className={`${styles['link-icon']}`}>
               <i className='bi bi-person-bounding-box'></i>
-              <p>PortraitAI</p>
+              <p>PortraitGen</p>
             </div>
           </NavLink>
         </li>
@@ -62,19 +52,18 @@ const Navbar = ({ viewportType }) => {
           </NavLink>
         </li>
         <li>
-          <div className='profile-dropdown'>
-            <NavLink
-              to='/myprofile'
-              className={({ isActive, isPending }) =>
-                isPending ? styles.pending : isActive ? styles.active : ''
-              }
-            >
-              <div className={`${styles['link-icon']}`}>
-                <i className='bi bi-person-lines-fill'></i>
-                <p>Profile</p>
-              </div>
-            </NavLink>
-          </div>
+          <NavLink
+            to='/myprofile'
+            className={({ isActive, isPending }) =>
+              isPending ? styles.pending : isActive ? styles.active : ''
+            }
+          >
+            <div className={`${styles['link-icon']} ${styles['profile-link']}`}>
+              {/* <i className='bi bi-person-lines-fill'></i> */}
+              <i className='bi bi-person-circle'></i>
+              <p>Profile</p>
+            </div>
+          </NavLink>
         </li>
       </ul>
     </nav>
