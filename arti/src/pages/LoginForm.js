@@ -11,7 +11,10 @@ import {
   InputGroup,
   Button,
   FloatingLabel,
+  Image,
 } from 'react-bootstrap'
+
+import LoginCarousel from '../components/LoginCarousel'
 
 const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   const navigate = useNavigate()
@@ -86,9 +89,9 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
   return (
     <Row className='login-container'>
       <Col sm='6' className=' side-column'>
-        <div className='side-container'></div>
+        <LoginCarousel></LoginCarousel>
       </Col>
-      <Col sm='6'>
+      <Col sm='6' className='my-4'>
         <div className='side-container'>
           <div className='w-75'>
             <h1 className='welcome-title'>
