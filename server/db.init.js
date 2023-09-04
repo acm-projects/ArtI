@@ -1,15 +1,15 @@
 import mongoose from 'mongoose'
-export default () => {
+export default (uri) => {
+  let mongoURL = !uri
+    ? `mongodb+srv://arti.ck3bsyz.mongodb.net/?retryWrites=true&w=majority`
+    : uri
   mongoose.set('strictQuery', false)
   mongoose
-    .connect(
-      'mongodb+srv://arti.bvq3rzx.mongodb.net/?retryWrites=true&w=majority',
-      {
-        dbName: 'artiDB',
-        user: process.env.DB_USERNAME,
-        pass: process.env.DB_PASSWORD,
-      }
-    )
+    .connect(mongoURL, {
+      dbName: 'artiDB',
+      user: process.env.DB_USERNAME,
+      pass: process.env.DB_PASSWORD,
+    })
     .then(() => {
       console.log('Database is connected!')
     })

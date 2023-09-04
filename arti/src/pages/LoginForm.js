@@ -4,15 +4,7 @@ import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import { storeUser, handleUser } from '../utils/Auth'
 
-import {
-  Col,
-  Row,
-  Form,
-  InputGroup,
-  Button,
-  FloatingLabel,
-  Image,
-} from 'react-bootstrap'
+import { Col, Row, Form, InputGroup, Button } from 'react-bootstrap'
 
 import LoginCarousel from '../components/LoginCarousel'
 
@@ -76,7 +68,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
         setLoginStatus('Invalid Username or Password')
       else {
         setLoginStatus('Something went wrong')
-        console.log(error.message)
+        console.error(error.message)
       }
     }
   }
