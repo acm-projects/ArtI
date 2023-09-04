@@ -45,7 +45,6 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
         password: formData.password,
       })
       if (response.status === 200) {
-        console.log(response.data.data)
         // stores user in sessionStorage for easy access
         storeUser(response.data.data)
         // Sets the loggedIn prop (a state in App.js) to true

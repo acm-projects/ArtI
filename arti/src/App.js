@@ -34,6 +34,7 @@ const App = () => {
       setisLoggedIn(true)
       handleUser(userStorage)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]) // DO NOT REMOVE THE ARRAY!, it will run useEffect multiple times
 
   // Gets basic user information
@@ -56,7 +57,7 @@ const App = () => {
       const response = await axios.get(`/api/v1/boards/${user.username}`)
       return response.data
     } catch (error) {
-      console.log(error)
+      console.error(error.message)
     }
   }
 
