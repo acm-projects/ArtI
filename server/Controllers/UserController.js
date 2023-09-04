@@ -5,6 +5,11 @@ import mongoose from 'mongoose'
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
 import path from 'path'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 // FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
