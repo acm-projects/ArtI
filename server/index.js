@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 
 const PORT = 8080 || process.env.PORT
 
-dbInit()
+dbInit(process.env.MONGODB_URI)
 
 app.get('/', (req, res) => {
   res.send('Hello World')
