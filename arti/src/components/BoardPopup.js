@@ -48,7 +48,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                 className='image-btn'
                 onClick={() => {
                   setNewImageURL(
-                    `data:image/png;base64,${bufferToBase64(image.data.data)}`
+                    `data:image/jpeg;base64,${bufferToBase64(image.data.data)}`
                   )
                   setShowImageModal(true)
                   setSelectedImage(image.id)
@@ -56,7 +56,7 @@ export default function BoardPopup({ boards, deleteBoard, handleCloseModal }) {
                 }}
               >
                 <Image
-                  src={`data:image/png;base64,${bufferToBase64(
+                  src={`data:image/jpeg;base64,${bufferToBase64(
                     image.data.data
                   )}`}
                   alt={`Thumbnail image of ${image.prompt}`}

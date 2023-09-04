@@ -3,6 +3,7 @@ import '../styles/pages/ImageGen.css'
 import GenerateBtn from '../components/GenerateBtn'
 import { Row, Col, Container, Button } from 'react-bootstrap'
 import { createContext, useState } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import PopUp from '../components/PopUp'
 import axios from 'axios'
 import Backdrop from '../components/Backdrop'
@@ -20,6 +21,7 @@ const ImageGen = () => {
   const [disabledItems, setDisabledItems] = useState([])
   const [loading, setLoading] = useState(false)
   const [colorPalette, setColorPalette] = useState()
+
 
   const values = {
     disabledItems,
@@ -44,7 +46,10 @@ const ImageGen = () => {
   // Submits the prompt to generate an image from our API
   async function handleSubmit(e) {
     e.preventDefault()
-    setLoading(true)
+    setLoading(true)    
+
+    setIsVisible(!isVisible && setLoading(true))
+
 
     const postUrl = '/api/v1/imageai'
     try {
@@ -67,6 +72,7 @@ const ImageGen = () => {
       console.log(error.message)
       setLoading(false)
     }
+    setIsVisible(false);
   }
 
   const onChangeHandler = (event) => {
@@ -89,6 +95,7 @@ const ImageGen = () => {
   return (
     <ItemsContext.Provider value={values}>
       <div className='generator-container'>
+
         <Backdrop
           page={'imagegen'}
           loading={loading}
@@ -96,6 +103,7 @@ const ImageGen = () => {
         />
         <Row className='my-auto w-100'>
           <Container fluid>
+
             <div className='image-input-container'>
               <Row>
                 <Col>
