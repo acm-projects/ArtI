@@ -6,9 +6,10 @@ import fs from 'fs'
 import jwt from 'jsonwebtoken'
 // import { fileURLToPath } from 'url'
 // import { dirname } from 'path'
-
 // const __filename = fileURLToPath(import.meta.url)
 // const __dirname = dirname(__filename)
+import path from 'path'
+const __dirname = path.resolve()
 
 // FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
@@ -74,7 +75,7 @@ async function getUserAuthorized(req, res, next) {
 
     // verifying jwt token
     const cert = fs
-      .readFileSync(process.cwd() + '/public/public.pem')
+      .readFileSync(path.join(__dirname, 'public', 'public.pem'))
       .toString()
     jwt.verify(clientToken, cert, async (err, decoded) => {
       if (err) {
