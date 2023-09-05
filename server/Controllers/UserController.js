@@ -4,12 +4,11 @@ import bcrypt from 'bcrypt'
 import mongoose from 'mongoose'
 import fs from 'fs'
 import jwt from 'jsonwebtoken'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
+// import { fileURLToPath } from 'url'
+// import { dirname } from 'path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = dirname(__filename)
 
 // FOR US ONLY :: query for all users
 async function getAllUsers(req, res) {
@@ -24,7 +23,6 @@ async function getAllUsers(req, res) {
 // FOR SIGNUP :: this creates a new user and passes to database
 async function createUser(req, res, next) {
   try {
-    console.log(validate(req.body))
     const { error } = validate(req.body) // Check if request body is parsed correctly
     if (error)
       return res.status(400).send({ message: error.details[0].message })
@@ -46,7 +44,7 @@ async function createUser(req, res, next) {
 
     res.send(result)
   } catch (error) {
-    console.log(error.message)
+    console.error(error.message)
     if (error.name === 'ValidationError')
       next(createHttpError(422, error.message))
   }
@@ -59,7 +57,7 @@ async function getUser(req, res, next) {
     const result = await User.findOne({ username: userName })
     res.send(result)
   } catch (error) {
-    console.log(error.message)
+    console.error(error.message)
     if (error instanceof mongoose.CastError) {
       next(createError(400, 'Invalid username'))
       return
@@ -68,17 +66,18 @@ async function getUser(req, res, next) {
   }
 }
 
+// Returns basic info of the user back to the client
 async function getUserAuthorized(req, res, next) {
   try {
-    const clientToken = req.body.token
+    const clientToken = req.body.token.token
     const username = req.body.username
 
     // verifying jwt token
-    const file = path.join(process.cwd(), 'server', 'files', 'public.pem')
-    const cert = fs.readFileSync(file)
+    const cert = fs.readFileSync(process.cwd() + 'public/public.pem').toString()
     jwt.verify(clientToken, cert, async (err, decoded) => {
-      if (err) console.log('From getUserAuthorized: ', err.message)
-      else {
+      if (err) {
+        console.error('From getUserAuthorized: ', err.message)
+      } else {
         // only give back basic user info to client if token is verified
         const userPrivate = await User.aggregate([
           { $match: { username: username } },

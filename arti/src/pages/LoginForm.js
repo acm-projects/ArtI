@@ -164,7 +164,7 @@ const LoginForm = ({ loggedIn, setLoggedIn, setUser }) => {
 
           {/* Footer */}
           <footer>
-            <Link to='/signup'>New to ArtI? Sign Up.</Link>
+            <Link to='/signup'>New to ARTi? Sign Up.</Link>
           </footer>
         </div>
       </Col>
