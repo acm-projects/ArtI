@@ -73,7 +73,7 @@ async function getUserAuthorized(req, res, next) {
     const username = req.body.username
 
     // verifying jwt token
-    const cert = fs.readFileSync(process.cwd() + 'public/public.pem').toString()
+    const cert = fs.readFileSync('public/public.pem').toString()
     jwt.verify(clientToken, cert, async (err, decoded) => {
       if (err) {
         console.error('From getUserAuthorized: ', err.message)
