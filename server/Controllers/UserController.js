@@ -70,7 +70,7 @@ async function getUser(req, res, next) {
 // Returns basic info of the user back to the client
 async function getUserAuthorized(req, res, next) {
   try {
-    const clientToken = req.body.token.token
+    const clientToken = req.body.token
     const username = req.body.username
 
     // verifying jwt token
